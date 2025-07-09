@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "resumen_diarios",
+  "info": {
+    "name": "ResumenDiario"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "fecha": {
+      "unique": true,
+      "required": true,
+      "type": "date"
+    },
+    "nuevosConfirmados": {
+      "type": "integer",
+      "required": true
+    },
+    "totalConfirmados": {
+      "type": "integer"
+    },
+    "nuevasMuertes": {
+      "type": "integer"
+    },
+    "totaldeMuertes": {
+      "type": "integer"
+    },
+    "nuevosRecuperados": {
+      "type": "integer"
+    },
+    "totalRecuperados": {
+      "type": "integer"
+    }
+  }
+}

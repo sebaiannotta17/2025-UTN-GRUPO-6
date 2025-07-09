@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TP1</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        header { /*Cabecera*/
+            background-color: #4c6baf;
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .imagen {
+            width: 100px;
+            height: 100px;
+            float: left;
+        }
+        aside { /*Barra lateral*/
+            background-color: #6e6e6e;
+            color: white;
+            text-align: left;
+            padding: 20px;
+            width: 160px;
+            height: 100vh;
+            float: left;
+        }
+        section { /*Caja principal*/
+            background-color: #dfdfdf;
+            padding: 20px;
+            color: black;
+            width: calc(100% - 240px); /* Ancho total menos padding y ancho del aside */
+            height: 100vh;
+            float: right;
+        }
+        .frase1 {
+            text-shadow: #ff0000 1px 1px 2px;
+        }
+        .frase2 {
+            text-shadow: #000000 1px 1px 2px;
+        }
+        .frase3 {
+            text-shadow: #001560 1px 1px 2px;
+        }
+        footer { /*Pie de página*/
+            background-color: #333;
+            color: white;
+            text-align: right;            
+            padding: 0px;
+            width: calc(100% - 20px); /* Ancho total menos padding */
+            height: 50px;
+            padding-top: 20px;
+            padding-right: 20px;
+            float: left;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="APIs.js"></script>
+</head>
+<body>
+    <header>
+        <img class="imagen" src="utn-logo.png" alt="imagen" width="100" height="100">
+        <h1>TP Nro 1. Figueroa Rodrigo</h1>
+      
+    </header>
+    <aside>
+        <h1><a href="#" onclick="getClima()">OpenWeather</a></h1>
+        <h1><a href="#" onclick="getLaunchData()">SpaceX</a></h1>
+    </aside>
+    <section>
+        <h2 id="frase" class="frase1"></h2>
+        <script>
+            const frases = [
+            { text: "Bienvenido a mi página web", className: "frase1" },
+            { text: "Ésta es mi página web para el TP1", className: "frase2" },
+            { text: "Aprendiendo a diseñar páginas web", className: "frase3" }
+            ]; /*Array de objetos con texto y clase para asignar una sombra distinta a cada frase*/
+            const nroOpcion = Math.floor(Math.random() * frases.length);/*Genera una probabilidad entre 0 y 1, multiplica por la longitud del array y redondea hacia abajo*/
+            const fraseElement = document.getElementById("frase"); /*Obtiene el elemento con id "frase"*/
+            fraseElement.textContent = frases[nroOpcion].text; /*Asigna el texto del objeto seleccionado al contenido del elemento*/
+            fraseElement.className = frases[nroOpcion].className; /*Asigna la clase del objeto seleccionado al elemento*/
+        </script>
+        <p>Mi espectativa principal de la cátedra es adquirir los conocimientos básicos necesarios para aprender a gestionar 
+        y diseñar el front-end de aplicaciones y páginas web.</p>
+        <div id="contenidoPrincipal"></div>
+    </section>
+    <footer>
+        <p>TyGWeb 2025</p>
+    </footer>
+</body>
+</html>

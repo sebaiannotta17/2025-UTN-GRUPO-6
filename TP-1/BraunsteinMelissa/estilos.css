@@ -1,0 +1,66 @@
+.logo {
+    position: absolute;
+    left: 30px;
+    top: 30px;
+    height: 50px;
+}
+header {
+    background-color: #b5b5b4;
+    padding: 10px;
+    text-align: center;
+    border-bottom: 2px solid black;
+   
+
+}
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #e7acac;
+}
+
+main {
+    flex: 1;
+    text-align: right;   
+    padding: 30px;
+    background-color: #ffffff;
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+}
+
+aside {
+    background-color: #aac1c5;
+    padding: 20px;
+    height: 200px;
+    border: 1px solid black;
+}
+
+aside ul {
+    list-style: none;
+    padding: 0;
+} 
+
+aside li {
+    text-align: center;
+    margin-bottom: 10px;
+    
+}
+
+.contenedor {
+    display: flex;
+}
+
+
+footer {
+    background-color: #d3dbeb;
+    text-align: right;
+    padding: 10px;
+    border-top: 2px solid black;
+}
+
+.sombra {
+    text-shadow: 2px 2px 4px #000000;
+    color: #333;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+}

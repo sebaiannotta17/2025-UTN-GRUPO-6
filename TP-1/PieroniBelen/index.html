@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tecnología y Gestión Web</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="assets/media/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <video id="video-fondo" autoplay muted loop playsinline>
+        <source src="assets/media/fondo.mp4" type="video/mp4">
+        Tu navegador no soporta el video HTML5.
+    </video>
+    <header>
+        <img src="assets/media/logo.webp" alt="Logo" width="50">
+        <div class="header-text">
+            <h1>Trabajo Práctico Nº1</h1>
+            <p>Pieroni, María Belén</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <aside>
+            <nav>
+                <ul>
+                    <li><button class="btn-api" id="btn-consejo">Consejo del día</button></li>
+                    <li><button class="btn-api" id="btn-libro">Libro recomendado</button></li>
+                </ul>
+            </nav>
+        </aside>
+        <main>
+            <div id="frase-del-dia"></div>
+            <hr>
+            <p class="expectativa">Espero que esta materia me ayude a mejorar mis habilidades en JavaScript, HTML y CSS.</p>
+            <script>
+                const frases = [
+                    '<span class="sombra1">"Cualquiera puede creer en alguien, o en algo, que siempre tiene éxito, señora. Pero en el fracaso... Ah, en eso sí que es difícil creer, con certeza y confianza. Es bastante difícil tener valía, creo".</span>',
+                    '<span class="sombra2">"Nunca debes sucumbir a la desesperación. Permítete deslizarte por ese camino y te rendirás a tus instintos más bajos. En los momentos más oscuros, la esperanza es algo que te das a ti mismo. Ese es el significado de la fuerza interior".</span>',
+                    '<span class="sombra3">"No sé, a nadie le gusta tener malos recuerdos. Pero tal vez sea mejor recordar todas las cosas malas y aprender de ellas que tratar de negar todo y olvidar".</span>'
+                ];
+
+                const randomIndex = Math.floor(Math.random() * frases.length);
+                document.getElementById("frase-del-dia").innerHTML = frases[randomIndex];
+            </script>
+            <hr>
+            <section id="contenido-api"></section> 
+        </main>
+
+    </div>
+
+    <footer>
+        <p>Tecnología y Gestión Web | Año 2025</p>
+    </footer>
+
+    <script>
+        document.getElementById('btn-consejo').addEventListener('click', async (e) => {
+        e.preventDefault();
+        document.getElementById("contenido-api").innerHTML = `<p class="loading">Cargando consejo...</p>`;
+        try {
+            const response = await fetch('https://api.adviceslip.com/advice');
+            const data = await response.json();
+            const consejoEnIngles = data.slip.advice;
+
+            const translateResponse = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=es&dt=t&q=${encodeURIComponent(consejoEnIngles)}`);
+            const translateData = await translateResponse.json();
+            const consejoEnEspañol = translateData[0][0][0];
+
+            document.getElementById("contenido-api").innerHTML = `
+                <div class="card">
+                    <h2>Consejo del día</h2>
+                    <p>"${consejoEnEspañol}"</p>
+                </div>
+            `;
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    });
+    </script>
+    <script>
+        document.getElementById('btn-libro').addEventListener('click', (e) => {
+        e.preventDefault();
+        document.getElementById("contenido-api").innerHTML = `<p class="loading">Cargando libro...</p>`;
+        fetch('https://openlibrary.org/search.json?q=book&limit=10')
+        .then(response => response.json())
+        .then(data => {
+            if (data.docs.length > 0) {
+                const libroAleatorio = data.docs[Math.floor(Math.random() * data.docs.length)];
+                document.getElementById("contenido-api").innerHTML = `
+                    <div class="card">
+                        <h2>Libro recomendado</h2>
+                        <p><strong>Título:</strong> ${libroAleatorio.title}</p>
+                        <p><strong>Autor:</strong> ${libroAleatorio.author_name ? libroAleatorio.author_name.join(", ") : "Desconocido"}</p>
+                        <p><strong>Año de publicación:</strong> ${libroAleatorio.first_publish_year ? libroAleatorio.first_publish_year : "No disponible"}</p>
+                    </div>
+                `;
+            } else {
+                document.getElementById("contenido-api").innerHTML = `<p>No se encontraron libros. Intenta otra vez!</p>`;
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    });
+    </script>
+</body>
+</html>

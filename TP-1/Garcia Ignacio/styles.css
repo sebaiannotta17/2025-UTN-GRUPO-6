@@ -1,0 +1,80 @@
+body{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: rgba(0, 0, 0, 0.8);
+    background-size: cover;
+    background-blend-mode: darken;
+    
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.colorPrincipal{
+    background: linear-gradient(180deg, 
+        rgb(240, 0, 220) 10%,
+        rgb(190, 31, 229) 90%
+    );
+}
+
+.colorSecundario{
+    background: linear-gradient(180deg,
+        rgb(75, 0, 110) 25%,
+        rgb(54, 3, 65) 95%
+    );
+}
+
+.direccion{
+    transition: background-color 0.5s;
+}
+
+.direccion:hover{
+    background-color: rgb(75, 0, 110);
+    color: white;
+}
+
+#main{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+#main > .row {
+    flex: 1;
+    height: 100%;
+    overflow: hidden;
+}
+
+#content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+}
+
+#origin{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex: 1;
+}
+
+#pokemon{
+    background-color: rgb(230, 198, 22);
+    text-align: center;
+}
+
+#cocktail{
+    background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+    color: #3d1c02;
+    text-align: center;
+}
+
+.card-body{
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

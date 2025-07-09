@@ -1,0 +1,47 @@
+ver online: https://leosfigueira.github.io/covid19-vue/
+
+CasosPais:
+pais => textfield
+fecha => fechafield
+casosdeldia => number
+totalConfirmados => number
+casosActivos => number
+casosRecuperados => number
+totalMuertes => number
+
+Pais:
+nombre => textfield
+
+Resumen:
+casos => JSON
+
+ResumenDiario:
+fecha => datefield
+nuevosConfirmados => number
+totalConfirmados => number
+nuevasMuertes => number
+totaldeMuertes => number
+nuevosRecuperados => number
+totalRecuperados => number
+
+Front-end
+1- En la carpeta Front-End-Covid, ejecutar npm install
+2- ejecutar npm run serve
+
+CMS - Strapi
+1- entrar a practica-con-vue/covidStrapi - CMS
+2- ejecutar docker-compose up
+3- Reemplazar la carpeta API desde covidStrapi- CMS en covidStrapi-CMS/app
+4- crear un user admin en http://localhost:1337/admin
+5- In a Usuarios, agregar un usuario con los siguientes datos:
+nombre: userCovid
+email: user@covid.com
+contraseña: 123456
+roll: Authenticated
+confirmed: on
+6- ir a Roles y permisos, y seleccionar todo para las cuatro tablas.
+7- guardar
+8- Probar la aplicacion: http://localhost:8080/
+9- Para que funcione correctamente se deberian cargar todos los datos desde http://localhost:8080/CargardesdeAPI, en el caso de detalle de pais
+deben estan cargados los datos de los 4 paises para que se vean los graficos.
+

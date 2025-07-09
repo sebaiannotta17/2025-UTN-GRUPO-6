@@ -1,0 +1,144 @@
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #ececee; 
+  color: #333;               
+}
+
+header {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #d1d3d4; 
+  border-bottom: 1px solid #bbb;
+}
+
+.logo {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+}
+
+.header-text {
+  flex: 1;
+  text-align: center;
+}
+
+.container {
+  flex: 1;
+  display: flex;
+}
+aside {
+  width: 260px;
+  background-color: #3a6b35;   
+  border-right: 1px solid #2e5328;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 60px;
+}
+
+aside nav ul {
+  list-style: none;
+  width: 100%;
+  margin-top: 0;
+}
+
+aside nav ul li {
+  margin: 15px 0;
+  width: 100%;
+  text-align: center;
+}
+
+aside nav ul li button {
+  width: 100%;
+  padding: 12px 0;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  border-radius: 6px;
+  background-color: #4a7d4a;  
+  color: #fff;
+  transition: background-color 0.2s ease;
+}
+
+aside nav ul li button:hover {
+  background-color: #3a6b3a;  
+}
+main {
+  flex: 1;
+  display: flex;
+  justify-content: center;   
+  align-items: flex-start;   
+  padding: 20px;
+  background-color: #f2f3f4; 
+}
+
+#content {
+  width: 100%;
+  max-width: 640px;
+  text-align: center;
+}
+
+#phrase {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+#phrase.frase1 {
+  text-shadow: 2px 2px 4px rgba(224, 24, 24, 0.894);
+}
+#phrase.frase2 {
+  text-shadow: -2px -2px 4px rgba(87, 223, 56, 0.73);
+}
+#phrase.frase3 {
+  text-shadow: 2px -2px 4px rgba(73, 23, 237, 0.824);
+}
+#expectation {
+  font-size: 18px;
+  line-height: 1.4;
+  margin-bottom: 30px;
+}
+.api-block {
+  display: inline-block;
+  background-color: #e8e9ea; 
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+.api-block h3 {
+  margin-bottom: 15px;
+  font-size: 22px;
+  color: #2f2f2f;
+}
+#fotoperro {
+  width: 100%;
+  max-width: 400px;   
+  height: auto;
+  border-radius: 6px;
+  display: block;
+  margin: 0 auto 20px auto;
+  object-fit: cover;
+}
+.error-msg {
+  color: #a00;
+  font-size: 18px;
+  margin-top: 20px;
+}
+footer {
+  background-color: #d1d3d4;  
+  text-align: right;
+  padding: 10px 20px;
+  border-top: 1px solid #bbb;
+  font-size: 14px;
+  color: #555;
+}

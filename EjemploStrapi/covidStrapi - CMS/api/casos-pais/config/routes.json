@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/casos-pais",
+      "handler": "casos-pais.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/casos-pais/count",
+      "handler": "casos-pais.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/casos-pais/:id",
+      "handler": "casos-pais.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/casos-pais",
+      "handler": "casos-pais.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/casos-pais/:id",
+      "handler": "casos-pais.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/casos-pais/:id",
+      "handler": "casos-pais.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

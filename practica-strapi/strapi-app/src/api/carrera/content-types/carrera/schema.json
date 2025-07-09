@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "carreras",
+  "info": {
+    "singularName": "carrera",
+    "pluralName": "carreras",
+    "displayName": "Carrera"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "nombre": {
+      "type": "string",
+      "required": true
+    },
+    "materia": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::materia.materia",
+      "mappedBy": "carrera"
+    }
+  }
+}

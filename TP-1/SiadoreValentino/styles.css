@@ -1,0 +1,110 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/* cabecera */
+.cabecera {
+  background-color: gray;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100px;
+  position: relative;
+}
+
+/* contenedor para centrar el título */
+.contenedor-cabecera {
+  position: absolute;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  pointer-events: none; /* evita que bloquee el logo para clicks */
+}
+
+.logo {
+  width: 80px;
+  height: 80px;
+}
+
+.nombre {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+/* contenedor principal */
+.contenedor {
+  display: flex;
+  min-height: calc(
+    100vh - 160px
+  ); /* altura de pantalla menos header y footer */
+}
+
+/* barra lateral */
+.barra-lateral {
+  width: 200px;
+  background-color: #a8c0f5;
+  padding: 20px;
+  border: black 3px solid;
+}
+
+/* contenido principal */
+.contenido {
+  flex: 1;
+  padding: 20px;
+  background-color: #c2efef;
+  border-top: black 3px solid;
+  border-right: black 3px solid;
+  border-bottom: black 3px solid;
+}
+
+/* pie de página */
+.pie {
+  background-color: #c2efef;
+  border-left: black 3px solid;
+  border-right: black 3px solid;
+  border-bottom: black 3px solid;
+  text-align: center;
+  padding: 10px;
+}
+
+.pie {
+  margin: 0;
+  display: flex;
+  justify-content: end;
+}
+
+/* frases */
+
+.sombra1 {
+  font-size: 2rem;
+  margin: 20px;
+  padding: 10px;
+  text-align: center;
+  text-shadow: 2px 2px 5px red;
+}
+
+.sombra2 {
+  font-size: 2rem;
+  margin: 20px;
+  padding: 10px;
+  text-align: center;
+  text-shadow: 2px 2px 5px blue;
+}
+
+.sombra3 {
+  font-size: 2rem;
+  margin: 20px;
+  padding: 10px;
+  text-align: center;
+  text-shadow: 2px 2px 5px green;
+}
+
+.expectativas {
+  font-size: 1.2rem;
+  margin: 20px;
+  padding: 10px;
+  text-align: start;
+}

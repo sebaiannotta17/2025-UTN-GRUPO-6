@@ -1,0 +1,121 @@
+body {
+    font-family: sans-serif;
+    color: #e9dab1;
+    margin: 0;
+    display: grid;
+    grid-template-areas:
+    "header  header"
+    "sidebar main"
+    "footer  footer";
+    grid-template-columns: 150px 1fr; 
+    grid-template-rows: auto 1fr auto;
+    min-height: 100vh;
+}
+
+header {
+    grid-area: header;
+    background-color: black;
+    padding: 1em;
+    display: flex;
+}
+
+header img {
+    grid-area: header;
+    background-color: black;
+    padding: 1em;
+    align-items: left;
+    max-width: 150px; 
+    max-height: 75px;
+}
+
+header h1 {
+    text-align: center;
+    padding-top: 0.5em;
+}
+
+aside {
+    grid-area: sidebar;
+    background-color: #333;
+    padding: 1em;
+}
+
+aside nav h2 {
+    margin-top: 0;
+    text-align: center;
+}
+
+aside nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+aside nav ul li a {
+    display: block;
+    text-decoration: none;
+    color: whitesmoke;
+    padding: 0.3em;
+}
+
+main {
+    grid-area: main;
+    background-color: #444;
+    padding: 1em;
+}
+
+footer {
+    grid-area: footer;
+    background-color: black;
+    padding: 1em;
+    text-align: right;
+}
+
+/* Estilos de las frases random */
+
+#FrasesAleatorias {
+    margin-bottom: 20px;
+}
+
+.sombra-1 {
+    text-shadow: 2px 2px 0px #e2b94b;
+    color: white;
+}
+
+.sombra-2 {
+    text-shadow: -2px -2px 3px black;
+    color: white;
+}
+
+.sombra-3 {
+    text-shadow: 1px -1px 4px white;
+    color: black;
+}
+
+#expectativa {
+    color: #e9dab1;
+}
+
+
+#ContenidoAPI {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #555;
+    border-radius: 8px;
+    color: white;
+}
+
+#ContenidoAPI h2 {
+    border-bottom: 2px solid #e9dab1;
+    padding-bottom: 5px;
+}
+
+#ContenidoAPI img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 10px auto;
+    border-radius: 8px;
+}
+
+#ContenidoAPI p {
+    line-height: 1.6;
+}

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Malone</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <img class="logo_header" src="./media/logo_header.png" alt="Logo Header" id="logo_header">
+        <div class="texto_centro_header">T.P.1: Cemino Conrado</div>
+        <div class="espacio_vacio"></div>
+
+        <nav class="menu_desplegable" id="menu_desplegable">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="api1.html">Post Malone</a></li>
+                <li><a href="api2.html">Películas</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div id="contenedor-explicacion" class="box-posty">Esta sección utiliza la API de MusicBrainz y Cover Art Archive para obtener datos actualizados sobre Post Malone. Primero, se selecciona un álbum aleatorio de su discografía, para luego mostrar la portada correspondiente y una selección aleatoria de tres canciones de ese álbum.</div>
+        <div id="contenedor-info" class="box-posty" style="max-width: 25%;">
+            <div id="imagen"></div>
+            <h2 id="album">Cargando álbum…</h2>
+            <div id="canciones-album"></div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="texto_footer">TyGWeb 2025</div>
+    </footer>
+
+    <script src="menu_desplegable.js"></script>
+    <script src="postmalone_api.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,83 @@
+body {
+    margin: 0px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif
+}
+
+#cabecera {
+    background-color: #bdbdbd;
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 50px;             
+    display: flex;  
+    align-items: center;  
+    justify-content: center;
+    position: relative;         
+}
+
+#logo {
+    height: 100px;
+    width: 100px;   
+    margin-right: 20px;
+    position: static;
+}
+
+#cabecera h1 {
+    flex: 1;
+    text-align: center;
+    font-size: 30px;
+    margin: 0;
+}
+
+#contenido {
+    display: flex;
+    min-height: 500px;
+}
+
+#lateral {
+    width: 200px;
+    text-align: center;
+    background-color: darkviolet;
+    border: 1px solid black;
+    padding: 50px;
+    box-sizing: border-box;
+}
+
+#lateral a {
+    color: white;
+}
+
+#cuerpo {
+    flex: 1;
+    padding: 50px;
+    background-color: mediumpurple;
+    border: 1px solid black;
+    box-sizing: border-box;
+    text-align: justify;
+}
+
+footer {
+    background-color: rgb(189, 189, 189);
+    border: 1px solid black;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    height: 48px;
+}
+
+.frase1 {
+    text-shadow: 8px 8px 8px indigo;
+    color: whitesmoke;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.frase2 {
+    text-shadow: 8px 8px 8px black;
+    color: whitesmoke;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.frase3 {
+    text-shadow: 8px 8px 8px grey;
+    color: whitesmoke;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}

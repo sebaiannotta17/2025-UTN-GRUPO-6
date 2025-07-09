@@ -1,0 +1,106 @@
+
+header {
+    display: flex;
+    align-items: center; /* Alinea verticalmente logo y título */
+    justify-content: center; /* Centra horizontalmente el contenido */
+    background-color: grey;
+    padding: 1rem;
+    border: 1px solid black;
+    position: relative; /* Para posicionar el logo a la izquierda */
+}
+
+header img {
+    position: absolute;
+    left: 1rem;
+    height: 60px; /* Ajustá según el tamaño deseado */
+}
+
+header h1 {
+    margin: 0;
+    text-align: center;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 0;
+}
+
+img {
+    text-align: left;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+main {
+    display: flex;
+    flex: 1;
+}
+
+aside{
+    background-color: #99c2c2;
+    width: 10%;
+    border: 1px solid black;
+}
+
+aside a {
+    display: block;
+    margin-bottom: 0.5rem;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    text-align: center;
+    font-size: medium;
+    margin-top: 10px;
+}
+
+section {
+    flex:1;
+    border: 1px solid black;
+}
+
+.celeste {
+    background-color: #cce0f0;
+}
+
+footer {
+    text-align: right;
+    padding: 0.5rem 1rem;
+    font-style: italic;
+    font-size: larger;
+    border: 1px solid black
+}
+
+#FraseAleatoria, #texto4 {
+    margin-left: 8px;
+    margin-top: 8px;
+}
+
+.frasestyle1 {
+    text-shadow: 2px 2px 4px black;
+}
+
+.frasestyle2 {
+    text-shadow: -2px -2px 2px red;
+}
+
+.frasestyle3 {
+    text-shadow: 0px 0px 8px blue;
+}
+
+#texto4 {
+    font-size: 1.2em;
+    color: #000000;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 500;
+}

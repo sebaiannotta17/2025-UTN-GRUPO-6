@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscador de Peleadores MMA</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <header class="header">
+        <img src="../publi/logo.jpg" alt="Logo" class="logo">
+        <h1>Buscador de Peleadores MMA</h1>
+    </header>
+    <main class="main">
+        <aside class="aside">
+            <nav>
+                <ul class="lista">
+                    <li class="lista-item"><a class="lista-item-a" href="../index.html">Volver al inicio</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <div class="container">
+            <div class="search-container">
+                <div class="search-box">
+                    <input type="text" id="fighter-search" placeholder="Ingrese el nombre del peleador..." class="search-input">
+                    <button id="search-button" class="search-button">Buscar</button>
+                </div>
+                <div id="error-message" class="error-message"></div>
+            </div>
+
+            <div id="fighter-info" class="fighter-info" style="display: none;">
+                <div class="fighter-header">
+                    <div class="fighter-image-container">
+                        <img id="fighter-image" src="" alt="Foto del peleador" class="fighter-image">
+                    </div>
+                    <div class="fighter-details">
+                        <h2 id="fighter-name"></h2>
+                        <p class="fighter-nickname" id="fighter-nickname"></p>
+                        <p class="fighter-category" id="fighter-category"></p>
+                        <div class="fighter-stats">
+                            <p>Peso: <span id="fighter-weight"></span></p>
+                            <p>Altura: <span id="fighter-height"></span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="loading" class="loading" style="display: none;">
+                <p>Buscando información...</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p class="footer-text">Desarrollo Web - 6/6</p>
+    </footer>
+
+    <script src="../apiFighters.js"></script>
+    <script src="peleas.js"></script>
+</body>
+</html>

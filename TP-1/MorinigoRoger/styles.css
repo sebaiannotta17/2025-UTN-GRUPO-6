@@ -1,0 +1,102 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  background-color: #004466;
+  color: white;
+  padding-left: 20px;
+}
+
+.logo {
+  height: 60px;
+  margin-right: 15px;
+}
+
+.encabezado {
+  text-align: center;
+  width: 100%;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  flex:1;
+  border: 1px solid #ccc;
+  padding: 15px;
+  box-sizing: border-box;
+  background-color: #f9f9f9;
+  border-radius: 6px;
+}
+
+.barra-lateral {
+  display: flex;
+  min-height: 80vh; 
+}
+
+aside {
+  width: 200px;
+  background-color: #f0f0f0;
+  padding: 15px;
+  display: block;
+}
+
+aside ul {
+  list-style: none;
+  padding: 0;
+}
+
+aside li {
+  margin-bottom: 10px;
+}
+
+aside a {
+  text-decoration: none;
+  color: #004466;
+  font-weight: bold;
+}
+
+main {
+  flex: 1;
+  padding: 20px;
+  background-color: #e0f7fa;
+  display: flex;             
+  justify-content: center;   
+  align-items: center;      
+  flex-direction: column;    
+  text-align: center;       
+}
+
+footer {
+  background-color: #004466;
+  color: white;
+  text-align: right;
+  padding: 10px;
+}
+
+#frase {
+  font-size: 1.5em;
+  margin-bottom: 20px;
+}
+
+.frase1 {
+  text-shadow: 2px 2px 5px green;
+}
+
+.frase2 {
+  text-shadow: 2px 2px 5px blue;
+}
+
+.frase3 {
+  text-shadow: 2px 2px 5px red;
+}
+
+.frase-container, .api-container, .expectativa {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}

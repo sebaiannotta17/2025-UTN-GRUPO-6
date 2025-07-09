@@ -1,0 +1,111 @@
+/* ======== RESET Y BASE ======== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  font-family: sans-serif;
+}
+
+/* ======== HEADER Y FOOTER ======== */
+footer {
+  height: 70px;
+  background-color: #333;
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  z-index: 10;
+}
+header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background-color: #333;
+  padding: 20px;
+  color: white;
+}
+
+/* Logo a la izquierda */
+header img {
+  position: absolute;
+  left: 20px;
+  height: 60px; /* ajustá el tamaño que necesites */
+}
+
+/* Centrar el título */
+header h1 {
+  margin: 0;
+  font-size: 24px;
+}
+footer {
+  justify-content: right;
+}
+
+/* ======== LAYOUT PRINCIPAL ======== */
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* ======== NAV (barra lateral) ======== */
+nav.link-api {
+  width: 220px;
+  background-color: #f1f1f1;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 70px;  /* justo debajo del header */
+  left: 0;
+  bottom: 0;
+  z-index: 10;
+  height: calc(100vh - 70px); /* Ocupa todo el alto disponible desde debajo del header */
+  overflow-y: auto;
+}
+
+/* Estilo de los links en el nav */
+nav.link-api a {
+  display: block;
+  margin-bottom: 10px;
+  text-decoration: none;
+  color: #333;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: background 0.3s, color 0.3s;
+}
+
+/* Efecto hover para los links */
+nav.link-api a:hover {
+  background: linear-gradient(to right, #00c6ff, #0072ff);
+  color: white;
+}
+
+/* Efecto active para los links */
+nav.link-api a:active {
+  background: linear-gradient(to right, #ff6a00, #ee0979);
+  color: white;
+}
+
+/* ======== MAIN (contenido principal) ======== */
+main {
+  flex: 1;
+  margin-left: 220px; /* Para que el contenido no quede debajo del nav */
+  padding: 20px;
+  background-color: #ffffff;
+  overflow-y: auto;
+  height: calc(100vh - 140px); /* Queda entre header y footer */
+}
+
+/* Estilo para el contenido dentro de main */
+#output {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 2px dashed #ccc;
+  border-radius: 10px;
+  min-height: 100px;
+}

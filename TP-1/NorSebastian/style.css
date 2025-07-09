@@ -1,0 +1,112 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  display: grid;
+  grid-template-areas:
+    "header header"
+    "aside main"
+    "footer footer";
+  grid-template-columns: 220px 1fr;
+  grid-template-rows: auto 1fr auto;
+  height: 100vh;
+}
+
+/* Cabecera */
+header {
+  grid-area: header;
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #1e3a5f;
+  color: white;
+}
+
+.logo {
+  height: 40px;
+  width: auto;
+  margin-right: 12px;
+  border-radius: 6px;
+  box-shadow: 1px 1px 4px rgba(0,0,0,0.2);
+  object-fit: contain;
+}
+
+.titulo {
+  flex-grow: 1;
+  text-align: center;
+}
+
+/* Barra lateral izquierda */
+aside {
+  grid-area: aside;
+  background-color: #f3f3f3;
+  padding: 20px;
+  border-right: 2px solid #ccc;
+}
+
+aside ul {
+  list-style: none;
+}
+
+aside li {
+  margin: 15px 0;
+}
+
+aside a {
+  text-decoration: none;
+  color: #1e3a5f;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+aside a:hover {
+  color: #003366;
+}
+
+/* Contenido principal */
+main {
+  grid-area: main;
+  padding: 30px;
+  background-color: #ffffff;
+}
+
+.expectativa {
+  margin-top: 20px;
+  font-size: 1.1em;
+  color: #333;
+}
+
+/* Frase aleatoria con sombras */
+.frase {
+  font-size: 1.5em;
+  margin-bottom: 15px;
+  font-weight: bold;
+  color: #222;
+}
+
+.sombra1 {
+  text-shadow: 2px 2px 5px #ff6f61;
+}
+
+.sombra2 {
+  text-shadow: 2px 2px 5px #00a6ed;
+}
+
+.sombra3 {
+  text-shadow: 2px 2px 5px #45d17a;
+}
+
+/* Pie de página */
+footer {
+  grid-area: footer;
+  background-color: #1e3a5f;
+  color: white;
+  text-align: right;
+  padding: 10px 20px;
+  font-size: 0.9em;
+}

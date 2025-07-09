@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Películas</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <img class="logo_header" src="./media/logo_header.png" alt="Logo Header" id="logo_header">
+        <div class="texto_centro_header">T.P.1: Cemino Conrado</div>
+        <div class="espacio_vacio"></div>
+
+        <nav class="menu_desplegable" id="menu_desplegable">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="api1.html">Post Malone</a></li>
+                <li><a href="api2.html">Películas</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div id="contenedor-explicacion" class="box-peliculas">Esta sección utiliza la API de The Movie Database (TMDb) para obtener datos actualizados sobre películas populares. Se selecciona una película aleatoria del catálogo y se muestra su título, portada, géneros, duración y sinopsis.</div>
+        <div class="box-peliculas" id="contenedor-pelicula">
+            <h2 id="titulo-pelicula">Cargando película...</h2>
+            <img id="portada-pelicula" src="" alt="Portada de película" style="display:none;">
+            <p id="generos-pelicula"></p>
+            <p id="duracion-pelicula"></p>
+            <p id="sinopsis-pelicula"></p>
+        </div>
+    </main>
+
+    <footer>
+        <div class="texto_footer">TyGWeb 2025</div>
+    </footer>
+
+    <script src="menu_desplegable.js"></script>
+    <script src="peliculas_api.js"></script>
+</body>
+</html>

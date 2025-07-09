@@ -1,0 +1,420 @@
+/*---------------------------Letra de Google Fonts y adaptacion body---------------------------*/
+html, body{
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+/*---------------------------Estilos del contenido principal---------------------------*/
+#contenido {
+    display: flex;
+    flex-flow: row nowrap;
+    flex-grow: 1;
+}
+#contenido-principal {
+    flex-grow: 1;
+    transition: background-color 0.5s ease-in-out;
+}
+
+/*---------------------------Estilos del footer---------------------------*/
+#footer{
+    background-color: rgb(40, 40, 40);
+    padding: 15px;
+    text-align: right;
+    font-size: 1rem;
+}
+#footer p {
+    margin: 0;
+    color: white;
+    font-weight: bold;
+}
+
+/*---------------------------Estilos del header---------------------------*/
+#header {
+    display: flex;
+    background-color: black;
+    align-items: center;
+}
+#header img {
+    margin-left: 20px;
+    height: 80px;
+    width: 80px;
+}
+
+#titulo {
+    color: white;
+    flex-grow: 1;
+    text-align: center;
+}
+
+#titulo h1 {
+    margin: 0;
+}
+
+/*---------------------------Estilos de la barra---------------------------*/
+#sidebar{
+    flex-basis: 200px;
+    flex-shrink: 0;
+    flex-grow: 0;
+    padding-top: 20px;
+    transition: background-color 0.5s ease-in-out;
+}
+#sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+#sidebar li {
+    margin-bottom: 10px;
+}
+#sidebar a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    display: block;
+    padding: 10px 15px;
+    transition: background-color 0.3s ease;
+    position: relative;
+    z-index: 1;
+}
+#sidebar a:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+/*---------------------------Estilos de la frase aleatoria---------------------------*/
+#frase-aleatoria {
+    font-size: 2em;
+    text-align: center;
+    margin-top: 50px;
+    padding: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    opacity: 0;
+    animation: fadeIn 0.5s ease-in-out forwards;
+}
+
+/*---------------------------Estilos de la expectativa---------------------------*/
+#expectativa {
+    font-size: 1.5em;
+    text-align: center;
+    margin-top: 20px;
+    padding: 10px;
+    opacity: 0;
+    animation: fadeIn 0.5s ease-in-out forwards;
+}
+
+/*---------------------------Estilos de la API de Free To Game (antes F1)---------------------------*/
+#contenedor-f2g {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    flex-grow: 1;
+    box-sizing: border-box;
+}
+#titulo-f2g {
+    text-align: center;
+    color: black;
+    margin-bottom: 20px;
+    font-size: 2.5em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    animation: fadeIn 0.5s ease-in-out forwards;
+    animation-delay: 0.1s;
+}
+#formulario-f2g {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 40px;
+    padding: 25px;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    animation: fadeIn 0.5s ease-in-out forwards;
+    animation-delay: 0.2s;
+}
+#formulario-f2g label {
+    font-weight: bold;
+    color: #333;
+    font-size: 1.2em;
+}
+#formulario-f2g select {
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    width: 280px;
+    max-width: 90%;
+    background-color: white;
+    cursor: pointer;
+}
+#formulario-f2g button {
+    padding: 12px 25px;
+    background-color: rgb(255, 0, 0);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+#formulario-f2g button:hover {
+    background-color: rgb(200, 0, 0);
+    transform: translateY(-2px);
+}
+.resultado-f2g-estilo {
+    margin-top: 30px;
+    width: 100%;
+    text-align: center;
+    opacity: 0;
+    animation: fadeIn 0.5s ease-in-out forwards;
+    animation-delay: 0.3s;
+}
+.resultado-f2g-estilo h2 {
+    color: #333;
+    font-size: 1.8em;
+}
+.game-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    padding: 20px;
+    max-width: 350px;
+    margin: 20px auto;
+    text-align: center;
+}
+.game-card img {
+    width: 100%;
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+.game-card img:hover {
+    transform: scale(1.03);
+}
+.game-details {
+    width: 100%;
+}
+.game-details h3 {
+    margin-top: 0;
+    color: rgb(255, 0, 0);
+    font-size: 1.4em;
+    margin-bottom: 10px;
+    text-align: center;
+}
+.game-details p {
+    color: #555;
+    font-size: 1em;
+    text-align: center;
+    margin-bottom: 8px;
+}
+.botones-f2g {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 15px;
+}
+.f2g-button {
+    display: inline-block;
+    background-color: rgb(255, 0, 0);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+.f2g-button:hover {
+    background-color: rgb(200, 0, 0);
+    transform: translateY(-2px);
+}
+.mensaje-f2g {
+    text-align: center;
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    opacity: 0;
+    animation: fadeIn 0.5s ease-in-out forwards;
+}
+.error-f2g {
+    color: #D8000C;
+    background-color: #FFD2D2;
+    border: 1px solid #D8000C;
+}
+
+/*---------------------------Estilos de la API de Spotify---------------------------*/
+#contenedor-spotify {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    flex-grow: 1;
+    box-sizing: border-box;
+}
+#titulo-spotify {
+    text-align: center;
+    color: black;
+    margin-bottom: 20px;
+    font-size: 2.5em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    animation: fadeIn 0.5s ease-in-out forwards;
+    animation-delay: 0.1s;
+}
+#formulario-spotify {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 40px;
+    padding: 25px;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    animation: fadeIn 0.5s ease-in-out forwards;
+    animation-delay: 0.2s;
+}
+#formulario-spotify label {
+    font-weight: bold;
+    color: #333;
+    font-size: 1.2em;
+}
+#formulario-spotify select {
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    width: 250px;
+    max-width: 90%;
+    background-color: white;
+    cursor: pointer;
+}
+#formulario-spotify button {
+    padding: 12px 25px;
+    background-color: #1DB954;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+#formulario-spotify button:hover {
+    background-color: #1AA34A;
+    transform: translateY(-2px);
+}
+.resultado-spotify-estilo {
+    margin-top: 30px;
+    width: 100%;
+    text-align: center;
+    opacity: 0;
+    animation: fadeIn 0.5s ease-in-out forwards;
+    animation-delay: 0.3s;
+}
+.resultado-spotify-estilo h2 {
+    color: #333;
+}
+.album-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    padding: 20px;
+    max-width: 350px;
+    margin: 0 auto;
+    text-align: center;
+    margin-bottom: 20px
+}
+.album-card img {
+    width: 150px;
+    height: 150px;
+    border-radius: 4px;
+    object-fit: cover;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+.album-card img:hover {
+    transform: scale(1.03);
+}
+.album-details {
+    width: 100%;
+}
+.album-details h3 {
+    margin-top: 0;
+    color: #1DB954;
+    font-size: 1.4em;
+    margin-bottom: 10px;
+    text-align: center;
+}
+.album-details p {
+    color: #555;
+    font-size: 1.1em;
+    text-align: center;
+}
+.spotify-button {
+    display: inline-block;
+    background-color: #1DB954;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+.spotify-button:hover {
+    background-color: #1AA34A;
+    transform: translateY(-2px);
+}
+.mensaje-spotify {
+    text-align: center;
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    opacity: 0;
+    animation: fadeIn 0.5s ease-in-out forwards;
+}
+.error-spotify {
+    color: #D8000C;
+    background-color: #FFD2D2;
+    border: 1px solid #D8000C;
+}
+.botones-spotify {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+/*---------------------------Animacion usando keyframes---------------------------*/
+@keyframes fadeIn{
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

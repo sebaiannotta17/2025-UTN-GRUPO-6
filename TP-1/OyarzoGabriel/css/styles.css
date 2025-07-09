@@ -1,0 +1,156 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing:border-box;
+}
+
+
+.body{
+    font-family:sans-serif;
+    background-color: rgba(0, 0, 0, 0.2);
+    flex-direction: column;
+    min-height: 100vh; 
+    display: flex;
+}
+
+.header{
+    display:flex;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 1);
+    padding: 10px 20px;
+    box-sizing: border-box;
+}
+
+.nav{
+    width: auto;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content:center;
+    background-color: rgba(0, 0, 0, 1);
+    padding: 10px;          /* Agrega espacio interno */
+    box-sizing: border-box;
+}
+.logo{
+    display:flex;
+    align-items: center;
+    margin-left: 10px;
+}
+
+.title{
+    display: flex;
+    font-size:25px ;
+    width: 1100px;
+    text-align: center;
+    justify-content: center;
+    color: rgb(255, 255, 255);
+}
+
+
+.footer-title{
+    text-align: right;
+    font-size: 18px;
+    width: 2000px;
+    align-items:center;
+    justify-content:flex-end;
+    color: rgb(255, 255, 255);
+    padding: 10px;
+}
+
+.container{
+    display:flex ;
+    flex: 1;
+}
+.main-content{
+    flex: 1;
+    background-color: rgba(255, 255, 255, 0.518);
+
+}
+
+.api{
+    justify-content:center;
+    color: rgb(255, 255, 255);
+    font-size: 16px;
+    margin: 5px;  
+    cursor: pointer;
+    padding-left: 5px;
+
+}
+
+.footer{
+    display:flex;
+    height: 50px;
+    background-color: rgba(0, 0, 0, 1);
+    padding: 10px 20px;
+    
+}
+
+.nav:hover{
+    background-color: rgba(0, 0, 0, 0.4);
+    transition: background-color 0.5s;
+}
+
+.character-card, #productos > div {
+  background-color: rgb(245, 245, 245);
+  padding: 20px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+  max-width: 500px;
+  margin: 0 auto;
+  height: auto;
+  width: auto;
+  
+}
+
+.character-card img, #productos img {
+  max-width: 50%;
+  border-radius: 1px;
+}
+
+.character-card h2, #productos strong {
+  color: #333;
+  margin: 10px 0 5px;
+  font-size: 1.2em;
+}
+
+.character-details p {
+  margin: 3px 0;
+  font-size: 0.9em;
+  color: #555;
+
+}
+
+#productos strong {
+  display: block;
+  margin-top: 10px;
+
+}
+
+.nav-spacer {
+            text-align: justify;
+            margin-left:auto;
+            max-width: 70%;
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 15px;
+            margin-bottom: 1px;
+            margin: 70px auto;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            font-size: 25px;
+}
+
+.expectativas {
+    margin: 100px 0px 0 auto;
+    max-width:30%;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    font-size: 18px;
+    text-align: justify;
+}
+
+

@@ -1,0 +1,156 @@
+/* cuerpo*/
+body {
+    font-family: 'Arial', sans-serif; /* fuente */
+    background-color: #f0f0f0; /* color de fondo */
+    margin: 0; /* elimina margene */
+    padding: 0; /* saca el padding por defec */
+    color: #333; /* color de text */
+    line-height: 1.6; /* espacio entre lineas  */
+}
+
+/* cabeza */
+header {
+    position: fixed;       /* fija el header arriba */
+    top: 0;                /* lo pega al borde de arriba */
+    left: 0;               /* lo pega al borde izq */
+    width: 100%;           /* ocupa todo el ancho */
+    height: 80px;          /* altura fija de 80px */
+    background-color: #588aba; /* color de fondo*/
+    display: flex;         /* alinea logo y título*/
+    align-items: center;   /* centra verticalmente los elementos */
+    padding: 0 20px;       /* espacio 20px a los lados */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* sombrita*/
+    z-index: 1000;         /* asegura que esté por encima de otros elementos*/
+}
+
+/* logo */
+.logo {
+    height: 60px;         /* altura del logo */
+    margin-right: 20px;   /* espacio a la derecha del log */
+}
+
+/* titulo */
+h1 {
+    color: #d4d66f;
+    font-size: 1.8rem; /* tamaño del titulo */
+    margin: 0;         /* elimina margenes por defecto del h1 */
+    flex-grow: 1;      /* Hace que el h1 ocupe el espacio disponible en el header */
+    text-align: center;/* Centra el texto dentro del h1 */
+}
+
+/* barra lateral */
+nav {
+    position: fixed;
+    top: 80px;          /* altura del header */
+    left: 0;
+    width: 250px;
+    height: calc(100vh - 80px - 40px); /* viewport - header - footer */
+    background-color: #0d2f4f;
+    padding: 15px 0;
+    overflow-y: auto;   /* scroll si el contenido excede la altura */
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+}
+/* botones de la barra lateral */
+nav ul {
+    list-style: none; /* saca los puntos de la lista */
+    padding : 0;       /* saca el padding por defecto */
+}
+/* items de la barra lateral */
+.menu-item{
+    display: block;         /* cada item ocupa toda la linea */
+    padding: 12px 20px;     /* espaciado interno */
+    margin: 5px 15px;       /* margen entre items */
+    background-color: #3a5169; /* fondo azul medio */
+    color: #e4e732;        /* texto verde */
+    border-radius: 5px;     /* bordes redondeados */
+    cursor: pointer;       /* cambia el cursor al pasar */
+    transition: all 0.3s;  /* transición suave para hover */
+    text-align: center;    /* texto centrado */
+}
+/* botones de la barra lateral */
+.menu-item:hover {
+    background-color: #4a637d; /* Color más claro al pasar mouse */
+    transform: translateY(-2px); /* Efecto de levantar */
+}
+
+/* conten principal */
+main {
+    margin-left: 250px;     /* respeta el ancho del nav */
+    margin-top: 80px;       /* respeta la altura del header */
+    padding: 30px;
+    min-height: calc(100vh - 120px); /*  */
+    background-color: #f8f9fa;
+    position: relative;     /* para posicionar elementos */
+}
+
+/* contenedor de la frase aleatoria y del contenido de la api  */
+#frase-aleatoria {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    text-align: center;
+}
+
+/* contenedor del texto de expectativas */
+.expectativas {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    font-style: italic;
+    color: #555;
+    margin-top: 1.5rem;
+}
+
+
+/* estilos de las sombritas */
+.sombra1 { 
+    color: #e74c3c; /* Rojo */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* sombra sutil */
+}          
+.sombra2 { 
+    color: #3498db;   /* Azul */
+    text-shadow: 4px 4px 6px rgba(0, 0, 0, 0.2); /* sombra mas grande */
+}
+.sombra3 { 
+    color: #5b58dc;   /* Verde */
+    text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4); /* sombra mas mas grande */
+}
+
+/* barra de abajo */
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0px;        /* mismo ancho que el nav */
+    right: 0;
+    height: 40px;       /* altura fija */
+    background-color: #08345e; /* azul oscuro como el nav */
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* alinea el contenido a la derecha */
+    padding-right: 20px; /* espaciado interno derecho */
+    font-size: 0.9rem;  /* tamaño de fuente */ 
+    z-index: 1000;      /* para que quede sobre otros elementos */
+    border-top: 1px solid #1a4b7a; /* borde superior sutil */
+}
+
+/* foto de pokemon */
+#frase-aleatoria img {
+    max-width: 200px;
+    display: block;
+    margin: 10px auto;
+}
+
+#frase-aleatoria h3 {
+    color: #0d2f4f;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+#frase-aleatoria p {
+    margin: 5px 0;
+    padding: 0;
+}

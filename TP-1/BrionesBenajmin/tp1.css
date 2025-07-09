@@ -1,0 +1,92 @@
+
+header {
+    background-color: rgb(155, 153, 153);
+    display: flex;
+    justify-content: center;
+    border: 1px solid;
+    height: 100px;
+}
+header img {
+    left:10px;
+    height: 100px;
+    width: auto;
+    position: absolute;
+    border: 1px solid;
+}
+header div {
+    font-size: larger;
+}
+main {
+    display: flex;    
+}
+
+aside {
+    align-items: center;
+    width: 160px;
+    background-color: rgb(121, 172, 172);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid;
+}
+aside ul {
+    list-style-type: none;
+}
+aside ul li {
+    margin-bottom: 8px;
+    margin-left: 0;
+}
+aside ul li a{
+    color: azure;
+    display: block;
+    width: 100%;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+aside ul li a:hover{
+    color: rgb(255, 140, 0);
+    cursor: pointer;
+}
+.pie{
+    display: flex;
+    height: 30px;
+    background-color: rgb(151, 226, 226) ;
+    color: black;
+    border:  1px solid;
+    justify-content: right;
+    align-items: center;
+
+}
+.principal {
+    color: black;
+    background-color: rgb(151, 226, 226);
+    flex: 1;
+    border: 1px solid;
+    text-align: center;
+    font-size: larger;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.Encabezado {
+    color: black;
+    background-color: rgb(200, 199, 199);
+}
+
+.frase {
+    text-align: center;
+    font-size: 35px;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.sombra1{
+    text-shadow: 2px 2px 4px rgba(214, 17, 17, 0.7);
+}
+.sombra2{
+    text-shadow: 3px 3px 5px rgba(94, 247, 39, 0.4);
+}
+.sombra3{
+    text-shadow: 4px 4px 4px rgb(23, 23, 239);
+}

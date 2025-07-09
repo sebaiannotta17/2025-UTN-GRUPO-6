@@ -1,0 +1,93 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  background-color: #004466;
+  color: white;
+  padding-left: 20px;
+}
+
+.encabezado {
+  text-align: center;
+  width: 100%;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  flex:1;
+  border: 1px solid #ccc;
+  padding: 15px;
+  box-sizing: border-box;
+  background-color: #f9f9f9;
+  border-radius: 6px;
+}
+
+.barra-lateral {
+  display: flex;
+  min-height: 80vh; 
+}
+
+aside {
+  width: 200px;
+  background-color: #f0f0f0;
+  padding: 15px;
+  display: block;
+}
+
+aside ul {
+  list-style: none;
+  padding: 0;
+}
+
+aside li {
+  margin-bottom: 10px;
+}
+
+aside a {
+  text-decoration: none;
+  color: #004466;
+  font-weight: bold;
+}
+
+main {
+  flex: 1;
+  padding: 20px;
+  background-color: #e0f7fa;
+  display: flex;             
+  justify-content: center;   
+  align-items: center;      
+  flex-direction: column;    
+  text-align: center;       
+}
+
+footer {
+  background-color: #004466;
+  color: white;
+  text-align: right;
+  padding: 10px;
+}
+
+.card {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-left: 5px solid #2196f3;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 6px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+.card h3 {
+  margin-top: 0;
+  color: #333;
+}
+
+.card p {
+  margin: 5px 0;
+  color: #555;
+}

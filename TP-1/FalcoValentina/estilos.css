@@ -1,0 +1,162 @@
+
+body {
+    background-color: #CFE2F3;
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+#encabezado {
+    background-color: #B3B4B5;
+    text-align: center;
+    padding: 10px;
+    border: 1px solid black;
+}
+
+#contenido {
+    flex: 1;
+    display: flex;
+    min-height: 300px; 
+    flex-direction: row;
+}
+
+#barra {
+    background-color: #A2C4C9;
+    width: 200px;
+    padding: 10px;
+    border: 1px solid black;
+}
+
+#barra ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#barra li {
+    margin-bottom: 10px;
+}
+
+#barra a {
+    text-decoration: none;
+    color: black;
+}
+
+main {
+    flex: 1;
+    padding: 20px;
+    border: 1px solid black;
+    justify-content: space-between;
+    flex-direction: column; 
+    display: flex;
+}
+
+#expectativa h3, #expectativa p {
+    margin: 0; 
+    padding: 0;
+}
+
+#expectativa expectativas{
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: left;
+    margin-top: auto;
+
+}
+
+#expectativa parrafo{
+    margin-top: 0;
+    line-height: 1.6;
+}
+
+footer {
+    background-color: #CFE2F3;
+    text-align: right;
+    padding: 10px;
+    border: 1px solid black;
+}
+
+#pie p {
+    font-size: large;
+    margin: 0;
+}
+
+#frase-container {
+    margin-bottom: 80px;
+    text-align: center;
+}
+
+#frase {
+    font-size: 1.5em;
+    margin: 20px auto;
+    text-align: center;
+    width: 80%;
+}
+
+.sombra1 {
+    text-shadow: 2px 2px 5px #0962b0;
+}
+
+.sombra2 {
+    text-shadow: 2px 2px 5px #6ae3f3;
+}
+
+.sombra3 {
+    text-shadow: 2px 2px 5px #26575f;
+}
+
+#contenedorlogo {
+    display: flex;
+    align-items: left;
+    justify-content: center;
+    position: relative;
+}
+
+#logo {
+    position: absolute;
+    top: 5px;
+    left: 10px;
+    height: 70px;
+}
+
+#resultado-api{
+    border: 1px solid black;
+    width: calc(100% + 40px); 
+    margin-left: -20px;       
+    margin-right: -20px;       
+    margin-top: 20px;
+    margin-bottom: -20px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+#resultado-api h3, #api-content div{
+    margin: 0; 
+    padding: 0;
+}
+
+#top-tracks {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#top-tracks li {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 15px;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+#top-tracks li audio {
+    flex-grow: 1;
+    max-width: 300px;
+}
+
+#top-tracks li::before {
+    content: "🎵";
+    margin-right: 8px;
+}

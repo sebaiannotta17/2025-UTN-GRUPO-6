@@ -1,0 +1,98 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #e6f2f8;
+}
+
+header {
+  background-color: #a3cde3;
+  color: #033649;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  height: 50px;
+}
+
+.tituloHead {
+  margin-left: 20px;
+}
+
+.lateral {
+  background-color: #d0e7f5;
+  width: 200px;
+  padding: 20px;
+  height: 100vh;
+  position: fixed;
+}
+
+.lateral li {
+  margin-bottom: 10px;
+}
+
+.lateral button {
+  background-color: #7fbcd2;
+  margin-top: 20px;
+  color: #fff;
+  border-color: black;
+  padding: 10px 20px;
+  cursor: pointer;
+  width: 100%;
+}
+
+#contenido {
+  margin-left: 220px;
+  padding: 20px;
+}
+
+.sliderFrases {
+  background-color: #ffffff;
+  padding: 20px;
+  margin-bottom: 30px;
+}
+
+.sliderFrases h2 {
+  margin-top: 0;
+  text-align: center;
+}
+
+.sliderFrases p {
+  font-size: 18px;
+  text-align: center;
+}
+
+.slider, .slider1 {
+  background-color: #ffffff;
+  padding: 20px;
+  margin-bottom: 30px;
+}
+
+#valorDolar {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+#weatherContainer {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.pie {
+  background-color: #a3cde3;
+  color: #033649;
+  padding: 20px;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.pie h3 {
+  margin:  0px;
+  margin-right: 20px;
+  padding-right: 20px;
+  text-align: right;
+}

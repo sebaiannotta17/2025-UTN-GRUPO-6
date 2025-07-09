@@ -1,0 +1,114 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Header y footer */
+header, footer {
+    background-color: #222;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    height: 60px;
+}
+
+header img {
+    height: 50px;
+    flex-shrink: 0;
+}
+
+.header-text {
+    display: flex;
+    gap: 15px;
+    flex-grow: 1;
+    justify-content: center;
+    align-items: center;
+}
+
+.header-text h1, .header-text h2 {
+    margin: 0;
+    line-height: 1.2;
+    font-weight: normal;
+}
+
+.contenedor {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+}
+
+aside {
+    width: 200px;
+    background-color: #f0f0f0;
+    padding: 15px;
+    height: 100%;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    margin-bottom: 15px;
+}
+
+li a {
+    text-decoration: none;
+    color: #444; 
+    font-weight: bold;
+    display: block;
+    cursor: pointer;
+}
+
+main {
+    flex-grow: 1;
+    padding: 20px;
+    height: 100%;
+    overflow-y: auto;
+}
+
+/* Sombras para frases completas */
+.sombra1 {
+  text-shadow: 2px 2px 5px rgba(255, 0, 0, 0.7);
+}
+.sombra2 {
+  text-shadow: 2px 2px 5px rgba(0, 128, 0, 0.7);
+}
+.sombra3 {
+  text-shadow: 2px 2px 5px rgba(0, 0, 255, 0.7);
+}
+.sombra4 {
+  text-shadow: 2px 2px 5px rgba(255, 165, 0, 0.7);
+}
+.sombra5 {
+  text-shadow: 2px 2px 5px rgba(128, 0, 128, 0.7);
+}
+
+.frase-completa {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+/* Imagen estilo moda */
+img.moda {
+  max-width: 100%;
+  margin-top: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* Pie de página */
+footer {
+  justify-content: flex-end;
+  font-size: 0.9em;
+}

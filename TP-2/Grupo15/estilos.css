@@ -1,0 +1,213 @@
+
+
+body {
+    background-color: #CFE2F3;
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+#encabezado {
+    background-color: #B3B4B5;
+    text-align: center;
+    padding: 10px;
+    border: 1px solid black;
+}
+
+#contenido {
+    flex: 1;
+    display: flex;
+    min-height: 300px; 
+    flex-direction: row;
+}
+
+#barra {
+    background-color: #A2C4C9;
+    width: 200px;
+    padding: 10px;
+    border: 1px solid black;
+}
+
+#barra ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#barra li {
+    margin-bottom: 10px;
+}
+
+#barra a {
+    text-decoration: none;
+    color: black;
+}
+
+main {
+    flex: 1;
+    padding: 20px;
+    border: 1px solid black;
+    justify-content: space-between;
+    flex-direction: column; 
+    display: flex;
+}
+
+footer {
+    background-color: #CFE2F3;
+    text-align: right;
+    padding: 10px;
+    border: 1px solid black;
+}
+
+#pie p {
+    font-size: large;
+    margin: 0;
+    font-family: sans-serif; 
+}
+
+
+#resultado-api h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.5em;
+    color: black; 
+    margin-top: 0;
+    margin-bottom: 20px;
+    padding: 0;
+    text-align: left;
+    border-bottom: 2px solid #8FAADC; 
+    padding-bottom: 10px;
+}
+
+
+#listaSeries {
+    list-style: none;
+    padding: 0;
+}
+
+
+#listaSeries div {
+    background-color: #FFFFFF;
+    border: 1px solid #C0DFFC;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    margin-top: 0;
+    padding: 20px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08); 
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; 
+}
+
+#listaSeries div:hover {
+    transform: translateY(-7px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); 
+}
+
+
+#listaSeries div h4 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.3em;
+    color: #3B5F8A; 
+    margin: 0;
+    margin-bottom: 15px;
+    padding: 0;
+    border-bottom: 1px solid #A8D1FF; 
+    padding-bottom: 8px;
+}
+
+
+#listaSeries div p {
+    font-family: 'Roboto', sans-serif; 
+    font-size: 0.95em;
+    color: #444; 
+    margin: 0;
+    margin-bottom: 8px;
+    padding: 0;
+}
+
+#listaSeries div p strong {
+    color: #222; 
+    font-weight: 700;
+}
+
+
+#listaSeries div p:last-child {
+    margin-bottom: 0;
+}
+
+/* Estilos para el Modal (Ventana Emergente) */
+.modal {
+    display: none; /* Oculto por defecto */
+    position: fixed; /* Posición fija en la pantalla */
+    z-index: 1000; /* Por encima de todo lo demás */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Habilitar scroll si el contenido es largo */
+    background-color: rgba(0, 0, 0, 0.7); /* Fondo semi-transparente oscuro */
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-contenido {
+    background-color: #fefefe;
+    margin: auto; /* Centrar el contenido */
+    padding: 30px;
+    border: 1px solid #888;
+    width: 80%; /* Ancho del modal */
+    max-width: 600px; /* Ancho máximo */
+    border-radius: 10px;
+    position: relative; /* Para posicionar el botón de cerrar */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    animation-name: animatetop;
+    animation-duration: 0.4s
+}
+
+/* Animación para que el modal aparezca desde arriba */
+@keyframes animatetop {
+    from {top: -300px; opacity: 0}
+    to {top: 0; opacity: 1}
+}
+
+.cerrar-modal {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    cursor: pointer;
+}
+
+.cerrar-modal:hover,
+.cerrar-modal:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Estilos para el contenido dentro del modal */
+#modalTitulo {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2em;
+    color: #3B5F8A;
+    margin-top: 0;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #A8D1FF;
+    padding-bottom: 10px;
+}
+
+#modalSerie p {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1em;
+    color: #444;
+    margin-bottom: 10px;
+}
+
+#modalSerie p strong {
+    color: #222;
+    font-weight: 700;
+}
+
+

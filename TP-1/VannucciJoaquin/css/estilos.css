@@ -1,0 +1,109 @@
+body{
+    margin: 0;
+    display:flex;
+    flex-direction: column;
+}
+/* SECCION HEADER */
+
+header{
+    display: flex;
+    align-items: center;
+    background-color: rgb(95, 95, 95);
+    text-align: center;
+    font-weight: bold;
+    color: #ffffff;
+    margin-bottom: 3px;
+}
+
+.logo{
+    text-align: left;
+    width: max-content;
+    margin-top: 5px;
+}
+
+.texto{
+    text-align: center;
+    text-decoration: underline;
+    flex: 1;
+}
+
+/* FIN SECCION HEADER */
+
+/* SECCION MAIN */
+main{
+    flex: 1;
+    display: flex;
+    margin-left: 2px;
+    margin-right: 2px;
+    background-color: rgb(4, 6, 176);
+}
+
+/* SECCION FRASE RANDOM EXPECTATIVA Y CONSUMO API */
+section{
+    text-align: center;
+    justify-content: center;
+}
+
+.textoRandom{
+    color: #ffffff;
+}
+
+
+.expec{
+    text-align: center;
+    justify-content: center;
+    padding: 2px;
+}
+
+.expectativa{
+    color: #ffffff;
+    
+}
+/* FIN FRASE RANDOM EXPECTATIVA Y CONSUMO API */
+
+/* SECCION DEL ASIDE CON LAS 2 API */
+
+aside{
+    width: 200px;
+    background-color: rgb(146, 12, 101);
+    border-right: 3px solid #fefefe ;
+}
+
+.apiRet{
+    color: #ffffff;
+}
+
+a{
+    color:#ffffff;
+    text-decoration: none;
+}
+
+.link{
+    margin: 2rem;
+    padding: 3px;
+    text-align: left;
+    justify-content: center;
+}
+
+a:hover{
+    color: #000000;
+    text-decoration:solid;
+    cursor: grab;
+}
+
+/* FIN SECCION DE LAS API */
+
+/* SECCION DEL FOOTER */
+
+footer{
+    color: #ffffff;
+    background-color: black;
+    text-align: right;
+    margin-top: 3px;
+}
+
+.piePag{
+    margin-right: 5px;
+}
+
+/* FIN SECCION DEL FOOTER */

@@ -1,0 +1,132 @@
+:root {
+    --primary-color: #0c2a28;
+    --secondary-color: #cd5b43;
+    --tertiary-color: #e4e1b6;
+}
+
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; 
+    background-color: var(--tertiary-color);
+}
+
+header {
+    background-color: var(--primary-color); 
+    color: var(--secondary-color);
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative; 
+    min-height: 80px;
+    box-shadow: 2px 2px 8px rgb(0, 0, 0); 
+}
+
+.logo-container {
+    position: absolute;
+    left: 20px; 
+}
+
+.logo {
+    height: 60px; 
+    width: 60px;
+}
+
+.tp-title {
+    margin: 0;
+    text-align: center;
+    flex-grow: 1; 
+}
+
+.container {
+    display: flex;
+    flex-grow: 4; 
+}
+
+.sidebar {
+    background-color: var(--primary-color); 
+    width: 250px;
+    padding: 20px;
+    box-sizing: border-box; 
+    border-right: 1px solid var(--tertiary-color);
+}
+
+.sidebar nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar nav ul li {
+    margin-bottom: 10px;
+}
+
+.sidebar nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    display: block;
+    padding: 5px 0;
+}
+
+.sidebar nav ul li a:hover {
+    color: var(--secondary-color);
+}
+
+.main-content {
+    flex-grow: 1;
+    background-color: var(--tertiary-color);
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+#home-content {
+    background-color: var(--tertiary-color); 
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.267);
+}
+
+.phrase {
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+
+.shadow1 {
+    text-shadow: 2px 2px 4px #000000;
+}
+
+.shadow2 {
+    text-shadow: 0 0 5px #FF0000, 0 0 10px #0000FF, 0 0 15px #00FF00;
+}
+
+.shadow3 {
+    text-shadow: 1px 1px 0px #FFF, -1px -1px 0px #FFF, 1px -1px 0px #FFF, -1px 1px 0px #FFF,
+                 2px 2px 0px #CCC, 3px 3px 0px #BBB, 4px 4px 0px #AAA;
+    color: #333;
+}
+
+
+.expectations-paragraph {
+    line-height: 1.6;
+    color: #555;
+}
+
+footer {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 10px 20px;
+    text-align: right;
+    margin-top: auto;
+    box-shadow: 2px 2px 10px  #000000; 
+}

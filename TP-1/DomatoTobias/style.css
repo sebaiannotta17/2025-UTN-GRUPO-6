@@ -1,0 +1,83 @@
+body {
+    font-family: Arial, sans-serif;
+    display: grid;
+    grid-template-areas:
+        "header header"
+        "aside main"
+        "footer footer";
+    grid-template-columns: 200px 1fr;
+    grid-template-rows: auto 1fr auto;
+    height: 100vh;
+    margin: 0;
+    background-color: rgb(149, 149, 169);
+
+header {
+    color: whitesmoke;
+    grid-area: header;
+    display: flex;
+    align-items: center;
+    background-color: rgb(3, 3, 104);
+    padding: 10px;
+    border: 2px solid black;
+}
+
+
+.titulo {
+    text-align: center;
+    flex-grow: 1;
+}
+
+aside {
+    grid-area: aside;
+    background-color: #00004d;
+    border: 2px solid black;
+
+}
+
+li {
+    color: white;
+}
+
+a {
+    color: white;
+}
+
+main {
+    grid-area: main;
+    padding: 20px;
+    border: 2px solid black;
+
+}
+
+footer {
+    grid-area: footer;
+    text-align: right;
+    padding: 10px;
+    background-color: #eee;
+    font-weight: bold;
+    border: 2px solid black;
+
+}
+
+
+.expectativa {
+    color: rgb(2, 2, 91);
+    font-weight: bold;
+}
+
+#frase {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+.frase1 {
+    text-shadow: 2px 2px 4px hsl(209, 100%, 51%);
+}
+.frase2 {
+    text-shadow: 1px 1px 5px rgb(0, 251, 255);
+}
+.frase3 {
+    text-shadow: 0px 0px 10px #00f;
+}
+
+}

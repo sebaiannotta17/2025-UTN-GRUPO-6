@@ -1,0 +1,103 @@
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', Arial, sans-serif;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      #encabezado {
+        background-color: #000002a9;
+        color: white;
+        text-align: center;
+        padding: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+      }
+
+      #encabezado img {
+        position: absolute;
+        left: 15px;
+        width: 100px;
+        height: auto;
+        margin-right: 20px;
+      }
+
+      #contenido {
+        display: flex;
+        flex: 1;
+      }
+
+      #barralateral {
+        width: 200px;
+        background-color: #5394a8;
+        color: white;
+        padding: 20px;
+      }
+
+      #barralateral h2 {
+        margin-top: 0;
+      }
+
+      #barralateral ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      #barralateral ul li {
+        margin-bottom: 10px;
+      }
+
+      #barralateral ul li a {
+        display: block;
+        background-color: #ffffff;
+        color: #333;
+        text-decoration: none;
+        padding: 10px 15px;
+        border-radius: 8px;
+        transition: background-color 0.3s, color 0.3s;
+        font-weight: bold;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      #barralateral ul li a:hover {
+        background-color: #f0f0f0;
+        color: #000;
+      }
+      
+
+      #principal {
+        flex: 1;
+        padding: 20px;
+        margin-top: 40px;
+      }
+
+      .frase {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+        font-weight: bold;
+        text-align: center;
+      }
+
+      .sombra1 {
+        text-shadow: 2px 2px 4px rgba(255, 147, 147, 0.3);
+      }
+
+      .sombra2 {
+        text-shadow: 1px 1px 3px rgba(47, 255, 158, 0.5);
+      }
+
+      .sombra3 {
+        text-shadow: 3px 3px 6px rgba(216, 213, 38, 0.2);
+      }
+
+      #piedepagina {
+        background-color: #000002a9;
+        color: white;
+        text-align: right;
+        padding: 10px;
+        font-style: italic;
+      }
+

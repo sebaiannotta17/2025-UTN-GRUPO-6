@@ -1,0 +1,82 @@
+body {
+    font-family: sans-serif;
+    margin: 0;
+}
+
+.contenedor {
+    display: grid;
+    grid-template-areas: "header header" "aside main" "footer footer";
+    grid-template-columns: 150px 1fr;
+    grid-template-rows: auto 1fr auto;
+    height: 100vh;
+    border: 3px solid black;
+    border-radius: 5px;
+}
+
+header {
+    grid-area: header;
+    background-color: #ccc;
+    text-align: center;
+    padding: 15px;
+    font-weight: bold;
+}
+
+header img {
+    width: 250px;
+    float: left;
+}
+
+p {
+    text-align: center;
+}
+
+aside {
+    grid-area: aside;
+    background-color: #a9cdd6;
+    padding: 15px;
+}
+
+main {
+    grid-area: main;
+    background-color: #cde3f5;
+    padding: 15px;
+}
+
+footer {
+    grid-area: footer;
+    background-color: #cde3f5;
+    text-align: right;
+    padding: 10px 15px;
+}
+
+a {
+    display: block;
+    margin-bottom: 8px;
+    color: black;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.sombra1 {
+    text-shadow: 2px 2px 5px #666;
+}
+
+.sombra2 {
+    text-shadow: 0 0 10px red;
+}
+
+.sombra3 {
+    text-shadow: 1px 1px 0 #000, 2px 2px 0 #555;
+}
+
+.frase {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+header, nav, aside, main, footer {
+    border: 1px solid black;
+}

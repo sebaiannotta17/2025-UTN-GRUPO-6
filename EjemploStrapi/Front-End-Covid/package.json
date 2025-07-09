@@ -1,0 +1,41 @@
+{
+  "name": "Covid-19-TP2-TyGWeb",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.4.4",
+    "axios": "^0.19.2",
+    "core-js": "^3.6.5",
+    "devextreme": "20.1-stable",
+    "devextreme-vue": "20.1-stable",
+    "moment": "^2.27.0",
+    "roboto-fontface": "*",
+    "vue": "^2.6.11",
+    "vue-axios": "^2.1.5",
+    "vue-google-charts": "^0.3.3",
+    "vue-router": "^3.2.0",
+    "vuetify": "^2.2.11",
+    "vuex": "^3.4.0"
+  },
+  "devDependencies": {
+    "@mdi/font": "^3.9.97",
+    "@vue/cli-plugin-babel": "~4.4.0",
+    "@vue/cli-plugin-router": "~4.4.0",
+    "@vue/cli-plugin-vuex": "~4.4.0",
+    "@vue/cli-service": "~4.4.0",
+    "devextreme-themebuilder": "20.1-stable",
+    "material-design-icons-iconfont": "^5.0.1",
+    "vue-cli-plugin-vuetify": "^2.0.5",
+    "vue-template-compiler": "^2.6.11"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie <= 10"
+  ]
+}

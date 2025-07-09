@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TP Nro 2- Grupo 15</title>
+    <link rel="stylesheet" href="estilos.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <header id="encabezado">
+        <h1>TP Nro 2- Grupo 15</h1>
+    </header>
+    <div id="contenido">
+        <div id="barra">
+            <ul>
+                <li><a href="#" id="btnVolverInicio">Inicio</a></li>
+                <li><a href="#" id="btnCargarSeries">Cargar series</a></li>
+                <li><a href="#" id="resultado">Resultados</a></li>
+            </ul>
+        </div>
+        <main>
+            <section id="resultado-api">
+                <h3>Top 10 series más antiguas</h3>
+                <div id="listaSeries"></div>
+            </section>
+        </main>
+    </div>
+    
+    <footer id="pie">
+        <p>TyGWeb 07/06/2025</p>
+    </footer>
+    <div id="modalSerie" class="modal">
+        <div class="modal-contenido">
+            <span class="cerrar-modal">&times;</span>
+            <h2 id="modalTitulo"></h2>
+            <p><strong>Fecha de estreno:</strong> <span id="modalFechaEstreno"></span></p>
+            <p><strong>Votos promedio:</strong> <span id="modalVotosPromedio"></span></p>
+        </div>
+    </div>
+    <script src="animaciones.js"></script>
+</body>
+</html>

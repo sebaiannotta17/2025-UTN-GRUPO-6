@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&family=Poppins:wght@400;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    background-color: #E5D4ED; 
+}
+
+header {
+    grid-column: 1 / -1;
+    background: #6D72C3; 
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+}
+
+.logo {
+    height: 50px;
+    margin-right: 1rem;
+}
+
+.header-content {
+    flex-grow: 1;
+    text-align: center;
+}
+
+.header-content h1 {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 2rem;
+}
+
+.header-content h2 {
+    font-size: 1.2rem;
+    font-weight: normal;
+}
+
+aside {
+    background: #D499B9; 
+    padding: 1rem;
+}
+
+/* Le saco los puntitos a la lista */
+nav ul {
+    list-style: none;
+}
+
+/*Le doy borde asi queda mas prolijo*/
+main {
+    padding: 2rem;
+    margin-top: 0;
+}
+
+
+
+
+footer {
+    grid-column: 1 / -1;
+    background: #6D72C3; 
+    color: white;
+    padding: 1rem;
+    text-align: right;
+    font-size: 0.9rem;
+}
+
+.frase-aleatoria {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    color: #011638; 
+}
+
+button {
+    margin-top: 10px;
+    background-color: #6E75A8;  
+    color: white;              /* color del texto */
+    padding: 10px 20px; 
+    border: solid;       
+    border-color: #51A3A3;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 16px;           /* tamaño del texto */
+}
+
+.c1 {
+    text-shadow: 2px 2px 5px #4D243D;
+    
+}
+
+.c2 {
+    text-shadow: 1px 1px 4px #EFDD8D;
+    
+}
+
+.c3 {
+    text-shadow: 0 0 8px #65743A;
+
+}

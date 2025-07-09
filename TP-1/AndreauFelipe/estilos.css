@@ -1,0 +1,79 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+
+/* Encabezado */
+
+header {
+    background-color: #b5b5b4;
+    padding: 10px;
+    text-align: center;
+    border-bottom: 2px solid black;
+}
+
+.logo {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    height: 50px;
+}
+
+
+/* Contenedor principal */
+
+.contenedor-principal {
+    display: flex;
+}
+
+
+/* Barra lateral */
+
+.barra-lateral {
+    background-color: #aac1c5;
+    width: 200px;
+    padding: 20px;
+    border: 2px solid black;
+}
+
+.barra-lateral ul {
+    list-style: none;
+    padding: 0;
+}
+
+.barra-lateral li {
+    margin-bottom: 10px;
+}
+
+
+/* Contenido principal */
+
+main {
+    flex: 1;
+    padding: 20px;
+    background-color: #d3dbeb;
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+}
+
+
+/* Pie de página */
+
+footer {
+    background-color: #d3dbeb;
+    text-align: right;
+    padding: 10px;
+    border-top: 2px solid black;
+}
+
+
+/* Estilo para la frase */
+
+.sombra {
+    text-shadow: 2px 2px 4px #000000;
+    color: #333;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+}

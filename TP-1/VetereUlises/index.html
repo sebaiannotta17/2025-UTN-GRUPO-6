@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TP Nro 1 - Ulises Vetere</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <header id="encabezado">
+    <img src="assets/logo.png" alt="Logo" />
+    <h1>TP1 - Vetere Ulises</h1>
+  </header>
+
+  <div id="contenido">
+    <aside id="barralateral">
+      <h2>Menú APIs</h2>
+      <ul>
+        <li><a href="#" onclick="getRandomBreakingBadQuote()">Frase Breaking Bad aleatoria</a></li>
+        <li><a href="#" onclick="getPokemon()">Ver Pokémon aleatorio</a></li>
+      </ul>
+    </aside>
+
+    <main id="principal">
+      <div id="frase" class="frase"></div>
+      <div id="apirq"></div>
+      <p>
+        Espero aprender en esta materia, herramientas útiles para poder aplicarlas en proyectos reales y mejorar mis habilidades en el desarrollo web.
+      </p>
+    </main>
+  </div>
+
+  <footer id="piedepagina">
+    <p>Tecnología y Gestión Web - 10/5/2025</p>
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

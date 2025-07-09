@@ -1,0 +1,210 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Roboto", sans-serif;
+    color: #ffffff;
+}
+
+header {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    background-color: #1c1e20;
+}
+
+.imgLogo {
+    position: absolute;
+    left: 60px;
+    width: 150px;
+    animation: flotar 2s ease-in-out infinite;
+    cursor: pointer;
+}
+
+.imgLogo:hover {
+    animation: moverDiagonal 1s ease-in-out infinite alternate;
+}
+
+@keyframes flotar {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+@keyframes moverDiagonal {
+    from {
+        transform: translate(0, 0);
+    }
+
+    to {
+        transform: translate(160px, -160px);
+    }
+}
+
+main {
+    display: flex;
+    height: 75vh;
+    background-color: #23272a;
+}
+
+aside {
+    background-color: #723b9e;
+    width: 250px;
+    padding: 20px;
+    text-align: center;
+}
+
+aside ul {
+    list-style: none;
+    padding: 0;
+}
+
+aside li {
+    margin: 20px 0;
+}
+
+aside a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+aside a:hover {
+    background-color: #1c1e20;
+    padding: 10px;
+    border-radius: 5px;
+    transition: ease 0.3s;
+}
+
+section {
+    width: 100%;
+    text-align: center;
+    padding: 30px;
+}
+
+#frase {
+    font-size: 30px;
+    margin-top: 30px;
+    font-weight: bold;
+}
+
+hr {
+    margin: 30px 0px;
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    color: white;
+    margin: 20px 0;
+    font-size: 25px;
+}
+
+.divider::before,
+.divider::after {
+    content: "";
+    flex: 1;
+    height: 5px;
+    background: #723b9e;
+}
+
+.divider span {
+    padding: 8px 16px;
+    background: #723b9e;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.expectativasContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.expectativas {
+    color: #838383;
+    max-width: 600px;
+    font-size: 20px;
+}
+
+#pokemons{
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    padding: 20px 0px;
+}
+
+#pokemons img {
+    width: 150px;
+    height: 150px;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+.pokemon{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #1c1e20;
+    padding: 10px 10px 20px 10px;
+    border-radius: 10px;
+}
+
+.btnPesado{
+    background-color: #723b9e;
+    color: #ffffff;
+    padding: 10px 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 20px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+#country{
+    padding: 20px 0px;
+}
+
+#country input {
+    width: 200px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+    margin-right: 10px;
+}
+
+#country button {
+    background-color: #723b9e;
+    color: #ffffff;
+    padding:  5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.flag{
+    max-width: 300px;
+    max-height: 200px;
+    border-radius: 5px;
+    margin: 20px 0;
+}
+
+footer {
+    background-color: #171a1d;
+    text-align: end;
+    padding: 20px;
+}

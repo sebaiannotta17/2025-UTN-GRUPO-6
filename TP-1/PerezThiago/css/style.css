@@ -1,0 +1,408 @@
+/* Fuentes importadas */
+@font-face {
+    font-family: 'MiFuenteNav';
+    src: url('../fonts/newfont.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;  
+}
+
+@font-face {
+    font-family: 'Gryphius';
+    src: url('../fonts/Gryphius.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;  
+}
+
+@font-face {
+    font-family: 'DIN';
+    src: url('../fonts/DIN.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;  
+}
+
+:root {
+    --primary-color: #95BCD0;
+    --secondary-color: #19283E;
+    --light-beige-bg: #F8EDDE; 
+    --dark-blue-texture: url('../images/contenedorAzul.jpg'); 
+    --paper-texture: url('../images/paper.jpg'); 
+    --text-on-dark: #19283E; 
+    --text-on-light: #F8EDDE; 
+    --button-sidebar-bg: rgba(255, 255, 255, 0.08);
+    --button-sidebar-border: rgba(255, 255, 255, 0.2);
+    --button-sidebar-hover-bg: #19283E; 
+    --postcard-unified-bg: #FAF3E8; 
+    --postcard-unified-border: #D7C8B6;
+    --postcard-unified-text: #4A3B31;
+    --postcard-unified-lines: #C5B7A8;
+}
+
+body {
+    background-image: var(--paper-texture);
+    background-size: auto;
+    background-attachment: fixed;
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    color: var(--text-on-dark); 
+}
+
+/* Encabezado */
+header { 
+    background-image: var(--paper-texture);
+    background-blend-mode: multiply;
+    padding-top: 10px;
+    position: relative; 
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    min-height: 130px; 
+    padding-bottom: 60px; 
+}
+
+header .logo { 
+    max-height: 110px; 
+    width: auto;
+    display: block;
+    margin: 20px auto 15px auto; 
+    position: relative; 
+    z-index: 5; 
+    rotate: -10deg;
+}
+
+header .logo2 { 
+    position: absolute;
+    left: 120px; 
+    top: 30px;   
+    max-height: 100px; 
+    width: auto;
+    display: block;
+    rotate: 8deg; 
+    z-index: 3; 
+    opacity: 0.9;
+}
+
+header .stamp { 
+    width: 100px; 
+    height: 100px; 
+    position: absolute; 
+    right: 150px; 
+    bottom: 25px; 
+    opacity: 0.9;
+    rotate: -10deg; 
+    z-index: 2; 
+}
+
+header .stripes-container { 
+    width: 100%; 
+    height: 60px; 
+    object-fit: fill; 
+    line-height: 0;
+    position: absolute; 
+    bottom: -5px; 
+    left: 0; 
+    z-index: 1; 
+}
+
+.main { 
+    display: flex; 
+    flex-grow: 1; 
+    padding: 20px; 
+    gap: 20px; 
+}
+
+/* Barra Lateral */
+aside { 
+    width: 260px; 
+    flex-shrink: 0; 
+    background-image: var(--dark-blue-texture);
+    background-size: cover;
+    background-position: center;
+    padding: 20px;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    color: var(--text-on-dark); 
+    position: -webkit-sticky; 
+    position: sticky;
+    top: 20px; 
+    align-self: flex-start; 
+    height: calc(90vh - 40px); 
+    overflow-y: auto; 
+    border-radius: 6px;
+}
+
+aside nav { 
+    margin-bottom: auto; 
+}
+aside nav ul { 
+    list-style: none; 
+    padding: 0; 
+    margin: 0; 
+}
+aside nav ul li { 
+    margin-bottom: 10px; 
+}
+aside nav ul li a { 
+    display: block; 
+    background-color: var(--primary-color); 
+    color: var(--text-on-dark); 
+    padding: 10px 15px; 
+    text-decoration: none; 
+    text-align: center; 
+    font-weight: 400; 
+    font-size: 1.5em; 
+    font-family: 'DIN', 'Helvetica Neue', Helvetica, Arial, sans-serif; 
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+aside nav ul li a:hover { 
+    background-color: var(--button-sidebar-hover-bg); 
+    color: #F8EDDE; 
+}
+aside nav h1{ 
+    color: #F8EDDE; 
+    text-align: center; 
+    font-size: 1.6em; 
+    font-family: 'Gryphius', serif; 
+}
+
+/* Contenido Principal */
+main { 
+    background-blend-mode: multiply;
+    border-radius: 6px; 
+    padding: 25px 30px; 
+    color: var(--text-on-dark); 
+}
+.main-content { 
+    margin-bottom: 30px; 
+}
+.frase-aleatoria { 
+    font-size: 2em;
+    font-family: Gryphius;
+    text-align: center;
+    padding-bottom: 15px; 
+    border-bottom: 1px solid var(--postcard-line-color); 
+    margin-bottom: 10px; 
+    text-shadow: 2px 2px 4px rgba(25, 40, 62, 0.2); 
+}
+.expectativas h4 { 
+    margin-top: 0; 
+    margin-bottom: 8px; 
+    font-size: 2em; 
+    font-family: 'DIN', 'Helvetica Neue', Helvetica, Arial, sans-serif; 
+    font-weight: 500;
+}
+.expectativas p { 
+    font-size: 1.3em; 
+    line-height: 1.6; 
+    opacity: 0.85; 
+    font-family: 'DIN', 'Helvetica Neue', Helvetica, Arial, sans-serif; 
+}
+
+.separador { 
+    width: 100%; 
+    height: 10px; 
+    margin: 10px 0;
+}
+
+/* Contenido de la API */
+#api-display {
+    position: relative; 
+    display: flex;
+    align-items: center; 
+    justify-content: center; 
+}
+
+#api-content {
+    flex-grow: 1; 
+    max-width: 600px; 
+    margin: 0 40px; 
+    font-family: DIN;
+    font-size: 1.2em;
+}
+
+#api-content .postcard {
+    display: flex;
+    background-color: var(--postcard-unified-bg); 
+    box-shadow: 1px 1px 4px rgba(0,0,0,0.1);
+    padding: 15px; 
+    max-width: 600px; 
+    min-height: 240px; 
+    margin: 0 auto; 
+    gap: 15px; 
+    font-family: 'Georgia', serif; 
+    color: var(--postcard-unified-text); 
+    position: relative; 
+    overflow: hidden; 
+}
+
+.postcard-nav-arrow {
+    background-color: var(--primary-color); 
+    color: var(--secondary-color); 
+    border: 1px solid var(--postcard-unified-border); 
+    padding: 0; 
+    font-size: 1.6em; 
+    cursor: pointer;
+    border-radius: 50%; 
+    width: 44px;  
+    height: 44px; 
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    z-index: 10; 
+    flex-shrink: 0; 
+    box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    line-height: 1; 
+}
+
+.postcard-nav-arrow:hover {
+    background-color: var(--button-sidebar-hover-bg); 
+    transform: scale(1.05);
+    color: var(--light-beige-bg);
+}
+
+.postcard-nav-arrow.prev {
+    margin-right: 15px; 
+}
+
+.postcard-nav-arrow.next {
+    margin-left: 15px; 
+}
+
+.postcard-nav-arrow:disabled {
+    background-color: rgba(200, 200, 200, 0.3); 
+    color: rgba(0,0,0,0.3); 
+    border-color: rgba(0,0,0,0.1);
+    cursor: not-allowed;
+    opacity: 0.6;
+    transform: scale(1); 
+}
+
+.postcard-image-area { 
+    flex: 0 0 45%; 
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+    border-radius: 2px; 
+    overflow: hidden; 
+}
+.postcard-image-area img {
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+}
+
+.postcard-text-area { 
+    flex: 1; 
+    display: flex;
+    flex-direction: column;
+    padding-left: 15px; 
+    padding-right: 15px; 
+    position: relative; 
+}
+
+.postcard-title { 
+    font-size: 1.7em; 
+    font-weight: bold; 
+    font-family: 'Times New Roman', Times, serif;
+    color: var(--text-on-dark);
+    margin: 0 0 8px 0; 
+    line-height: 1.2;
+    padding-right: 75px; 
+}
+
+.postcard-subtitle-link, .postcard-subtitle-nolink { 
+    font-size: 0.8em;
+    font-family: 'Courier New', Courier, monospace; 
+    margin-bottom: 10px; 
+    margin-right: 100px;
+    display: block; 
+}
+.postcard-subtitle-link { 
+    color: var(--primary-color); 
+    text-decoration: none; 
+}
+.postcard-subtitle-link:hover { 
+    text-decoration: underline; 
+}
+.postcard-subtitle-nolink { 
+    color: var(--postcard-unified-text); 
+}
+
+.postcard-description { 
+    font-size: 0.85em; 
+    font-family: 'Courier New', Courier, monospace; 
+    color: var(--text-on-dark); 
+    line-height: 1; 
+    margin: 0 0 10px 0; 
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    max-height: calc(0.85em * 1.35 * 3 + 0.1em)
+}
+
+.postcard-decorations { 
+    margin-top: auto; 
+    padding-top: 8px;
+    position: relative;
+}
+
+.postcard-internal-stamp { 
+    width: 90px;   
+    height: 90px;  
+    background-image: url('../images/estampa.png'); 
+    opacity: 0.5;
+    background-size: contain; 
+    background-repeat: no-repeat;
+    background-position: center;
+    position: absolute;
+    top: -4px;      
+    right: 5px;     
+    z-index: 1; 
+    rotate: -10deg; 
+}
+.postcard-internal-stamp::before { 
+    content: none; 
+}
+
+.postcard-address-lines span {
+    display: block; 
+    height: 1px; 
+    background-color: var(--postcard-unified-lines); 
+    margin-bottom: 15px; 
+    opacity: 0.7;
+    width: 100%;
+}
+
+#api-content > p em { 
+    display: block; 
+    text-align: center; 
+    font-size: 1.1em; 
+    color: #777; 
+    padding: 30px; 
+}
+#api-content > h3 { 
+    text-align: center; 
+    color: var(--primary-color); 
+    margin-bottom: 15px; 
+}
+
+/* Pie de Pagina */
+footer { 
+    text-align: right; 
+    padding: 15px 30px; 
+    color: var(--text-on-dark); 
+    font-size: 1.3em; 
+    border-top: 1px solid rgba(0,0,0,0.1);
+    font-family: DIN;
+}
+footer p { 
+    margin: 0; 
+}
+footer span { 
+    font-weight: bold; 
+}

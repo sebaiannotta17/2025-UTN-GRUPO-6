@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/resumen-diarios",
+      "handler": "resumen-diario.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/resumen-diarios/count",
+      "handler": "resumen-diario.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/resumen-diarios/:id",
+      "handler": "resumen-diario.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/resumen-diarios",
+      "handler": "resumen-diario.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/resumen-diarios/:id",
+      "handler": "resumen-diario.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/resumen-diarios/:id",
+      "handler": "resumen-diario.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

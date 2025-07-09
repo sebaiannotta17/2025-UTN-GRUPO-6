@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "casos_pais",
+  "info": {
+    "name": "CasosPais"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "pais": {
+      "type": "string"
+    },
+    "fecha": {
+      "type": "date"
+    },
+    "casosdeldia": {
+      "type": "integer"
+    },
+    "totalConfirmados": {
+      "type": "integer",
+      "required": true
+    },
+    "casosActivos": {
+      "type": "integer"
+    },
+    "casosRecuperados": {
+      "type": "integer"
+    },
+    "totalMuertes": {
+      "type": "integer"
+    },
+    "index": {
+      "type": "integer",
+      "unique": true
+    }
+  }
+}

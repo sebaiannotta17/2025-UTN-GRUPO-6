@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TP1 - Sofia Kalpin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="logo.jpg" alt="Logo" class="logo">
+        </div>
+        <div class="header-text">
+            <h1>Trabajo Practico n° 1</h1>
+            <h2>Sofia Kalpin</h2>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <aside>
+            <h3>APis de Animales</h3>
+            <div class="nav-menu">
+                <a href="#" class="api-link" id="api1">
+                    <i class="fas fa-dog"></i>
+                    Api de Perros
+                </a>
+                <a href="#" class="api-link" id="api2">
+                    <i class="fas fa-cat"></i>
+                   Api de Gatos
+                </a>
+            </div>
+        </aside>
+
+        <main>
+            <div class="phrase-container">
+                <p class="phrase" id="contenido"></p>
+            </div>
+
+            <div class="expectations">
+                <h2>Mis expectativas en la cátedra</h2>
+                <p>
+                    En esta materia de Tecnología y Gestión Web espero poder seguir aprendiendo sobre desarrollo web moderno, especialmente trabajando con APIs públicas como estamos haciendo en este trabajo práctico. Me interesa mucho mejorar en JavaScript y entender bien cómo hacer interfaces interactivas que realmente den una buena experiencia al usuario. También me gustaría aprender sobre diseño web responsivo y accesibilidad, para poder hacer sitios que se vean bien y funcionen en cualquier dispositivo. Siento que todo lo que veamos en esta materia me va a servir un montón para mi futuro como desarrolladora web.
+                </p>
+            </div>
+
+            <div class="api-content" id="api1-content">
+                <div class="api-header">
+                    <i class="fas fa-dog"></i>
+                    <h1>Fotos de Perros</h1>
+                </div>
+                <div class="dog-content"></div>
+            </div>
+
+            <div class="api-content" id="api2-content">
+                <div class="api-header">
+                    <i class="fas fa-cat"></i>
+                    <h1>Fotos de Gatos</h1>
+                </div>
+                <div class="cat-content">
+                    <div id="cat-img-container"></div>
+                    <button class="btn" id="btn-cat">
+                        <i class="fas fa-sync-alt"></i>
+                        Otro Gato
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <p>Tecnologia y Gestion Web - 2025</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

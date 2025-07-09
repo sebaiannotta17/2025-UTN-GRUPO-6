@@ -1,0 +1,231 @@
+html, body{
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    background-color: #eeeeee;
+}
+
+main {
+    flex: 1;
+    padding: 20px;
+    overflow: hidden;
+}
+
+/* Header */
+header{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #ffffff;
+    border-radius: 3px;
+}
+
+.logo_header{
+    width: 55px;
+    padding-left: 60px;
+}
+
+.texto_centro_header{
+    flex: 1;
+    text-align: center;
+    font-size: 50px;
+    font-weight: bold;
+    font-family: "Trebuchet MS", sans-serif;
+}
+
+.espacio_vacio{
+    width: 60px;
+}
+
+/* Menu desplegable */
+.menu_desplegable{
+    position: fixed;
+    top: 78px;
+    left: 0;
+    border: 1px #0000001f;
+    display: none;
+    z-index: 1000;
+    width: 200px;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    backdrop-filter: blur(25px);
+}
+
+.menu_desplegable ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.menu_desplegable li{
+    padding: 20px 20px;    
+    text-align: center;
+}
+
+.menu_desplegable li a{
+    text-decoration: none;
+    color: #f0f0f0e5;
+    display: block;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: "Trebuchet MS", sans-serif;
+}
+
+.menu_desplegable li a:hover{
+    color: white;
+}
+
+/* Footer */
+footer {
+    background-color: #ffffff;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 60px;
+    border-radius: 3px;
+}
+
+.texto_footer {
+    font-size: 20px;
+    font-weight: bold;
+    font-family: "Trebuchet MS", sans-serif;
+}
+
+/* Frase Random */
+.frase-random {
+    text-align: center;
+    font-size: 24px;
+    margin-top: 50px;
+    font-family: "Trebuchet MS", sans-serif;
+}
+
+.sombra1 {
+    color: #111;
+    text-shadow: 2px 2px 3px #00f2ff3e;
+}
+
+.sombra2 {
+    color: #111;
+    text-shadow: 2px 2px 3px #ff000032;
+}
+
+.sombra3 {
+    color: #111;
+    text-shadow: 2px 2px 3px #8000ff2e;
+}
+
+/* Expectativa */
+.expectativa {
+    margin: 60px auto;
+    width: 60%;
+    background-color: #ffffffb9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 10px 10px 6px #cccccc;
+    font-family: "Trebuchet MS", sans-serif;
+}
+
+.expectativa h2 {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 24px;
+    font-family: "Trebuchet MS", sans-serif;
+}
+
+/* API Post Malone */
+.box-posty {
+    margin: 10px auto;
+    width: 50%;
+    background-color: #ffffffb9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 10px 10px 6px #cccccc;
+    font-family: "Trebuchet MS", sans-serif;
+    margin-bottom: 30px;
+}
+
+#contenedor-explicacion {
+    font-size: 18px;
+    text-align: center;
+}
+
+#contenedor-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: "Trebuchet MS", sans-serif;
+    text-align: center;
+    margin: 0 auto;
+}
+
+#contenedor-info img {
+    box-shadow: 10px 10px 6px #cccccc;
+    border-radius: 10px;
+    max-width: 350px;
+    margin-bottom: 0;
+    margin-top: 10px;
+}
+
+#album h2 {
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+#canciones-album {
+    font-size: 20px;
+    font-weight: normal;
+    margin-bottom: 10px;
+}
+
+/* API peliculas */
+.box-peliculas {
+    margin: 10px auto;
+    width: 50%;
+    background-color: #ffffffb9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 10px 10px 6px #cccccc;
+    font-family: "Trebuchet MS", sans-serif;
+    margin-bottom: 30px;
+}
+
+#contenedor-pelicula {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: "Trebuchet MS", sans-serif;
+    text-align: center;
+    margin: 0 auto;
+}
+
+#titulo-pelicula {
+    font-size: 30px;
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-family: "Trebuchet MS", sans-serif;
+}
+
+#contenedor-pelicula img {
+    box-shadow: 10px 10px 6px #cccccc;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    margin-top: 10px;
+    max-width: 200px;
+}
+
+#contenedor-pelicula p {
+    font-size: 18px;
+    font-weight: normal;
+    margin-bottom: 5px;
+    margin-top: 10px;
+}

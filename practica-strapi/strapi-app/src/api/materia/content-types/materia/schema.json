@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "materias",
+  "info": {
+    "singularName": "materia",
+    "pluralName": "materias",
+    "displayName": "Materia"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "nombre": {
+      "type": "string",
+      "required": true
+    },
+    "carrera": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::carrera.carrera",
+      "inversedBy": "materia"
+    },
+    "alumnos": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::alumno.alumno"
+    }
+  }
+}

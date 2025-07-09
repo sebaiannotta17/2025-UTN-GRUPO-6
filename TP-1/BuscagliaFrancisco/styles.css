@@ -1,0 +1,146 @@
+body{
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    
+}
+
+/*-----------------------------------Encabezado----------------------------------*/
+
+header{
+    display: flex;
+    width: 100%;
+    height: 70px;
+    background-color:rgb(229, 219, 210);
+    float: left;
+    border: 1px solid black;
+    box-sizing: border-box;
+    top: 0;
+    left: 0;
+    position: relative;
+}
+
+#titulo{
+    text-align: center;
+    position: absolute;
+    top: 25%;
+    left: 40%;
+    margin: 0; 
+    font-size: 200%
+}
+
+/*--------------------------------Barra lateral----------------------------------*/
+
+aside{
+    width: 15%;
+    height: 800px;
+    background-color:steelblue;
+    float: left;
+    border: 1px solid black;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: larger;
+}
+
+
+#barraLateral a{
+    text-decoration: none;
+    color: white;
+    cursor: pointer;
+}
+
+#barraLateral a:hover{
+    color: blue;
+}
+
+/*--------------------------------Contenido principal---------------------------*/
+
+#contenido{
+    width: 85%;
+    height: 800px;
+    background-color: lightblue;
+    float: left;
+    border: 1px solid black;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 150%;
+}
+
+/*--------------------------------Pie de pagina---------------------------------*/
+
+footer{
+    width: 100%;
+    height: 60px;
+    background-color: lightblue;
+    float: left;
+    border: 1px solid black;
+    box-sizing: border-box;
+}
+
+/*-------------------------------Estilos API1-----------------------------------*/
+
+#api1{
+    width: 100%;
+    height: 800px;
+    background-color: lightblue;
+    float: left;
+    border: 1px solid black;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 150%;
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+#pie_de_pag{
+    text-align: right;
+    position: relative;
+    right: 1%;
+}
+
+#foto_titulo {
+    background-color: steelblue;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.8);
+    width: 300px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px; 
+    margin: 50px;
+    border: 2px solid black;
+}
+
+#foto_titulo p{
+    color: white;
+}
+
+#foto_titulo img{
+    width: 250px;
+    height: 250px;
+    align-self: center;
+}
+
+#datos{
+    background-color: steelblue;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.8);
+    width: 800px;
+    height: 400px;
+    margin: 50px;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    border: 2px solid black;
+}
+
+#datos li{
+    text-align: left;
+    color: white;
+}
+
+/*-------------------------------Estilos API2-----------------------------------*/
+
+#api2 button{
+    border-radius: 2px;
+}

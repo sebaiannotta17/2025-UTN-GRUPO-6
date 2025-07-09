@@ -1,0 +1,17 @@
+.text {
+    color: green;
+    font-size: 18px;
+}
+
+a:visited {
+    color: green;
+}
+
+a:hover {
+    color: red;
+}
+
+#btc {
+    background-color: yellow;
+    padding: 10px 5px 10px 5px;
+}
