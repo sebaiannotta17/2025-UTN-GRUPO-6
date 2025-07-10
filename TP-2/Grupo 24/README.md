@@ -7,11 +7,11 @@ Este proyecto consiste en el desarrollo de una aplicación web que permite consu
 ---
 
 ### **Integrantes**
-- Joaquin Montes
-- Maximo Carpignano
-- Ulises Moran
-- Pedro Fiuza
-- Jesus Vergara
+- Montes Joaquin
+- Carpignano Maximo
+- Moran Ulises
+- Fiuza Pedro
+- Vergara Jesus 
 
 ---
 
