@@ -1,10 +1,8 @@
-# Trabajo Grupal - Tecnologia y Gestión Web
+# Trabajo Grupal - Tecnologia y Gestión Web - Grupo 24
 
 ## Trabajo Práctico N°2
 
 Este proyecto consiste en el desarrollo de un sitio web en donde consumimos la información de la API, la almacenamos en Strapi y luego la visualizamos.
-
-### Grupo 18
 
 **Integrantes:**
 - Joaquin Montes
