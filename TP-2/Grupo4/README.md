@@ -30,4 +30,4 @@ DESCRIPCIÓN: diseño de una estructura básica de la interfaz de usuario que co
 - Un botón para cargar los datos desde la API.
 - Un botón para visualizar las películas en pantalla.
 - Una zona principal donde se mostrarán los resultados.
-- Uso de HTML, CSS y JavaScript con Axios para conectar datos y mostrarlos dinámicamente.
+- Uso de HTML, CSS y JavaScript con Chart.js para conectar datos y mostrarlos dinámicamente.

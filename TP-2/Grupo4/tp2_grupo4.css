@@ -63,3 +63,56 @@ a:hover {
 header, nav, aside, main, footer {
     border: 1px solid black;
 }
+
+.card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    padding: 15px;
+    margin-bottom: 20px;
+    transition: transform 0.2s ease;
+}
+
+.card:hover {
+    transform: scale(1.02);
+}
+
+.movie-title {
+    font-size: 1.4em;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #003366;
+}
+
+.movie-subtitle {
+    font-style: italic;
+    margin-bottom: 8px;
+    color: #444;
+}
+
+.movie-genres, .movie-votes, .movie-average {
+    margin-bottom: 5px;
+    font-size: 0.95em;
+    color: #555;
+}
+
+.message-info, .message-success, .message-error, .message-warning {
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+.message-info { 
+    background-color: #e0f2ff; color: #005d9a; 
+}
+
+.message-success { 
+    background-color: #d6f5d6; color: #218838; 
+}
+.message-warning { 
+    background-color: #fff3cd; color: #856404; 
+}
+.message-error   { 
+    background-color: #f8d7da; color: #721c24;
+}

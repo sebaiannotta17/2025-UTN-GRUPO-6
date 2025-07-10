@@ -1,208 +1,282 @@
-function mostrarPeliculasSimuladas(peliculas) {
-    const contenedor = document.querySelector("main");
-    contenedor.innerHTML = "<h2>Películas simuladas</h2><canvas id='grafico' width='600' height='400'></canvas>";
+    const API_KEY = "91c6195ee5c03e5ff0f7a7c4c8088776";
+    const STRAPI_URL = "https://gestionweb.frlp.utn.edu.ar/api/g4-peliculas";
+    const STRAPI_GENEROS_URL = "https://gestionweb.frlp.utn.edu.ar/api/g4-generos";
+    const STRAPI_TOKEN =
+    "099da4cc6cbb36bf7af8de6f1f241f8c81e49fce15709c4cfcae1313090fa2c1ac8703b0179863b4eb2739ea65ae435e90999adb870d49f9f94dcadd88999763119edca01a6b34c25be92a80ed30db1bcacb20df40e4e7f45542bd501f059201ad578c18a11e4f5cd592cb25d6c31a054409caa99f11b6d2391440e9c72611ea";
 
-    const labels = [];
-    const promedios = [];
+    let generoLookupTMDB = {};
+    let generoStrapiMap = {};
 
-    peliculas.forEach(p => {
-        labels.push(p.titulo);
-        promedios.push(p.promedio_votos);
-
-        const peliHTML = `
-        <div style="margin-top: 20px; margin-bottom: 15px; padding: 10px; background-color: #fff; border-radius: 8px; box-shadow: 1px 1px 4px #888;">
-            <h3>${p.titulo}</h3>
-            <p><strong>Sinopsis:</strong> ${p.sinopsis}</p>
-            <p><strong>Géneros:</strong> ${p.generos.join(", ")}</p>
-            <p><strong>Votos:</strong> ${p.cantidad_votos}</p>
-            <p><strong>Promedio:</strong> ${p.promedio_votos}</p>
-        </div>`;
-        contenedor.innerHTML += peliHTML;
+    async function obtenerGenerosTMDB() {
+    const res = await fetch(
+        `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=es-AR`
+    );
+    const data = await res.json();
+    data.genres.forEach((g) => {
+        generoLookupTMDB[g.id] = g.name;
     });
-
-    const ctx = document.getElementById('grafico').getContext('2d');
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels,
-            datasets: [{
-                label: 'Promedio de Votos (Simulado)',
-                data: promedios,
-                backgroundColor: 'rgba(255, 99, 132, 0.6)',
-                borderColor: 'rgba(255, 99, 132, 1)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            indexAxis: 'y',
-            responsive: true,
-            scales: {
-                x: {
-                    beginAtZero: true,
-                    max: 10
-                }
-            }
-        }
-    });
-}
-
-document.getElementById("api1").addEventListener("click", async () => {
-    const apiKey = "91c6195ee5c03e5ff0f7a7c4c8088776";
-    const tmdbBase = "https://api.themoviedb.org/3";
-    const strapiBase = "https://gestionweb.frlp.utn.edu.ar/api";
-
-    const main = document.querySelector("main");
-    main.innerHTML = "<p>Cargando películas desde la API...</p>";
-
-    try {
-        const genreRes = await axios.get(`${tmdbBase}/genre/movie/list?api_key=${apiKey}&language=es-AR`);
-        const genreMap = {};
-        genreRes.data.genres.forEach(g => genreMap[g.id] = g.name);
-
-        const movieRes = await axios.get(`${tmdbBase}/discover/movie?api_key=${apiKey}&region=AR&vote_count.gte=1000&sort_by=vote_count.desc&language=es-AR&page=1`);
-        const top10 = movieRes.data.results.slice(0, 10);
-
-        const generosRes = await axios.get(`${strapiBase}/g4-generos`);
-        const existentes = generosRes.data.data;
-
-        for (const movie of top10) {
-            const titulo = movie.title;
-            const sinopsis = movie.overview || "Sin sinopsis";
-            const votos = movie.vote_count;
-            const promedio = movie.vote_average;
-            const generosTexto = movie.genre_ids.map(id => genreMap[id]);
-
-            const yaExiste = await axios.get(`${strapiBase}/g4-peliculas?filters[titulo][$eq]=${encodeURIComponent(titulo)}`);
-            if (yaExiste.data.data.length > 0) {
-                console.log(`Ya existe: ${titulo}`);
-                continue;
-            }
-
-            const generosFinal = [];
-            for (const nombre of generosTexto) {
-                let existente = existentes.find(g => g.attributes.nombre === nombre);
-
-                if (!existente) {
-                    const nuevo = await axios.post(`${strapiBase}/g4-generos`, {
-                        data: { nombre }
-                    });
-                    generosFinal.push(nuevo.data.data.id);
-                    existentes.push(nuevo.data.data);
-                } else {
-                    generosFinal.push(existente.id);
-                }
-            }
-
-            await axios.post(`${strapiBase}/g4-peliculas`, {
-                data: {
-                    titulo,
-                    sinopsis,
-                    cantidad_votos: votos,
-                    promedio_votos: promedio,
-                    g_4_generos: generosFinal
-                }
-            });
-
-            console.log(`Cargada: ${titulo}`);
-        }
-
-        alert("Películas cargadas correctamente en Strapi.");
-        main.innerHTML = "<p>Películas cargadas con éxito.</p>";
-    } catch (error) {
-        console.error("Error al procesar datos:", error);
-        alert("Hubo un error en la conexión con Strapi. Revisá la consola.");
-        main.innerHTML = "<p>Error al cargar datos. Ver consola.</p>";
     }
-});
 
-document.getElementById("api2").addEventListener("click", async () => {
-    const strapiBase = "https://gestionweb.frlp.utn.edu.ar/api";
-
-    const contenedor = document.querySelector("main");
-    contenedor.innerHTML = "<p>Cargando visualización...</p>";
-
+    async function obtenerGenerosDeStrapi() {
     try {
-        const res = await axios.get(`${strapiBase}/g4-peliculas?populate=g_4_generos`);
-        const peliculas = res.data.data;
+        const res = await fetch(STRAPI_GENEROS_URL, {
+        headers: {
+            Authorization: `Bearer ${STRAPI_TOKEN}`,
+        },
+        });
+        const data = await res.json();
 
-        contenedor.innerHTML = "<h2>Películas cargadas</h2><canvas id='grafico' width='600' height='400'></canvas>";
+        if (data && data.data && Array.isArray(data.data)) {
+        data.data.forEach((g) => {
+            if (g.attributes && g.attributes.nombre) {
+            generoStrapiMap[g.attributes.nombre] = g.id;
+            } else if (g.nombre) {
+            generoStrapiMap[g.nombre] = g.id;
+            } else {
+            console.warn("Género sin nombre válido:", g);
+            }
+        });
+        } else {
+        console.warn("Respuesta inesperada de Strapi:", data);
+        }
+    } catch (error) {
+        console.error("Error al obtener géneros de Strapi:", error);
+        throw error;
+    }
+    }
 
-        const labels = [];
-        const promedios = [];
-
-        peliculas.forEach(p => {
-            const datos = p.attributes;
-            const generos = datos.g_4_generos.data.map(g => g.attributes.nombre).join(", ");
-
-            labels.push(datos.titulo);
-            promedios.push(datos.promedio_votos);
-
-            const peliHTML = `
-            <div style="margin-bottom: 20px; padding: 10px; background-color: #fff; border-radius: 8px; box-shadow: 1px 1px 4px #888;">
-                <h3>${datos.titulo}</h3>
-                <p><strong>Sinopsis:</strong> ${datos.sinopsis}</p>
-                <p><strong>Géneros:</strong> ${generos}</p>
-                <p><strong>Votos:</strong> ${datos.cantidad_votos}</p>
-                <p><strong>Promedio:</strong> ${datos.promedio_votos}</p>
-            </div>`;
-            
-            contenedor.innerHTML += peliHTML;
+    async function crearGeneroEnStrapi(nombreGenero) {
+    try {
+        const res = await fetch(STRAPI_GENEROS_URL, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${STRAPI_TOKEN}`,
+        },
+        body: JSON.stringify({
+            data: {
+            nombre: nombreGenero,
+            },
+        }),
         });
 
-        const ctx = document.getElementById('grafico').getContext('2d');
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
+        if (res.ok) {
+        const data = await res.json();
+        generoStrapiMap[nombreGenero] = data.data.id;
+        return data.data.id;
+        } else {
+        const errorText = await res.text();
+        console.error("Error al crear género en Strapi:", errorText);
+        return null;
+        }
+    } catch (error) {
+        console.error("Error de red al crear género en Strapi:", error);
+        return null;
+    }
+    }
+
+    async function obtenerIdsGenerosStrapi(nombresGeneros) {
+    const generosIDs = [];
+
+    for (const nombre of nombresGeneros) {
+        if (generoStrapiMap[nombre]) {
+        generosIDs.push({ id: generoStrapiMap[nombre] });
+        } else {
+        const nuevoId = await crearGeneroEnStrapi(nombre);
+        if (nuevoId) {
+            generosIDs.push({ id: nuevoId });
+        }
+        }
+    }
+
+    return generosIDs;
+    }
+
+    async function cargarAPI() {
+    const contenedor = document.getElementById("pantalla");
+    contenedor.innerHTML = `<div class="message-info">Cargando datos...</div>`;
+
+    try {
+        await obtenerGenerosTMDB();
+        console.log("Géneros de TMDB cargados:", generoLookupTMDB);
+
+        await obtenerGenerosDeStrapi();
+        console.log("Géneros de Strapi cargados:", generoStrapiMap);
+
+        const url = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&region=AR&include_adult=false&sort_by=vote_count.desc&vote_count.gte=1000&language=es-AR&page=1`;
+        const res = await fetch(url);
+        if (!res.ok) throw new Error("Error al obtener datos de TMDB");
+
+        const data = await res.json();
+        const top10 = data.results.slice(0, 10);
+        console.log("Películas obtenidas de TMDB:", top10);
+
+        contenedor.innerHTML = `<div class="message-info">Guardando datos en Strapi...</div>`;
+
+        let uploadsExitosos = 0;
+        for (const peli of top10) {
+        const nombresGeneros = peli.genre_ids
+            .map((id) => generoLookupTMDB[id])
+            .filter(Boolean);
+        console.log(`Procesando película: ${peli.title}`, nombresGeneros);
+
+        const generosIDs = await obtenerIdsGenerosStrapi(nombresGeneros);
+        console.log(`IDs de géneros para ${peli.title}:`, generosIDs);
+
+        try {
+            const resStrapi = await fetch(STRAPI_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${STRAPI_TOKEN}`,
+            },
+            body: JSON.stringify({
+                data: {
+                titulo: peli.title,
+                sinopsis: peli.overview,
+                g_4_generos: generosIDs,
+                cantidad_votos: peli.vote_count,
+                promedio_votos: peli.vote_average,
+                },
+            }),
+            });
+
+            if (resStrapi.ok) {
+            const peliculaCreada = await resStrapi.json();
+            console.log(`Película guardada: ${peli.title}`, peliculaCreada);
+            uploadsExitosos++;
+            } else {
+            const error = await resStrapi.text();
+            console.error(`Error al guardar ${peli.title}:`, error);
+            }
+        } catch (error) {
+            console.error(`Error de red con ${peli.title}:`, error);
+        }
+        }
+
+        if (uploadsExitosos === top10.length) {
+        contenedor.innerHTML = `<div class="message-success">✔ Todas las películas se guardaron correctamente</div>`;
+        } else if (uploadsExitosos > 0) {
+        contenedor.innerHTML = `<div class="message-warning">⚠ Se guardaron ${uploadsExitosos} de ${top10.length} películas</div>`;
+        } else {
+        contenedor.innerHTML = `<div class="message-error">❌ No se pudo guardar ninguna película</div>`;
+        }
+    } catch (error) {
+        console.error("Error en cargarAPI:", error);
+        contenedor.innerHTML = `<div class="message-error">❌ Error: ${error.message}</div>`;
+    }
+    }
+
+        async function verDatos() {
+            const contenedor = document.getElementById("pantalla");
+            contenedor.innerHTML = `<div class="message-info">Cargando datos guardados...</div>`;
+        
+            try {
+            const res = await fetch(`${STRAPI_URL}?populate=g_4_generos&pagination[limit]=10`, {
+                headers: {
+                Authorization: `Bearer ${STRAPI_TOKEN}`,
+                },
+            });
+        
+            if (!res.ok) {
+                throw new Error(`Error ${res.status}: ${await res.text()}`);
+            }
+        
+            const response = await res.json();
+            console.log("Respuesta de Strapi:", response);
+        
+            if (!response.data || !Array.isArray(response.data)) {
+                throw new Error("Estructura de datos inválida");
+            }
+        
+            contenedor.innerHTML = "";
+        
+            // Crear contenedor de gráfico
+            const chartContainer = document.createElement("div");
+            chartContainer.style.width = "100%";
+            chartContainer.style.height = "500px";
+            chartContainer.style.marginBottom = "30px";
+        
+            const canvas = document.createElement("canvas");
+            canvas.id = "grafico";
+            canvas.width = 600;
+            canvas.height = 400;
+            chartContainer.appendChild(canvas);
+            contenedor.appendChild(chartContainer);
+        
+            // Crear contenedor de lista de películas
+            const movieListContainer = document.createElement("div");
+            contenedor.appendChild(movieListContainer);
+        
+            const labels = [];
+            const promedios = [];
+        
+            response.data.forEach((pelicula) => {
+                const attributes = pelicula.attributes || pelicula;
+        
+                const titulo = attributes?.titulo || "Sin título";
+                const sinopsis = attributes?.sinopsis || "Sin sinopsis disponible";
+                const votos = attributes?.cantidad_votos ?? "N/A";
+                const promedio = attributes?.promedio_votos ?? 0;
+                const promedioTexto = promedio.toFixed(1);
+                
+                const generoData = attributes?.g_4_generos?.data;
+                const generos = Array.isArray(generoData) && generoData.length
+                ? generoData.map((g) => g.attributes.documentId).join(", ")
+                : "En consola";
+
+                labels.push(titulo);
+                promedios.push(promedio);
+        
+                movieListContainer.innerHTML += `
+                <div class="card">
+                    <div class="movie-title">${titulo}</div>
+                    <div class="movie-subtitle">${sinopsis}</div>
+                    <div class="movie-genres">Géneros: ${generos}</div>
+                    <div class="movie-votes">Votos: ${votos}</div>
+                    <div class="movie-average">Promedio: ${promedioTexto}</div>
+                </div>
+                `;
+            });
+        
+            // Gráfico con Chart.js
+            const ctx = canvas.getContext("2d");
+            new Chart(ctx, {
+                type: "bar",
+                data: {
                 labels,
                 datasets: [{
-                    label: 'Promedio de Votos',
+                    label: "PROMEDIO DE VOTOS",
                     data: promedios,
-                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
+                    backgroundColor: "rgba(54, 162, 235, 0.6)",
+                    borderColor: "rgba(54, 162, 235, 1)",
                     borderWidth: 1
                 }]
-            },
-            options: {
-                indexAxis: 'y',
+                },
+                options: {
+                indexAxis: "y",
                 responsive: true,
                 plugins: {
                     legend: { display: true },
                     tooltip: {
-                        callbacks: {
-                            label: ctx => ` ${ctx.raw} puntos`
-                        }
+                    callbacks: {
+                        label: ctx => ` ${ctx.raw} puntos`
+                    }
                     }
                 },
                 scales: {
                     x: { beginAtZero: true, max: 10 }
                 }
-            }
-        });
-
-    } catch (err) {
-        console.error("Error al consultar películas:", err);
-        if (err.response?.status === 403) {
-            alert("Permiso denegado desde Strapi. Mostrando datos simulados...");
-            const pelisFake = [
-                {
-                    titulo: "Película simulada 1",
-                    sinopsis: "Un thriller argentino lleno de tensión.",
-                    generos: ["Suspenso", "Drama"],
-                    cantidad_votos: 1350,
-                    promedio_votos: 7.9
-                },
-                {
-                    titulo: "Película simulada 2",
-                    sinopsis: "Una comedia local que rompió récords.",
-                    generos: ["Comedia"],
-                    cantidad_votos: 2100,
-                    promedio_votos: 8.4
                 }
-            ];
-            mostrarPeliculasSimuladas(pelisFake);
-        } else {
-            alert("No se pudieron visualizar los datos. Revisá la consola.");
-            contenedor.innerHTML = "<p>Error al visualizar datos.</p>";
+            });
+        
+            } catch (error) {
+            console.error("Error en verDatos:", error);
+            contenedor.innerHTML = `
+                <div class="message-error">
+                <p><strong>Error:</strong> ${error.message}</p>
+                <p>Revisá la consola para más detalles</p>
+                </div>
+            `;
+            }
         }
-    }
-});
