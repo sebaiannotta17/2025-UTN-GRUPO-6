@@ -1,10 +1,12 @@
-# Trabajo Grupal - Tecnologia y Gestión Web - Grupo 24
+# Trabajo Grupal - Tecnología y Gestión Web - Grupo 24
 
 ## Trabajo Práctico N°2
 
-Este proyecto consiste en el desarrollo de un sitio web en donde consumimos la información de la API, la almacenamos en Strapi y luego la visualizamos.
+Este proyecto consiste en el desarrollo de una aplicación web que permite consultar, almacenar y visualizar información sobre los géneros de películas más populares, integrando el uso de APIs externas y un CMS headless (Strapi).
 
-**Integrantes:**
+---
+
+### **Integrantes**
 - Joaquin Montes
 - Maximo Carpignano
 - Ulises Moran
@@ -13,32 +15,67 @@ Este proyecto consiste en el desarrollo de un sitio web en donde consumimos la i
 
 ---
 
-### ¿Qué tenemos que hacer?
-Se nos pidió obtener los 10 géneros de películas más populares por número de películas asociadas. Para ello, debemos listar los 10 géneros con la mayor cantidad de películas disponibles en la API, mostrando el nombre del género y el conteo de películas.
+## ¿Qué hace la aplicación?
+
+La app permite:
+- Consultar la API de The Movie DB para obtener todos los géneros de películas y la cantidad de películas asociadas a cada uno.
+- Almacenar el top 10 de géneros más populares en Strapi, usando la API provista por la cátedra.
+- Visualizar esos datos en el frontend, tanto en formato de lista como en un gráfico de barras interactivo.
+- Probar la visualización con datos de ejemplo, en caso de que Strapi no esté disponible.
 
 ---
 
-### Pasos del Proyecto 📝
+## **Flujo de la aplicación**
 
-1.  **Generación de Información**: Obtendremos los datos necesarios desde la API de The Movie DB
-2.  **Almacenamiento**: Utilizaremos un botón en nuestra interfaz que, al ser presionado, tomará la información de la API y la guardará en nuestro CMS, Strapi. La instancia de Strapi provista por la cátedra se encuentra en `https://gestionweb.frlp.utn.edu.ar/admin/`.
-3.  **Búsqueda y Visualización**: Una vez almacenados, accederemos a los datos a través de la API de Strapi. Finalmente, presentaremos esta información en el frontend mediante gráficos o tablas para una clara visualización.
+1. **Generación de información**
+   - Al presionar el botón “¡Traer datos de las APIs!”, la app consulta la API de The Movie DB.
+   - Se obtiene la lista de géneros y, para cada uno, se consulta cuántas películas tiene asociadas.
+   - Se ordenan los géneros por cantidad de películas y se selecciona el top 10.
+
+2. **Almacenamiento en Strapi**
+   - El top 10 de géneros se envía a Strapi mediante su API REST.
+   - Antes de guardar, se eliminan los datos anteriores para evitar duplicados.
+   - Los datos quedan almacenados en la colección correspondiente de Strapi.
+
+3. **Búsqueda y visualización**
+   - Al presionar “Ver mis resultados”, la app consulta la API de Strapi para obtener los géneros almacenados.
+   - Se muestran en una lista ordenada y en un gráfico de barras (usando Chart.js) para facilitar la comparación visual.
+   - Si Strapi no está disponible, se puede usar el botón “Probar visualización (modo demo)” para ver un ejemplo de la visualización.
+
+---
+
+## **Tecnologías utilizadas**
+
+- **Frontend:** HTML, CSS (diseño minimalista y responsivo), JavaScript.
+- **APIs externas:** The Movie DB (para obtener géneros y conteos).
+- **Backend/CMS:** Strapi (para almacenar y servir los datos).
+- **Visualización:** Chart.js (para el gráfico de barras).
 
 ---
 
-### Creación de cuenta y autenticación en el sitio
+## **Detalle de las APIs utilizadas**
 
-Para comenzar, me registré en **[The Movie DB](https://developer.themoviedb.org)** y validé mi correo electrónico para activar la cuenta. Luego, accedí a la sección "Settings → API" para generar y copiar mi **API Key**. Para asegurar que todo funcionaba correctamente, realicé pruebas con la URL y la API Key en Postman, confirmando que las llamadas autenticadas devolvían los resultados esperados sin errores.
+- `GET /genre/movie/list`: Obtiene todos los géneros de películas.
+- `GET /discover/movie?with_genres={id}`: Obtiene la cantidad de películas para un género específico.
+- **Strapi API:**  
+  - `POST /api/[coleccion]`: Guarda los datos procesados.
+  - `GET /api/[coleccion]`: Recupera los datos almacenados.
+
+---
+
+## **Cómo usar la app**
+
+1. **Obtener y guardar datos reales**
+   - Haz clic en “¡Traer datos de las APIs!” para consultar y guardar el top 10 en Strapi.
+2. **Visualizar los resultados**
+   - Haz clic en “Ver mis resultados” para ver la lista y el gráfico con los datos reales.
+3. **Modo demo**
+   - Si Strapi no responde, usa “Probar visualización (modo demo)” para ver un ejemplo de la visualización.
 
 ---
 
-### Relevamiento de las APIs necesarias
+## **Notas finales**
 
-Para resolver la problemática, definí las siguientes rutas de la API de The Movie DB:
-
--   `GET /genre/movie/list`: Esta ruta nos permite obtener un listado de todos los géneros de películas disponibles en la API con su respectivo ID y nombre.
--   `GET /discover/movie`: Utilizaremos esta ruta para encontrar películas y filtrar por género usando el parámetro `with_genres`. El resultado de esta llamada nos proporciona el campo `total_results`, que indica la cantidad total de películas para un género específico.
-
-Además, se agregará el parámetro `language=es-AR` a las llamadas para obtener los resultados en español.
-
----
+- El diseño busca ser claro, minimalista y profesional, con efectos visuales modernos pero optimizados para buen rendimiento.
+- El código está comentado y estructurado para facilitar su comprensión y mantenimiento.
+- El proyecto fue realizado con dedicación y
