@@ -66,7 +66,7 @@ La app permite:
 ## **Cómo usar la app**
 
 1. **Obtener y guardar datos reales**
-   - Haz clic en “¡Traer datos de las APIs!” para consultar y guardar el top 10 en Strapi.
+   - Haz clic en “Traer datos de las APIs” para consultar y guardar el top 10 en Strapi.
 2. **Visualizar los resultados**
    - Haz clic en “Ver mis resultados” para ver la lista y el gráfico con los datos reales.
 3. **Modo demo**
