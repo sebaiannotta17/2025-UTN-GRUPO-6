@@ -223,7 +223,7 @@
                 const generoData = attributes?.g_4_generos?.data;
                 const generos = Array.isArray(generoData) && generoData.length
                 ? generoData.map((g) => g.attributes.documentId).join(", ")
-                : "En consola";
+                : ""; // No se sabe por qué los géneros no se mapean en pantalla. Sí aparecen en consola.
 
                 labels.push(titulo);
                 promedios.push(promedio);
@@ -232,7 +232,6 @@
                 <div class="card">
                     <div class="movie-title">${titulo}</div>
                     <div class="movie-subtitle">${sinopsis}</div>
-                    <div class="movie-genres">Géneros: ${generos}</div>
                     <div class="movie-votes">Votos: ${votos}</div>
                     <div class="movie-average">Promedio: ${promedioTexto}</div>
                 </div>
