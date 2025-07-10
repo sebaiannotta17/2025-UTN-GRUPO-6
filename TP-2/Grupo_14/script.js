@@ -193,9 +193,9 @@ async function verDatos() {
       const votos = attributes?.Cantidad_votos ?? "N/A";
       const promedio = attributes?.Promedio_votos?.toFixed(1) ?? "N/A";
 
-      const generos = attributes?.g_14_gens?.data?.length > 0
-        ? attributes.g_14_gens.data.map(g => g.attributes?.nombre).join(", ")
-        : "⚠ No se cargaron los géneros";
+      const generos = Array.isArray(attributes?.g_14_gens) && attributes.g_14_gens.length > 0
+      ? attributes.g_14_gens.map(g => g.nombre).join(", "): "⚠ No se cargaron los géneros";
+
 
       return `
         <div class="card" style="
