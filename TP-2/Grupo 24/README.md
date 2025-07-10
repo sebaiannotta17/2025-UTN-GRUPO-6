@@ -28,7 +28,7 @@ La app permite:
 ## **Flujo de la aplicación**
 
 1. **Generación de información**
-   - Al presionar el botón “¡Traer datos de las APIs!”, la app consulta la API de The Movie DB.
+   - Al presionar el botón "Traer datos de las APIs", la app consulta la API de The Movie DB.
    - Se obtiene la lista de géneros y, para cada uno, se consulta cuántas películas tiene asociadas.
    - Se ordenan los géneros por cantidad de películas y se selecciona el top 10.
 
@@ -74,8 +74,4 @@ La app permite:
 
 ---
 
-## **Notas finales**
-
-- El diseño busca ser claro, minimalista y profesional, con efectos visuales modernos pero optimizados para buen rendimiento.
-- El código está comentado y estructurado para facilitar su comprensión y mantenimiento.
-- El proyecto fue realizado con dedicación y
+### <3
