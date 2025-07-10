@@ -1,4 +1,9 @@
+
 # Trabajo Grupal - Tecnología y Gestión Web - Grupo 24
+
+<p align="center">
+  <img src="./64b78c69-3842-429a-868c-00ce8130bc82.png" alt="Vista de la aplicación" width="700"/>
+</p>
 
 ## Trabajo Práctico N°2
 
