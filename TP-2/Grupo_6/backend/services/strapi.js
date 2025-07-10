@@ -19,28 +19,33 @@ async function strapiFetch(path, opts = {}) {
 }
 
 // Busca o crea una entidad (género o compañía)
-async function obtenerOCrearEntidad(nombre, tipo) {
+async function obtenerOCrearEntidad(entidad, tipo) {
+  const nombre = typeof entidad === "string" ? entidad : entidad.nombre;
+
   // 1) Buscar
   const busqRes = await strapiFetch(
     `/api/${tipo}?filters[nombre][$eq]=${encodeURIComponent(nombre)}`
   );
   const busqJson = await busqRes.json();
-  console.log(`[${tipo}] buscar "${nombre}":`, busqJson); // para debuggear
 
   if (Array.isArray(busqJson.data) && busqJson.data.length) {
     return busqJson.data[0].id;
   }
 
   // 2) Crear
+  const data = { nombre };
+  if (typeof entidad === "object" && entidad.logo) {
+    data.logo = entidad.logo;
+  }
+
   const crearRes = await strapiFetch(`/api/${tipo}`, {
     method: "POST",
-    body: JSON.stringify({ data: { nombre } }),
+    body: JSON.stringify({ data }),
   });
   const crearJson = await crearRes.json();
-  console.log(`[${tipo}] creado "${nombre}":`, crearJson); // para debuggear
-
   return crearJson.data.id;
 }
+
 
 // Crea la película en Strapi (si no existe)
 async function crearPelicula(datos) {
@@ -83,6 +88,7 @@ async function crearPelicula(datos) {
 
 // Controlador para cargar Matrix
 export async function cargarPelicula() {
+  await limpiarStrapi()
   const datos = await obtenerDatosDeTheMatrix();
   const pelicula = await crearPelicula(datos);
   return pelicula;
@@ -90,7 +96,7 @@ export async function cargarPelicula() {
 
 // Controlador para recuperar películas
 export async function recuperarPeliculas() {
-  const res = await strapiFetch("/api/g6-peliculas");
+  const res = await strapiFetch("/api/g6-peliculas?populate=*");
   const json = await res.json();
   return json;
 }

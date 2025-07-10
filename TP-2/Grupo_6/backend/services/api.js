@@ -1,5 +1,5 @@
 import fetch from "node-fetch";
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 dotenv.config();
 
 const API_TOKEN = process.env.API_TOKEN;
@@ -15,8 +15,7 @@ const options = {
 // Paso 1: Buscar la primera película que coincida con "matrix"
 async function obtenerId() {
   const url =
-  "https://api.themoviedb.org/3/search/movie?query=The%20Matrix&include_adult=false&language=en-US&page=1";
-
+    "https://api.themoviedb.org/3/search/movie?query=The%20Matrix&include_adult=false&language=en-US&page=1";
 
   const res = await fetch(url, options);
   const data = await res.json();
@@ -43,7 +42,12 @@ export async function obtenerDatosDeTheMatrix() {
     nombre: data.title,
     generos: data.genres?.map((g) => g.name) || [],
     pagina_web: data.homepage || "",
-    companias: data.production_companies?.map((c) => c.name) || [],
+    companias: Array.isArray(data.production_companies)
+      ? data.production_companies.map((c) => ({
+          nombre: c.name,
+          logo: c.logo_path,
+        }))
+      : [],
     estreno: data.release_date,
     recaudacion: data.revenue,
   };
