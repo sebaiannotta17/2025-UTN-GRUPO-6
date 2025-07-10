@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TP2 - Strapi</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="scripts.js"></script>
+</head>
+<body>
+    <h1>Bienvenido a TP2 - Strapi</h1>
+    <p>Esta es una aplicación de ejemplo utilizando Strapi como backend.</p>
+    <div id="content">
+        <div id="sidebar"></div>
+        
+        <div id="main">
+            <label>Desde: <input type="date" id="fechaInicio"></label>
+            <label>Hasta: <input type="date" id="fechaFin"></label>
+            <label>Popularidad: 
+                <select id="popularidad">
+                    <option value="asc">Ascendente</option>
+                    <option value="desc">Descendente</option>
+                </select>
+            </label>
+            <button onclick="buscarPeliculas()">Buscar</button>
+
+
+        </div>
+    </div>
+    <div id="footer"></div>
+</body>
+</html>
