@@ -1,13 +1,13 @@
 # Trabajo Práctico 2 - Grupo 4
 
-## Integrantes <br>
+## INTEGRANTES <br>
 Piazza Damian - Legajo 33400 <br>
 Bucchino Ulises - Legajo 33326 <br>
 Piquet Leonel - Legajo 33725 <br>
 Garcia Amendola Martina - Legajo 33093 <br>
 Domato Tobias - Legajo 33271 <br>
 
-## Tareas realizadas <br>
+## TAREAS REALIZADAS <br>
 
 ### INVESTIGACIÓN DEL SITIO https://developer.themoviedb.org <br>
 INTEGRANTES: Domato Tobias y Garcia Amendola Martina. <br>
