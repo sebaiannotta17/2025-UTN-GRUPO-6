@@ -1,145 +1,34 @@
-#header {
-    background-color: #f0f0f0;
-    padding: 6px;
-    text-align: center;
-    font-size: 12px;
-    font-weight: bold;
-    position: flex;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif
+  ;
 }
 
-
-#pie {
-    position: fixed;
-    bottom: 0;
-    left: 0; /* empieza desde la izquierda */
-    width: 100%; /* ocupa todo el ancho */
-    background-color: purple;
-    padding: 7px;
-    color: white;
-    font-weight: bold;
-    text-align: right; /* centrado el texto */
-    box-sizing: border-box;
+html, body {
+  width: 100%;
+  height: 100%;
 }
 
-
-
-.logo {
-    float: left;
-    width: 60x;
-    height: 60px;
-    margin-right: 10px;
+body {
+  display: flex;
+  flex-direction: column;
+  background-color: #f6f6ed;
 }
 
-
-.titulo-menu {
-    background-color: purple; /* Un color más oscuro que el fondo */
-    margin: 1; /* Que no se despegue */
-    padding: 15px 10px; /* Espaciado interno */
-    font-size: 22px;
-    font-weight: bold;
-    text-align: center;
-    color: #ffffff;
-    text-shadow: 1px 1px 3px #000000;
-    font-family: 'Arial', sans-serif;
-     /* Una línea separadora abajo */
+header {
+  background-color: #24241f;
+  color: #fff;
 }
 
-
-
-.menu-lateral {
-    position: fixed; /* Siempre fijo en pantalla */
-    bottom: 1;
-    left: 0;
-    width: 200px; /* Ancho del menú */
-    height: 100vh; /* 100% de la altura de la ventana */
-    background-color: #afc19c; /* Color de fondo */
-    color: white; /* Color del texto */
-    padding-top: 20px;
-  }
-  /* #afc19c */
-  .menu-lateral ul {
-    list-style: none; /* Sacar viñetas */
-    padding: 0;
-    margin: 0;
-    
-     /* Evitar que el texto se desborde */
-  }
-  
-  .menu-lateral li {
-    margin: 20px 0;
-    text-align: center;
-  }
-  
-
-  
-    .menu-lateral button {
-        
-        background: linear-gradient(135deg, #6D9F71, #4CAF50); /* Degradado verde */
-        border: none;
-        color: white;
-        padding: 14px 26px;
-        text-align: center;
-        text-decoration: none;
-        font-size: 16px;
-        margin: 10px auto;
-        display: block;
-        cursor: pointer;
-        border-radius: 25px; /* Más redondeado */
-        transition: background 0.4s, transform 0.2s;
-        width: 80%; /* Que no sea tan ancho */
-        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Sombras */
-    }
-
-    .menu-lateral button:hover {
-        background: linear-gradient(135deg, #4CAF50, #6D9F71); /* Invertir degradado */
-        transform: scale(1.15); /* Efecto "agrandar" */
-    }
-    .menu-lateral h2 {
-        text-align: center;
-    }
-    
-
-
-
-.contenido{
-
-    margin-left: 200px; /* Deja espacio para el menú lateral */
-    margin-top: 0; /* Deja espacio para el header */
-    margin-bottom: 40px; /* Deja espacio para el footer */
-    display: fixed; /* Activa Flexbox */
-    justify-content: center; /* Centra horizontalmente */
-    align-items: center; /* Centra verticalmente */
-    height: 100; /* Calcula el espacio restante (header + footer) */
-    background-color: #f9f9f9; /* Opcional: color de fondo para visualizar */
+main {
+  flex: 1;
+  overflow-y: auto; /* Para scroll interno si el contenido lo necesita */
 }
 
-.contenido h1 {
-
-
-    text-align: center;
-}
-
-#api1 {
-    margin-top: 100px;
-    margin-left: 400px; /* Deja espacio para el menú lateral */
-}
-
-.frase1 {
-    text-shadow: 2px 2px 5px #FF5733;
-}
-.frase2 {
-    text-shadow: 3px 3px 8px #33C1FF;
-}
-.frase3 {
-    text-shadow: 1px 1px 3px #28A745;
-}
-.frase-container {
-    margin: 20px;
-    font-size: 1.5em;
-    font-weight: bold;
-}
-.expectativa {
-    margin: 20px;
-    font-size: 1.2em;
-    font-style: italic;
+footer {
+  background-color: #24241f;
+  color: white;
+  padding: 1rem 2rem;
 }
