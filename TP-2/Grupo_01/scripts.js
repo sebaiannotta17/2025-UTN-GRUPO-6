@@ -1,6 +1,6 @@
 const tokenTMDB = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4ZDIwZTU1ZjFkNjY5NGExMzhjODUyZWIyZGU0NzdiYyIsIm5iZiI6MTc1MTczODk4NC4yMjU5OTk4LCJzdWIiOiI2ODY5NmE2OGRjNjFkM2JmOTY1M2Y2OTkiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.-rq4PSyWpmy5XjeQmo0NunVmLP-Xq7ztAekvjkki6Ws";
 const tokenStrapi = "099da4cc6cbb36bf7af8de6f1f241f8c81e49fce15709c4cfcae1313090fa2c1ac8703b0179863b4eb2739ea65ae435e90999adb870d49f9f94dcadd88999763119edca01a6b34c25be92a80ed30db1bcacb20df40e4e7f45542bd501f059201ad578c18a11e4f5cd592cb25d6c31a054409caa99f11b6d2391440e9c72611ea";
-const strapiUrl = "https://gestionweb.frlp.utn.edu.ar/api/actors"; // Reemplazá con tu URL de Strapi
+const strapiUrl = "https://gestionweb.frlp.utn.edu.ar/api/actors"; 
 
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("btn-cargar").onclick = () => {
@@ -29,7 +29,6 @@ async function loadData() {
         const apellido = resto.join(" ") || "(Sin apellido)";
         const actorId = actor.id;
 
-        // Películas del actor
         const filmResp = await fetch(`https://api.themoviedb.org/3/person/${actorId}/movie_credits?language=es-ES`, {
             headers: {
                 Authorization: `Bearer ${tokenTMDB}`
@@ -52,7 +51,6 @@ async function loadData() {
             vote_average
         } = lastMovie;
 
-        // Obtener géneros por ID
         const genresResp = await fetch("https://api.themoviedb.org/3/genre/movie/list?language=es-ES", {
             headers: {
                 Authorization: `Bearer ${tokenTMDB}`
@@ -73,7 +71,6 @@ async function loadData() {
             promedio_votos: vote_average
         });
 
-        // POST a Strapi
         const strapiResponse = await fetch(strapiUrl, {
             method: "POST",
             headers: {
