@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tp2 TyG Web Grupo 6</title>
+  <link rel="stylesheet" type="text/css" href="styles.css" />
+</head>
+<body>
+  <div id="header">
+    <header>
+      <img class="logo" src="../frontend/Logo-Banfield-Escudo.png" alt="Logo" width="70" height="70" />
+      <h1>Trabajo Práctico N°2</h1>
+      <h2>Grupo 6</h2>
+    </header>
+  </div>
+
+  <div class="menu-lateral">
+    <h2 class="titulo-menu">Acciones disponibles</h2>
+    <ul>
+      <li><button onclick="cargarPelicula()">Cargar película 'Matrix' al backend</button></li>
+      <li><button onclick="recuperarPeliculas()">Recuperar películas desde backend</button></li>
+    </ul>
+  </div>
+
+  <div class="contenido">
+    <main>
+      <h1>Respuesta del backend:</h1>
+      <div id="resultado"></div>
+
+      <div class="frase-container" id="fraseAleatoria"></div>
+
+      
+    </main>
+  </div>
+
+  <div id="pie">
+    <footer>Tecnología y Gestión Web 2025</footer>
+  </div>
+
+  <script>
+   
+
+    // Conexión con backend
+    async function cargarPelicula() {
+      try {
+        const res = await fetch("http://localhost:3000/cargar-matrix");
+        const data = await res.json();
+        document.getElementById("resultado").innerText = JSON.stringify(data, null, 2);
+      } catch (err) {
+        document.getElementById("resultado").innerText = "Error al cargar película: " + err.message;
+      }
+    }
+
+    async function recuperarPeliculas() {
+      try {
+        const res = await fetch("http://localhost:3000/recuperar-matrix");
+        const data = await res.json();
+        document.getElementById("resultado").innerText = JSON.stringify(data, null, 2);
+      } catch (err) {
+        document.getElementById("resultado").innerText = "Error al recuperar películas: " + err.message;
+      }
+    }
+  </script>
+</body>
+</html>
