@@ -1,12 +1,16 @@
+    
+    // Claves y URLs de las APIs
     const API_KEY = "91c6195ee5c03e5ff0f7a7c4c8088776";
     const STRAPI_URL = "https://gestionweb.frlp.utn.edu.ar/api/g4-peliculas";
     const STRAPI_GENEROS_URL = "https://gestionweb.frlp.utn.edu.ar/api/g4-generos";
     const STRAPI_TOKEN =
     "099da4cc6cbb36bf7af8de6f1f241f8c81e49fce15709c4cfcae1313090fa2c1ac8703b0179863b4eb2739ea65ae435e90999adb870d49f9f94dcadd88999763119edca01a6b34c25be92a80ed30db1bcacb20df40e4e7f45542bd501f059201ad578c18a11e4f5cd592cb25d6c31a054409caa99f11b6d2391440e9c72611ea";
 
+    // Diccionarios para mapear
     let generoLookupTMDB = {};
     let generoStrapiMap = {};
 
+    // GET https://api.themoviedb.org/3/genre/movie/list?api_key=...&language=es-AR - Obtener y mapear los generos de peliculas por ID desde TMDB
     async function obtenerGenerosTMDB() {
     const res = await fetch(
         `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=es-AR`
@@ -17,6 +21,7 @@
     });
     }
 
+    // GET https://gestionweb.frlp.utn.edu.ar/api/g4-generos - Obtener los generos existentes desde Strapi y mapear por nombre
     async function obtenerGenerosDeStrapi() {
     try {
         const res = await fetch(STRAPI_GENEROS_URL, {
@@ -45,6 +50,7 @@
     }
     }
 
+    // POST https://gestionweb.frlp.utn.edu.ar/api/g4-generos - Crear un nuevo genero en Strapi y retornar su ID
     async function crearGeneroEnStrapi(nombreGenero) {
     try {
         const res = await fetch(STRAPI_GENEROS_URL, {
@@ -75,6 +81,7 @@
     }
     }
 
+    // Generar un array de IDs de generos desde el Strapi, crear los que no existan mediante POSTw
     async function obtenerIdsGenerosStrapi(nombresGeneros) {
     const generosIDs = [];
 
@@ -92,6 +99,7 @@
     return generosIDs;
     }
 
+    // GET https://api.themoviedb.org/3/discover/movie - Obtener las 10 peliculas mas votadas de TMDB y guardar en Strapi via POST
     async function cargarAPI() {
     const contenedor = document.getElementById("pantalla");
     contenedor.innerHTML = `<div class="message-info">Cargando datos...</div>`;
@@ -171,6 +179,7 @@
             const contenedor = document.getElementById("pantalla");
             contenedor.innerHTML = `<div class="message-info">Cargando datos guardados...</div>`;
         
+            // GET a Strapi para obtener las 10 peliculas con sus generos relacionados (populate=g_4_generos), usando paginacion
             try {
             const res = await fetch(`${STRAPI_URL}?populate=g_4_generos&pagination[limit]=10`, {
                 headers: {
@@ -212,33 +221,35 @@
             const promedios = [];
         
             response.data.forEach((pelicula) => {
-                const attributes = pelicula.attributes || pelicula;
-        
-                const titulo = attributes?.titulo || "Sin título";
-                const sinopsis = attributes?.sinopsis || "Sin sinopsis disponible";
-                const votos = attributes?.cantidad_votos ?? "N/A";
-                const promedio = attributes?.promedio_votos ?? 0;
-                const promedioTexto = promedio.toFixed(1);
-                
-                const generoData = attributes?.g_4_generos?.data;
-                const generos = Array.isArray(generoData) && generoData.length
-                ? generoData.map((g) => g.attributes.documentId).join(", ")
-                : ""; // No se sabe por qué los géneros no se mapean en pantalla. Sí aparecen en consola.
+            const attributes = pelicula.attributes || pelicula;
 
-                labels.push(titulo);
-                promedios.push(promedio);
-        
-                movieListContainer.innerHTML += `
+            const titulo = attributes?.titulo || "Sin título";
+            const sinopsis = attributes?.sinopsis || "Sin sinopsis disponible";
+            const votos = attributes?.cantidad_votos ?? "N/A";
+            const promedio = attributes?.promedio_votos ?? 0;
+            const promedioTexto = promedio.toFixed(1);
+
+            const generoData = attributes?.g_4_generos || [];
+
+            const generos = Array.isArray(generoData) && generoData.length
+                ? generoData.map((g) => g.nombre).join(", ")
+                : "(sin géneros)";
+
+            labels.push(titulo);
+            promedios.push(promedio);
+
+            movieListContainer.innerHTML += `
                 <div class="card">
                     <div class="movie-title">${titulo}</div>
                     <div class="movie-subtitle">${sinopsis}</div>
                     <div class="movie-votes">Votos: ${votos}</div>
                     <div class="movie-average">Promedio: ${promedioTexto}</div>
+                    <div class="movie-genres">Géneros: ${generos}</div>
                 </div>
-                `;
-            });
+            `;
+        });
         
-            // Gráfico con Chart.js
+            // Grafico con Chart.js
             const ctx = canvas.getContext("2d");
             new Chart(ctx, {
                 type: "bar",
