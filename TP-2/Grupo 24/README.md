@@ -20,7 +20,7 @@ Se nos pidió obtener los 10 géneros de películas más populares por número d
 
 ### Pasos del Proyecto 📝
 
-1.  [**Generación de Información**: Obtendremos los datos necesarios desde la API de The Movie DB
+1.  **Generación de Información**: Obtendremos los datos necesarios desde la API de The Movie DB
 2.  **Almacenamiento**: Utilizaremos un botón en nuestra interfaz que, al ser presionado, tomará la información de la API y la guardará en nuestro CMS, Strapi. La instancia de Strapi provista por la cátedra se encuentra en `https://gestionweb.frlp.utn.edu.ar/admin/`.
 3.  **Búsqueda y Visualización**: Una vez almacenados, accederemos a los datos a través de la API de Strapi. Finalmente, presentaremos esta información en el frontend mediante gráficos o tablas para una clara visualización.
 
