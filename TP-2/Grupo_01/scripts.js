@@ -105,23 +105,14 @@ async function loadData() {
 
 async function showResults() {
     const response = await fetch(strapiUrl, {
-        headers: {
-            Authorization: `Bearer ${tokenStrapi}`
-        }
+        headers: { Authorization: `Bearer ${tokenStrapi}` }
     });
-
     const data = await response.json();
-    console.log("Datos recibidos de Strapi:", data);
 
     const uniqueEntries = new Map();
-
     for (const entry of data.data) {
         const actor = entry.attributes || entry;
-
-        if (!actor.nombre || !actor.apellido || !actor.pelicula) {
-            console.warn("Entrada inválida o incompleta:", entry);
-            continue;
-        }
+        if (!actor.nombre || !actor.apellido || !actor.pelicula) continue;
 
         const key = `${actor.nombre}-${actor.apellido}-${actor.pelicula}`;
         if (!uniqueEntries.has(key)) {
@@ -133,8 +124,7 @@ async function showResults() {
         <table border="1" cellspacing="0" cellpadding="5">
             <thead>
                 <tr>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
+                    <th>Nombre y Apellido</th>
                     <th>Película</th>
                     <th>Estreno</th>
                     <th>Géneros</th>
@@ -148,11 +138,10 @@ async function showResults() {
     for (const actor of uniqueEntries.values()) {
         tablaHTML += `
             <tr>
-                <td>${actor.nombre}</td>
-                <td>${actor.apellido}</td>
+                <td>${actor.nombre} ${actor.apellido}</td>
                 <td>${actor.pelicula}</td>
                 <td>${actor.estreno}</td>
-                <td>${Array.isArray(actor.generos) ? actor.generos.join(", ") : "Desconocido"}</td>
+                <td>${Array.isArray(actor.generos) ? actor.generos.join("<br>") : "Desconocido"}</td>
                 <td>${actor.cantidad_votos}</td>
                 <td>${actor.promedio_votos}</td>
             </tr>
