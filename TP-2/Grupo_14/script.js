@@ -91,7 +91,7 @@ async function obtenerIdsGenerosStrapi(nombresGeneros) {
 
 async function cargarAPI() {
   const contenedor = document.getElementById("contenido");
-  contenedor.innerHTML = "<p>Cargando datos...</p>";
+  contenedor.innerHTML = `<div class="message-info">Cargando datos...</div>`;
 
   try {
     await obtenerGenerosTMDB();
@@ -108,7 +108,7 @@ async function cargarAPI() {
     const top10 = data.results.slice(0, 10);
     console.log("Películas obtenidas de TMDB:", top10);
 
-    contenedor.innerHTML = "<p>Guardando datos en Strapi...</p>";
+    contenedor.innerHTML = `<div class="message-info">Guardando datos en Strapi...</div>`;
 
     let uploadsExitosos = 0;
     for (const peli of top10) {
@@ -150,22 +150,22 @@ async function cargarAPI() {
     }
 
     if (uploadsExitosos === top10.length) {
-      contenedor.innerHTML = `<p>✔ Todas las películas se guardaron correctamente</p>`;
+      contenedor.innerHTML = `<div class="message-success">✔ Todas las películas se guardaron correctamente</div>`;
     } else if (uploadsExitosos > 0) {
-      contenedor.innerHTML = `<p>⚠ Se guardaron ${uploadsExitosos} de ${top10.length} películas</p>`;
+      contenedor.innerHTML = `<div class="message-warning">⚠ Se guardaron ${uploadsExitosos} de ${top10.length} películas</div>`;
     } else {
-      contenedor.innerHTML = `<p>❌ No se pudo guardar ninguna película</p>`;
+      contenedor.innerHTML = `<div class="message-error">❌ No se pudo guardar ninguna película</div>`;
     }
 
   } catch (error) {
     console.error("Error en cargarAPI:", error);
-    contenedor.innerHTML = `<p>❌ Error: ${error.message}</p>`;
+    contenedor.innerHTML = `<div class="message-error">❌ Error: ${error.message}</div>`;
   }
 }
 
 async function verDatos() {
   const contenedor = document.getElementById("contenido");
-  contenedor.innerHTML = "<p>Cargando datos guardados...</p>";
+  contenedor.innerHTML = `<div class="message-info">Cargando datos guardados...</div>`;
 
   try {
     const res = await fetch(`${STRAPI_URL}?populate=g_14_gens&pagination[limit]=10`, {
@@ -185,7 +185,52 @@ async function verDatos() {
       throw new Error("Estructura de datos inválida");
     }
 
-    contenedor.innerHTML = response.data.map(pelicula => {
+    // Clear previous content
+    contenedor.innerHTML = '';
+
+    // Create a container for the chart
+    const chartContainer = document.createElement('div');
+    chartContainer.id = 'chart_div';
+    chartContainer.style.width = '100%';
+    chartContainer.style.height = '500px';
+    contenedor.appendChild(chartContainer);
+
+    // Create a container for the movie list
+    const movieListContainer = document.createElement('div');
+    contenedor.appendChild(movieListContainer);
+
+    // Load Google Charts
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+      const chartData = [['Película', 'Promedio de Votos']];
+      response.data.forEach(pelicula => {
+        const attributes = pelicula.attributes || pelicula;
+        const titulo = attributes?.Titulo || "Sin título";
+        const promedio = attributes?.Promedio_votos ?? 0;
+        chartData.push([titulo, promedio]);
+      });
+
+      const data = google.visualization.arrayToDataTable(chartData);
+
+      const options = {
+        title: 'Promedio de Votos de Películas',
+        chartArea: {width: '50%'},
+        hAxis: {
+          title: 'Promedio de Votos',
+          minValue: 0
+        },
+        vAxis: {
+          title: 'Película'
+        }
+      };
+
+      const chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+      chart.draw(data, options);
+    }
+
+    movieListContainer.innerHTML = response.data.map(pelicula => {
       const attributes = pelicula.attributes || pelicula;
 
       const titulo = attributes?.Titulo || "Sin título";
@@ -198,19 +243,11 @@ async function verDatos() {
 
 
       return `
-        <div class="card" style="
-          margin: 1rem;
-          padding: 1.5rem;
-          border: 1px solid #ddd;
-          border-radius: 8px;
-          background: white;
-          box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        ">
-          <h3 style="margin-top: 0; color: #333;">${titulo}</h3>
-          <p><strong style="color: #555;">Géneros:</strong> ${generos}</p>
-          <p><strong style="color: #555;">Sinopsis:</strong> ${sinopsis}</p>
-          <p><strong style="color: #555;">Votos:</strong> ${votos}</p>
-          <p><strong style="color: #555;">Promedio:</strong> ${promedio}</p>
+        <div class="card">
+          <div class="movie-title">${titulo}</div>
+          <div class="movie-subtitle">${sinopsis}</div>
+          <div class="movie-votes">Votos: ${votos}</div>
+          <div class="movie-average">Promedio: ${promedio}</div>
         </div>
       `;
     }).join("");
@@ -218,13 +255,7 @@ async function verDatos() {
   } catch (error) {
     console.error("Error en verDatos:", error);
     contenedor.innerHTML = `
-      <div style="
-        color: #721c24;
-        background-color: #f8d7da;
-        border: 1px solid #f5c6cb;
-        padding: 1rem;
-        border-radius: 4px;
-      ">
+      <div class="message-error">
         <p><strong>Error:</strong> ${error.message}</p>
         <p>Revisá la consola para más detalles</p>
       </div>
