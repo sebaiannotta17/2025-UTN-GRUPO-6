@@ -2,12 +2,12 @@ let googleChartsLoaded = false;
 
 google.charts.load('current', { packages: ['geochart'] });
 google.charts.setOnLoadCallback(() => {
-  googleChartsLoaded = true;
+    googleChartsLoaded = true;
 });
 
 google.charts.load('current', { packages: ['corechart'] });
 google.charts.setOnLoadCallback(() => {
-  window.googleChartsLoaded = true;
+    window.googleChartsLoaded = true;
 });
 
 const getSeries = async () => {
@@ -37,8 +37,8 @@ const visualizar = async () => {
     visualizarLista(series, container);
     container.appendChild(document.createElement('hr'));
     if (!googleChartsLoaded) {
-    console.log('Google Charts no está listo aún');
-    return;
+        console.log('Google Charts no está listo aún');
+        return;
     }
     visualizarAnalytics(series, container);
 }
@@ -49,7 +49,7 @@ const visualizarLista = (series, container) => {
     lista.className = 'series-lista';
     series.data.forEach(async (serie) => {
         const card = document.createElement('div');
-        const generos = serie.grupo_5_generos.map(genero => {          
+        const generos = serie.grupo_5_generos.map(genero => {
             return `<span class="badge bg-secondary mr-2">${genero.nombre}</span>`;
         }).join('');
         card.className = 'card mb-3';
@@ -79,7 +79,7 @@ const visualizarAnalytics = (series, container) => {
     const chartDiv = document.createElement("div");
     chartDiv.style.width = "900px";
     chartDiv.style.height = "500px";
-    chartDiv.style.margin = "0 auto"
+    chartDiv.style.margin = "0 auto";
     container.appendChild(chartDiv);
 
     const datosPorPais = {};
@@ -89,91 +89,108 @@ const visualizarAnalytics = (series, container) => {
         const popularidad = parseFloat(serie.popularidad) || 0;
         let generos = [];
         if (Array.isArray(serie.grupo_5_generos)) {
-          generos = serie.grupo_5_generos.map(g => g.nombre.trim());
+            generos = serie.grupo_5_generos.map(g => g.nombre.trim());
         } else if (serie.grupo_5_generos && typeof serie.grupo_5_generos === 'object') {
-          generos = [serie.grupo_5_generos.nombre.trim()];
+            generos = [serie.grupo_5_generos.nombre.trim()];
         } else {
-          generos = ['No especificado'];
+            generos = ['No especificado'];
         }
-  
-        if (!pais) return;  
+        if (!pais) return;
         if (!datosPorPais[pais]) {
-                datosPorPais[pais] = {
+            datosPorPais[pais] = {
                 popularidadTotal: 0,
+                cantidadSeries: 0,
                 generos: {}
             };
-        }   
-        datosPorPais[pais].popularidadTotal += popularidad; 
+        }
+        datosPorPais[pais].popularidadTotal += popularidad;
+        datosPorPais[pais].cantidadSeries += 1;
         generos.forEach((genero) => {
             if (!datosPorPais[pais].generos[genero]) {
                 datosPorPais[pais].generos[genero] = 0;
             }
-                datosPorPais[pais].generos[genero] += popularidad;
+            datosPorPais[pais].generos[genero] += popularidad;
         });
-    }); 
-    const dataArray = [['Country', 'Popularity', { type: 'string', role: 'tooltip' }]];
+    });
+
+    const dataArray = [['Country', 'Average Popularity', { type: 'string', role: 'tooltip' }]];
     for (const pais in datosPorPais) {
         const datos = datosPorPais[pais];
         const generos = datos.generos;
+        const promedioPopularidad = datos.cantidadSeries > 0 ? datos.popularidadTotal / datos.cantidadSeries : 0;
 
-    let generoMasVisto = "";
-    let maxPopularidad = -1;
-    for (const genero in generos) {
-      if (generos[genero] > maxPopularidad) {
-        maxPopularidad = generos[genero];
-        generoMasVisto = genero;
-      }
+        let generoMasVisto = "";
+        let maxPopularidad = -1;
+        for (const genero in generos) {
+            if (generos[genero] > maxPopularidad) {
+                maxPopularidad = generos[genero];
+                generoMasVisto = genero;
+            }
+        }
+
+        const tooltip = `Popularidad promedio: ${promedioPopularidad.toFixed(2)}\nGénero más visto: ${generoMasVisto}`;
+        dataArray.push([pais, promedioPopularidad, tooltip]);
     }
 
-    const tooltip = `Popularidad total: ${datos.popularidadTotal.toFixed(2)}\nGénero más visto: ${generoMasVisto}`;
-    dataArray.push([pais, datos.popularidadTotal, tooltip]);
-  }
+    const data = google.visualization.arrayToDataTable(dataArray);
+    const options = {
+        tooltip: { isHtml: false }
+    };
 
-  const data = google.visualization.arrayToDataTable(dataArray);
-  const options = {
-    tooltip: { isHtml: false }
-  };
-  const chart = new google.visualization.GeoChart(chartDiv);
-  chart.draw(data, options);
+    const chartTitle = document.createElement('h3');
+    chartTitle.textContent = 'Popularidad por país de origen (+ género más visto por país)';
+    chartTitle.style.textAlign = 'center';
+    chartTitle.style.margin = '20px 0 10px 0';
+    container.insertBefore(chartTitle, chartDiv);
+
+    const chart = new google.visualization.GeoChart(chartDiv);
+    chart.draw(data, options);
 
 
-  const CakeDiv = document.createElement("div");
-  CakeDiv.style.width = "900px";
-  CakeDiv.style.height = "500px";
-  CakeDiv.style.margin = "0 auto"
-  container.appendChild(CakeDiv);
-  const popularidadPorGenero = {};
-  
-  series.data.forEach((serie) => {
-      const popularidad = parseFloat(serie.popularidad) || 0;
-      let generos = [];
-      if (Array.isArray(serie.grupo_5_generos)) {
-        generos = serie.grupo_5_generos.map(g => g.nombre.trim());
-      } else if (serie.grupo_5_generos && typeof serie.grupo_5_generos === 'object') {
-        generos = [serie.grupo_5_generos.nombre.trim()];
-      } else {
-        generos = ['No especificado'];
-      }
+    const CakeDiv = document.createElement("div");
+    CakeDiv.style.width = "900px";
+    CakeDiv.style.height = "500px";
+    CakeDiv.style.margin = "0 auto";
+    container.appendChild(CakeDiv);
 
-      generos.forEach((genero) => {
-          if (!popularidadPorGenero[genero]) {
-              popularidadPorGenero[genero] = 0;
+    const popularidadPorGenero = {};
+    const cantidadPorGenero = {};
+
+    series.data.forEach((serie) => {
+        const popularidad = parseFloat(serie.popularidad) || 0;
+        let generos = [];
+        if (Array.isArray(serie.grupo_5_generos)) {
+            generos = serie.grupo_5_generos.map(g => g.nombre.trim());
+        } else if (serie.grupo_5_generos && typeof serie.grupo_5_generos === 'object') {
+            generos = [serie.grupo_5_generos.nombre.trim()];
+        } else {
+            generos = ['No especificado'];
+        }
+
+        generos.forEach((genero) => {
+            if (!popularidadPorGenero[genero]) {
+                popularidadPorGenero[genero] = 0;
+                cantidadPorGenero[genero] = 0;
             }
             popularidadPorGenero[genero] += popularidad;
+            cantidadPorGenero[genero] += 1;
         });
     });
-    
-    const cakeDataArray = [['Género', 'Popularidad']];
+
+    const cakeDataArray = [['Género', 'Popularidad promedio']];
     for (const genero in popularidadPorGenero) {
-        cakeDataArray.push([genero, popularidadPorGenero[genero]]);
+        const promedio = cantidadPorGenero[genero] > 0
+            ? popularidadPorGenero[genero] / cantidadPorGenero[genero]
+            : 0;
+        cakeDataArray.push([genero, promedio]);
     }
-    
+
     const cakeData = google.visualization.arrayToDataTable(cakeDataArray);
-    
+
     const cakeOptions = {
-        title: 'Popularidad total por género'
+        title: 'Popularidad promedio por género'
     };
-    
+
     const cakeChart = new google.visualization.PieChart(CakeDiv);
     cakeChart.draw(cakeData, cakeOptions);
 
