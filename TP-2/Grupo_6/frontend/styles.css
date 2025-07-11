@@ -24,11 +24,29 @@ header {
 
 main {
   flex: 1;
-  overflow-y: auto; /* Para scroll interno si el contenido lo necesita */
+  overflow-y: auto; 
 }
 
 footer {
   background-color: #24241f;
   color: white;
   padding: 1rem 2rem;
+}
+/* Para cambiar el color de las flechas del carrusel */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: invert(1) grayscale(100%) brightness(200%); 
+}
+
+.carousel-item {
+  height: 250px; 
+}
+#logo {
+  height: 130px;
+  
+}
+.centrar{
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

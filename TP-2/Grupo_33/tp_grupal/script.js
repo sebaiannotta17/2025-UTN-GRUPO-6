@@ -3,7 +3,6 @@ const API_KEY = 'f9b1a141378864e8ccd44b63053a1ba8';
 const STRAPI_URL = 'https://gestionweb.frlp.utn.edu.ar/api/g33-series';
 let jwtToken = '099da4cc6cbb36bf7af8de6f1f241f8c81e49fce15709c4cfcae1313090fa2c1ac8703b0179863b4eb2739ea65ae435e90999adb870d49f9f94dcadd88999763119edca01a6b34c25be92a80ed30db1bcacb20df40e4e7f45542bd501f059201ad578c18a11e4f5cd592cb25d6c31a054409caa99f11b6d2391440e9c72611ea';
 
-
 document.addEventListener("DOMContentLoaded", function () {
     let botonCargar = document.getElementById("boton-cargar-datos");
     let botonLimpiar = document.getElementById("boton-limpiar-pantalla");
@@ -33,21 +32,22 @@ async function cargarDatos() {
 
     try {
         // 1. Proceso las series
-        let series = await procesarSeries();
+        let series = await procesarSeries()
 
         // 2. Muestro las series en pantalla
-        mostrarSeries(series); // No le pongo await porque no consumo una api (no retorna promise)
+        mostrarSeries(series) // No le pongo await porque no consumo una api (no retorna promise)
 
         // flag
-        console.log("Las series más populares PROCESADAS son: ", series);
+        console.log("Las series más populares PROCESADAS son: ", series)
 
         // 3. Lo guardo en el strapi
         if(await guardarEnStrapi(series)){
             alert("Datos enviados al strapi correctamente");
         } else {
-            alert("Error al enviar datos al strapi");
+            alert("Error al enviar datos al strapi")
         }
     } catch (error) {
+        alert("Nacho tenía razon");
         console.error('ERROR! (cargarDatos):', error);
     }
 
@@ -64,7 +64,7 @@ function limpiarPantalla(op) {
             return "none"
         }
         // Mantiene el botón visible porque el usuario apretó cancelar
-        return "block";
+        return "block"
     }
 
     // Opción 2: limpieza del contenedor sin nada más
@@ -77,7 +77,7 @@ function limpiarPantalla(op) {
             contenedor.removeChild(contenedor.firstChild);
         }
         // Cambia el estado del display a block
-        return "block";
+        return "block"
     }
 }
 
@@ -99,9 +99,9 @@ async function procesarSeries() {
             .then(respuesta => respuesta.json())
             .catch(error => console.log("ERROR! (generos): ", error))
         // flag
-        console.log("Las series más populares SIN PROCESAR son: ", series);
+        console.log("Las series más populares SIN PROCESAR son: ", series)
         // flag
-        console.log("Los generos son: ", generos);
+        console.log("Los generos son: ", generos)
         // new Map(...) convierte ese array de pares en un objeto Map que es un diccionario básicamente
         // .map(g => [g.id, g.name]) convierte cada objeto en un par [clave, valor], ejemplo: [[18, "Drama"], [35, "Comedia"], ...]
         generos = new Map(generos.genres.map(g => [g.id, g.name]));
@@ -122,20 +122,20 @@ async function procesarSeries() {
 // imprimir las series en pantalla
 function mostrarSeries(series) {
     // Flag
-    series.forEach(serie => console.log(serie));
+    series.forEach(serie => console.log(serie))
 
-    let contenedor = document.getElementById("series-container");
-    let titulo = document.createElement("h2");
-    titulo.innerHTML = "Series más populares";
-    titulo.style = "margin: 20px";
-    contenedor.appendChild(titulo);
+    let contenedor = document.getElementById("series-container")
+    let titulo = document.createElement("h2")
+    titulo.innerHTML = "Series más populares"
+    titulo.style = "margin: 20px"
+    contenedor.appendChild(titulo)
 
     let i = 0
     series.forEach((serie, i) => {
-        tarjeta = generarTarjeta(series[i]);
-        console.log(tarjeta);
-        contenedor.appendChild(tarjeta);
-        i++;
+        tarjeta = generarTarjeta(series[i])
+        console.log(tarjeta)
+        contenedor.appendChild(tarjeta)
+        i++
     })
 
 }
@@ -143,21 +143,21 @@ function mostrarSeries(series) {
 // generar las tarjetas para imprimirlas
 function generarTarjeta(serie) {
     // Creamos las estructuras
-    let tarjeta = document.createElement("div");
-    let divisor = document.createElement("div");
-    let titulo = document.createElement("h3");
-    let generos = document.createElement("span");
-    let popularidad = document.createElement("span");
-    let imagen = document.createElement("img");
+    let tarjeta = document.createElement("div")
+    let divisor = document.createElement("div")
+    let titulo = document.createElement("h3")
+    let generos = document.createElement("span")
+    let popularidad = document.createElement("span")
+    let imagen = document.createElement("img")
 
     // Le damos valores
-    titulo.textContent = serie.titulo;
+    titulo.textContent = serie.titulo
     // Usamos el método de arrays .join() pque convierte todos sus elementos en una sola cadena de texto
     // TODO se le puede poner una clase al stron Generos para ponerle otra letra o algo
-    generos.innerHTML = `<p><strong>Generos:</strong> ${serie.generos}<p>`;
-    popularidad.innerHTML = `<p><strong>Popularidad:</strong> ${serie.popularidad}<p>`;
-    imagen.src = serie.imagen;
-    imagen.alt = serie.titulo;
+    generos.innerHTML = `<p><strong>Generos:</strong> ${serie.generos}<p>`
+    popularidad.innerHTML = `<p><strong>Popularidad:</strong> ${serie.popularidad}<p>`
+    imagen.src = serie.imagen
+    imagen.alt = serie.titulo
 
     //Esto es un divisor que después le voy a aplicar estilos
     divisor.appendChild(titulo)
@@ -177,33 +177,33 @@ function generarTarjeta(serie) {
 // TODO Falta saber si en verdad guarda algo en el strapi
 async function guardarEnStrapi(series) {
     // flag
-    console.log("ESTOY EN GUARDAR, se va a guardar: ", series[3])
+    console.log("ESTOY EN GUARDAR, se van a guardar: ", series)
 
     // esto era código de prueba
     /*
     const nuevaSerie = {
         titulo: series[0].titulo,
-        generos: series[0].generos.join(", "),
+        generos: series[0].generos,
         imagen: series[0].imagen,
         popularidad: toString(series[0].popularidad)
-        console.log("Enviando a Strapi:", nuevaSerie);
     };
     */
 
-
     try {
-        const response = await axios.post(STRAPI_URL, {
-            data: series[3]
-        }, {
-            headers: {
-                'Content-Type': 'application/json',
-                ...(jwtToken && { 'Authorization': `Bearer ${jwtToken}` })
-            }
-        });
+        for (let i=0; i<series.length; i++){
 
-        // flag
-        console.log('Serie guardada:', response.data);
-
+            const response = await axios.post(STRAPI_URL, {
+                data: series[i]
+            }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    ...(jwtToken && { 'Authorization': `Bearer ${jwtToken}` })
+                }
+            });
+    
+            // flag
+            console.log(`Serie numero ${i+1} guardada: `, response.data);
+        }
         // Devuelvo true para indicar que está todo bien
         return true
     } catch (error) {
@@ -251,5 +251,3 @@ fetch(STRAPI_URL, {
     console.error('Error al hacer la solicitud:', error.message);
 });
 */
-
-
