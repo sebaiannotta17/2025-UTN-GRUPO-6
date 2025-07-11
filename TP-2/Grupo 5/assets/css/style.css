@@ -1,0 +1,94 @@
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column; 
+    min-height: 100vh; 
+    background-color: #f0f2f5; 
+    overflow-x: hidden;
+}
+
+
+header {
+    background-color: #333;
+    color: white;
+    padding: 15px 20px;
+    width: 100%; 
+}
+
+.navbar-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+}
+
+.navbar-container h1 {
+    margin: 0;
+    font-size: 1.8em;
+}
+
+
+.buttons {
+    display: flex; 
+    flex: 1; 
+    max-width: 1200px; 
+    background-color: #fff; 
+    min-height: 100vh;
+}
+
+aside {
+    min-width: 250px; 
+    background-color: #e9ecef; 
+    padding: 20px;
+    border-right: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 15px; 
+}
+
+aside nav {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; 
+}
+
+aside button {
+    width: 100%; 
+    padding: 12px 15px;
+    background-color: #007bff; 
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+aside button:hover {
+    background-color: #0056b3; 
+}
+
+
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 15px 20px;
+    margin-top: auto;
+    width: 100%; 
+}
+
+footer p {
+    margin: 0;
+}
+
+.series-lista{
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 20px; 
+    padding: 20px; 
+    justify-content: left; 
+}
