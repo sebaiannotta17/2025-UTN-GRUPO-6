@@ -89,10 +89,10 @@ No requiere instalación adicional ya que es una aplicación web estática.
 ## 👥 Equipo
 
 **Grupo 37** - TygWeb 2025
-**Siadore, Valentino**
-**Costa, Tomás**
-**Salas Triana, Mariano**
-**Ferrari, Agustín**
+- **Siadore, Valentino**
+- **Costa, Tomás**
+- **Salas Triana, Mariano**
+- **Ferrari, Agustín**
 
 ---
 
