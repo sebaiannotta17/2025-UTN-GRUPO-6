@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tp2 TyG Web Grupo 6</title>
+  <link rel="stylesheet" type="text/css" href="styles.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <header>
+    <nav class="navbar navbar-dark bg-dark">
+      <div class="container-fluid d-flex justify-content-center">
+        <a class="navbar-brand" href="#">TP Nro 2 - Grupo 6</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container-fluid flex-grow-1">
+    <div class="row h-100">
+      <aside class="col-sm-3 bg-secondary text-white p-5">
+        <h4 class="titulo-menu mb-3">Acciones disponibles</h4>
+        <ul class="list-unstyled">
+          <li><button class="btn btn-light p-2 mb-3" onclick="cargarPelicula()">Cargar película 'Matrix' al backend</button></li>
+          <li><button class="btn btn-light" onclick="recuperarPeliculas()">Recuperar películas desde backend</button></li>
+        </ul>
+      </aside>
+      <section class="col-sm-9 bg-light p-5">
+        <h2 class="d-flex justify-content-center fs-3">Aqui se mostrara la respuesta de la api</h2>
+        <div id="resultado" class="p-3 d-flex justify-content-center aling-items-center"></div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="bg-dark text-white text-end py-3 px-4">
+    Footer Grupo 6
+  </footer>
+
+  <script src="./index.js"></script>
+
+</body>
+
+</html>

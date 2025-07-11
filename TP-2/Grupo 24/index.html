@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TP Nro 2 - Grupo 24</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <img src="logo.jpg" alt="Logo UTN" class="logo-utn" />
+      <h1>TP Nro 2 - Grupo 24</h1>
+    </header>
+    <div class="contenido">
+      <aside>
+        <a onclick="cargarDatos()">Cargar datos de APIs</a>
+        <a onclick="visualizarDatos()">Visualizar datos</a>
+        <a onclick="visualizarDatosPrueba()" data-prueba>Visualizar datos de prueba</a>
+        <hr class="integrantes-divider" />
+        <div class="integrantes-list">
+          <h3>Integrantes</h3>
+          <ul>
+            <li>Joaquin Montes</li>
+            <li>Maximo Carpignano</li>
+            <li>Ulises Moran</li>
+            <li>Pedro Fiuza</li>
+            <li>Jesus Vergara</li>
+          </ul>
+        </div>
+      </aside>
+      <main id="main-content">
+        <h2>Visualización de Datos</h2>
+        <p>Haga clic en "Cargar datos de APIs" para procesar la información y luego en "Visualizar datos" para mostrar los resultados aquí.</p>
+        </main>
+    </div>
+    <footer>
+      Tecnología y Gestión Web - 2025
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

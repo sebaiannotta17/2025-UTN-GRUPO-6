@@ -1,0 +1,37 @@
+# 🔹 Configuraciones de VS Code
+.vscode/
+
+# 🔹 Archivos temporales del sistema
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
+
+# 🔹 MacOS / Linux cache
+__pycache__/
+.cache/
+*.swp
+*.swo
+
+# 🔹 Node.js
+node_modules/
+npm-debug.log
+
+# 🔹 Archivos de entorno
+.env
+.env.*
+
+# 🔹 Backups
+*.bak
+*.old
+*.orig
+
+# 🔹 Carpetas internas de proyectos paralelos
+Grupo_13/
+Grupo_14/
+Grupo_15/
+
+# 🔹 Archivos que no deben subirse nunca
+*.sqlite
+*.exe
+*.zip

@@ -18,15 +18,22 @@
     <div id="contenido">
         <div id="barra">
             <ul>
-                <li><a href="#" id="btnVolverInicio">Inicio</a></li>
+                <li><a href="#" id="btnVolverInicio">Graficos</a></li>
                 <li><a href="#" id="btnCargarSeries">Cargar series</a></li>
-                <li><a href="#" id="resultado">Resultados</a></li>
             </ul>
         </div>
         <main>
             <section id="resultado-api">
                 <h3>Top 10 series más antiguas</h3>
                 <div id="listaSeries"></div>
+                <div id="graficosApp">
+                    <div class="contenedor-graficos">
+                        <canvas id="grafico1"></canvas>
+                        <canvas id="grafico2"></canvas>
+                        <canvas id="grafico3"></canvas>
+                        <canvas id="grafico4"></canvas>
+                    </div>
+                </div>
             </section>
         </main>
     </div>
@@ -42,6 +49,8 @@
             <p><strong>Votos promedio:</strong> <span id="modalVotosPromedio"></span></p>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="animaciones.js"></script>
 </body>
 </html>

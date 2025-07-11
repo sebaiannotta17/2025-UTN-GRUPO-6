@@ -1,0 +1,34 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif
+  ;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  background-color: #f6f6ed;
+}
+
+header {
+  background-color: #24241f;
+  color: #fff;
+}
+
+main {
+  flex: 1;
+  overflow-y: auto; /* Para scroll interno si el contenido lo necesita */
+}
+
+footer {
+  background-color: #24241f;
+  color: white;
+  padding: 1rem 2rem;
+}
