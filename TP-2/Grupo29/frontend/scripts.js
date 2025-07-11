@@ -110,3 +110,7 @@ async function limpiarStrapi() {
         console.error("Error durante el proceso de limpieza de Strapi:", error);
     }
 }
+
+function cargarDatos() {
+  document.getElementById("filtros").style.display = "block";
+}

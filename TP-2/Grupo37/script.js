@@ -1,4 +1,7 @@
 const API_KEY = 'd50ef063f403773840e85b0faf4fcb57';
+const msjStart = document.getElementById('msjStart');
+const btnView = document.getElementById('btn-ver-strapi')
+const ul = document.getElementById('lista-productoras');
 
 async function getUniqueProdCompanies() {
 
@@ -30,22 +33,20 @@ async function getUniqueProdCompanies() {
   // Creo el array para strapi con los datos completos
   const prodArray = Array.from(prodMap.values());
 
-  renderList(prodArray);
-
   return prodArray;
 }
 
 function renderList(arr) {
-  const ul = document.getElementById('lista-productoras');
   ul.innerHTML = '';
   const BASE_IMG_URL = 'https://image.tmdb.org/t/p/w200';
 
   arr.forEach(obj => {
     const li = document.createElement('li');
     li.innerHTML = `
+      ${obj.logo_path ? `<img src="${BASE_IMG_URL}${obj.logo_path}" alt="${obj.name}" style="height: 50px; vertical-align: middle; margin-right: 8px;">` : ''}
       <strong>${obj.name}</strong> (${obj.origin_country})<br>
-      ${obj.logo_path ? `<img src="${BASE_IMG_URL}${obj.logo_path}" alt="${obj.name}" style="height: 50px;">` : ''}
     `;
+    li.classList.add('productora-item');
     ul.appendChild(li);
   });
 }
@@ -71,6 +72,10 @@ async function guardarProductorasEnStrapi(productoras) {
     const checkData = await checkRes.json();
     if (checkData.data.length > 0) {
       console.log(`Ya existe en Strapi: ${productora.name}`);
+      msjStart.innerHTML = `Productoras guardadas en Strapi`;
+      btnView.classList.remove('btn-disable')
+      btnView.classList.add('pulsar')
+      ul.innerHTML = '';
       continue;
     }
 
@@ -106,6 +111,7 @@ async function recuperarProductorasStrapi() {
   const strapiUrl = 'https://gestionweb.frlp.utn.edu.ar/api/g37-productoras';
   const BASE_IMG_URL = 'https://image.tmdb.org/t/p/w200';
   const API_TOKEN = '099da4cc6cbb36bf7af8de6f1f241f8c81e49fce15709c4cfcae1313090fa2c1ac8703b0179863b4eb2739ea65ae435e90999adb870d49f9f94dcadd88999763119edca01a6b34c25be92a80ed30db1bcacb20df40e4e7f45542bd501f059201ad578c18a11e4f5cd592cb25d6c31a054409caa99f11b6d2391440e9c72611ea'
+  btnView.classList.remove('pulsar');
 
   try {
     const response = await fetch(strapiUrl, {
@@ -125,15 +131,9 @@ async function recuperarProductorasStrapi() {
       return;
     }
 
-    const productoras = data
-      .filter(entry => entry && entry.attributes)
-      .map(entry => ({
-        name: entry.attributes.name,
-        origin_country: entry.attributes.origin_country,
-        logo_path: entry.attributes.logo_path
-    }));
-
-    renderList(productoras);
+    renderList(data);
+    msjStart.innerHTML = `Productoras recuperadas de Strapi`;
+    console.log('Productoras recuperadas:', data[0].name);
 
   } catch (error) {
     console.error('Error al recuperar desde Strapi:', error);
@@ -148,7 +148,5 @@ document
     await guardarProductorasEnStrapi(arr);
   });
 
-document
-  .getElementById('btn-ver-strapi')
-  .addEventListener('click', recuperarProductorasStrapi);
+btnView.addEventListener('click', recuperarProductorasStrapi);
 
