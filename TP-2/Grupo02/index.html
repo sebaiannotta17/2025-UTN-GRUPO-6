@@ -11,18 +11,23 @@
         <h1>TP 2 - Grupo2</h1>
     </header>
     <main>
-        
         <aside>
             <button onclick="Cargar()">Cargar datos de APIs</button>
             <button onclick="Visualizar()">Visualizar datos</button>
         </aside>
-        <section id="content">
-            <!-- Series -->
-        </section>
+        <div class="content-wrapper">
+            <section id="content">
+                <!-- Series -->
+            </section>
+            <div class="chart-container">
+                <canvas id="genreChart"></canvas>
+            </div>
+        </div>
     </main>
     <footer>
         <p>TyGWeb - 2025</p>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
