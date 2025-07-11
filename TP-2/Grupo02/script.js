@@ -268,6 +268,8 @@ async function Visualizar() {
 
         // Limpiar el contenido
         contentSection.innerHTML = ''; 
+        const genreCounts = {}; // Objeto para contar géneros
+
         data.forEach(item => { 
             const card = document.createElement('div');
             card.className = 'serie-card';
@@ -277,9 +279,14 @@ async function Visualizar() {
             const paisDeRelacion = paisCode || 'No disponible';
             const flagEmoji = getFlagEmoji(paisCode);
 
-            // Acceder a los nombres de los géneros.
+            // Acceder a los nombres de los géneros y contarlos para el gráfico
             const generosDeRelacion = item.g_2_generos && item.g_2_generos.length > 0
-                ? item.g_2_generos.map(g => g.nombre).join(', ')
+                ? item.g_2_generos.map(g => {
+                    if (g.nombre) {
+                        genreCounts[g.nombre] = (genreCounts[g.nombre] || 0) + 1;
+                    }
+                    return g.nombre;
+                }).join(', ')
                 : 'No disponible';
 
             card.innerHTML = `
@@ -296,8 +303,61 @@ async function Visualizar() {
             contentSection.appendChild(card);
         });
 
+        // Mostrar el contenedor del gráfico y luego renderizar el gráfico
+        const chartContainer = document.querySelector('.chart-container');
+        if (chartContainer) {
+            chartContainer.style.display = 'block';
+        }
+        renderGenreChart(genreCounts);
+
     } catch (error) {
         console.error("Error al obtener datos de Strapi:", error);
         contentSection.innerHTML = `<p class="error-message">No se pudieron cargar los datos desde Strapi. Revisa la consola.</p>`;
     }
+}
+
+function renderGenreChart(genreData) {
+    const ctx = document.getElementById('genreChart').getContext('2d');
+    
+    // Destruir el gráfico anterior si existe para evitar solapamientos al recargar
+    if (window.myGenreChart) {
+        window.myGenreChart.destroy();
+    }
+
+    const labels = Object.keys(genreData);
+    const data = Object.values(genreData);
+
+    window.myGenreChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Popularidad de Géneros (Nº de Series)',
+                data: data,
+                backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 1 // Para asegurar que el eje Y solo muestre enteros
+                    }
+                }
+            },
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Distribución de Géneros en las Series Populares'
+                }
+            }
+        }
+    });
 }
