@@ -1,0 +1,114 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  font-family: sans-serif;
+}
+
+footer {
+  height: 70px;
+  background-color: #333;
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  justify-content: right;
+  position: relative;
+  z-index: 10;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background-color: #333;
+  padding: 20px;
+  color: white;
+  z-index: 2;
+}
+
+header img {
+  position: absolute;
+  left: 20px;
+  height: 60px;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 24px;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+nav.link-api {
+  width: 220px;
+  background-color: #f1f1f1;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 70px;
+  left: 0;
+  z-index: 1;
+  height: calc(100vh - 70px);
+  overflow-y: auto;
+}
+
+nav.link-api ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+nav.link-api ol li {
+  margin-bottom: 20px;
+}
+
+nav.link-api ol li button {
+  display: block;
+  width: 100%;
+  padding: 10px 15px;
+  border: none;
+  background-color: transparent;
+  color: #333;
+  text-align: left;
+  font-size: 1em;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background 0.3s, color 0.3s;
+}
+
+nav.link-api ol li button:hover {
+  background: linear-gradient(to right, #7f7f7f, #4a4a4a);
+  color: white;
+}
+
+nav.link-api ol li button:active {
+  background: linear-gradient(to right, #323232, #000000);
+  color: white;
+}
+
+main {
+  flex: 1;
+  margin-left: 220px;
+  padding: 20px;
+  background-color: #ffffff;
+  overflow-y: auto;
+  height: calc(100vh - 140px);
+}
+
+#output {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 2px dashed #ccc;
+  border-radius: 10px;
+  min-height: 100px;
+}

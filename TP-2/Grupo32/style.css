@@ -1,0 +1,103 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #e0f7fa;
+}
+header {
+  background: #bdbdbd;
+  color: #222;
+  padding: 10px 0;
+  text-align: center;
+  font-size: 1.3em;
+  font-weight: bold;
+  border-bottom: 1px solid #888;
+}
+.main-layout {
+  display: flex;
+  min-height: 80vh;
+}
+aside {
+  width: 220px;
+  background: #a7c7cc;
+  padding: 25px 10px;
+  font-size: 1.1em;
+  color: #222;
+}
+aside ul { list-style: none; padding: 0; margin: 0; }
+aside li { margin-bottom: 15px; }
+aside button {
+  width: 100%;
+  padding: 8px;
+  background: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 6px rgba(33,150,243,0.08);
+}
+aside button:hover { background: #1769aa; }
+
+main {
+  flex: 1;
+  background: #d3eaf4;
+  padding: 30px 20px;
+}
+main h2 {
+  margin-top: 0;
+  color: #1976d2;
+  font-size: 2em;
+  font-weight: bold;
+}
+.subtitulo {
+  color: #555;
+  margin-bottom: 18px;
+  font-size: 1.1em;
+}
+
+#formulario input {
+  padding: 10px;
+  width: 70%;
+  margin-bottom: 10px;
+}
+#formulario button {
+  padding: 10px;
+  margin-left: 10px;
+}
+
+#resultado {
+  width: 100%;
+  margin-top: 20px;
+}
+
+/* Tarjetas */
+.card {
+  background: #fff;
+  border: 1px solid #bbb;
+  border-left: 5px solid #2196f3;
+  border-radius: 6px;
+  box-shadow: 1px 1px 5px rgba(0,0,0,0.07);
+  padding: 15px 18px;
+  margin-bottom: 18px;
+  max-width: 600px;
+}
+.card h3 { margin: 0 0 8px; color: #1976d2; }
+.card p { margin: 4px 0; color: #444; }
+
+#graficoSeries {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  padding: 10px;
+}
+footer {
+  background: #bdbdbd;
+  color: #222;
+  text-align: right;
+  padding: 8px 18px;
+  font-style: italic;
+  font-size: 1em;
+  border-top: 1px solid #888;
+}

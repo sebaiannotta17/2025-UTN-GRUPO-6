@@ -17,7 +17,7 @@ p, h1, h2{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    overflow: hidden; /* Evitar scroll en el contenedor principal */
+    overflow: auto; 
 }
 
 header{
@@ -73,36 +73,61 @@ aside{
     align-items: center;
 }
 
-aside a {
-    display: inline-block;  /* Cambiar a inline-block para que tenga comportamiento de bloque */
-    height: 50px;
+aside button {
+    font-size: 14px;
+    height: auto;
     width: 170px;
     background-color: #ECEBE9;
-    border-radius: 10px;
     color: #262225;
     text-decoration: none;
-    text-align: center; /* Centrar horizontalmente */
-    line-height: 50px;   /* Centrar verticalmente */
+    text-align: center;
+    line-height: 50px;
     margin-bottom: 60px;
+    border: none;
+    cursor: pointer;
 }
 
-aside a:hover{
+aside button:hover {
     background-color: #262225;
     color: #ECEBE9;
 }
 
-main{
-    width: 90%;
-    height: 100%;
-    background-color: #ECEBE9;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+main {
+  width: 90%;
+  height: 100%;
+  background-color: #ECEBE9;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+  padding: 20px;
+  padding-top: 0px;
 }
 
 #frase{
     text-align: center;
     font-size: 50px;
     margin: 30px;
+}
+
+/* Tabla */
+.series {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.series th,
+.series td {
+    border: 1px solid #262225;
+    padding: 10px;
+    text-align: left;
+    background-color: #fff;
+    color: #262225;
+}
+
+.series th {
+    background-color: #A0C8C3;
+    position: sticky;
+    top: 0;
+    z-index: 1;
 }

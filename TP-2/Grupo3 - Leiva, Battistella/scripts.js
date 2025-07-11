@@ -22,10 +22,10 @@ function formatearEstructura() {
   divPrin.innerHTML = "";
 }
 
-
+// Funcion que obtiene las 10 series de la API de series
 async function setMovies() {
-  const urlPeliculas = 'https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&primary_release_date.gte=2020-01-01';
-  const urlGeneros = 'https://api.themoviedb.org/3/genre/movie/list?language=en';
+  const urlSeries = 'https://api.themoviedb.org/3/discover/tv?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&first_air_date.gte=2020-01-01';
+  const urlGeneros = 'https://api.themoviedb.org/3/genre/tv/list?language=en';
 
   const options = {
       method: 'GET',
@@ -36,37 +36,38 @@ async function setMovies() {
   };
 
   try {
-    //Llamo a la API de peliculas
-    const responsePeliculas = await fetch(urlPeliculas, options);
+    //Llamo a la API de series
+    const responseSeries = await fetch(urlSeries , options);
     const responseGeneros = await fetch(urlGeneros, options);
     
     //Convierto lo que me devolvio a objetos JSON porque lo que me devuelve es un texto plano
-    const dataPeliculas = await responsePeliculas.json();
+    const dataSeries = await responseSeries.json();
     const dataGeneros = await responseGeneros.json();
 
-    //Creo un objeto genero que me permitira identificar los generos de una peliculas mas adelante
+    //Creo un objeto genero que me permitira identificar los generos de una series mas adelante
     let generos = {}
     dataGeneros.genres.forEach(g => {
       generos[g.id] = g.name
     });
 
-    let listaPeliculas = dataPeliculas.results.splice(0,10).map(p => ({ //Con el splice agarramos los primeros 10, con el map guardamos lo que se nos pidio de las peliculas en listaPeliculas
-      nombre: p.title,
+    let listaSeries = dataSeries.results.splice(0,10).map(p => ({ //Con el splice agarramos los primeros 10, con el map guardamos lo que se nos pidio de las series en listaSeires
+      nombre: p.name,
       sinopsis: p.overview,
-      generos: p.genre_ids.map(id => generos[id] || "desconocido"), //Dentro del objeto generos veremos que id coinciden con los id guardados en las peliculas
+      generos: p.genre_ids.map(id => generos[id] || "desconocido"), //Dentro del objeto generos veremos que id coinciden con los id guardados en las series
       cantidadDeVotos: p.vote_count,
       promedioDeVotos: p.vote_average
     }));
-    
-    return listaPeliculas;
+    console.log(listaSeries);
+    return listaSeries;
   } catch (error) {
       console.error('Error al cargar datos:', error);
   }
 }
 
 const STRAPI_TOKEN = '099da4cc6cbb36bf7af8de6f1f241f8c81e49fce15709c4cfcae1313090fa2c1ac8703b0179863b4eb2739ea65ae435e90999adb870d49f9f94dcadd88999763119edca01a6b34c25be92a80ed30db1bcacb20df40e4e7f45542bd501f059201ad578c18a11e4f5cd592cb25d6c31a054409caa99f11b6d2391440e9c72611ea';
+// Funcion que recibe una serie y la sube a Strapi
 async function guardarSerieEnStrapi(serie) {
-  await fetch('https://gestionweb.frlp.utn.edu.ar/api/g3-series', {
+  await fetch('https://gestionweb.frlp.utn.edu.ar/api/g03-series', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -76,20 +77,16 @@ async function guardarSerieEnStrapi(serie) {
       data: {
         titulo: serie.nombre,
         sinopsis: serie.sinopsis,
-        genero: serie.generos[0] || "desconocido",
+        genero: serie.generos.join(', ') || "desconocido",
         cant_votos: serie.cantidadDeVotos,
         prom_votos: serie.promedioDeVotos
       }
     })
   });
   
-  if (!res.ok) {
-    const msg = await res.text();
-    console.error('Error al guardar serie:', res.status, msg);
-    throw new Error(`Falló con status ${res.status}`);
-  }
 }
 
+// Funcion que sube las 10 series encontradas a Strapi
 async function subirSeriesStrapi() {
   try {
     const series = await setMovies(); 
@@ -103,6 +100,72 @@ async function subirSeriesStrapi() {
     console.error('Error al cargar series:', error);
   }
 }
+
+// Funcion que obtiene series traidas desde Strapi
+async function obtenerSeriesStrapi() {
+  const response = await fetch('https://gestionweb.frlp.utn.edu.ar/api/g03-series?pagination[pageSize]=10', {
+    headers: {
+      Authorization: `Bearer ${STRAPI_TOKEN}`
+    }
+  });
+  
+  const data = await response.json();
+  console.log(data);
+  return data.data;
+}
+
+// Funcion que crea una tabla para mostrar la informacion de las series obtenidas
+function crearTablaSeries(series) {
+  let html = `
+    <table class="series">
+      <thead>
+        <tr>
+          <th>Titulos</th>
+          <th>Sinopsis</th>
+          <th>Generos</th>
+          <th>Cantidad de votos</th>
+          <th>Promedio de votos</th>
+        </tr>
+      </thead>
+    <tbody>
+  `;
+  
+  for (const item of series) {
+    html += `
+      <tr>
+        <td>${item.titulo}</td>
+        <td>${item.sinopsis}</td>
+        <td>${item.genero}</td>
+        <td>${item.cant_votos}</td>
+        <td>${item.prom_votos}</td>
+      </tr>
+    `;
+  }
+  
+  html += `
+      </tbody>
+    </table>
+  `;
+  
+  return html;
+}
+
+// Funcion que muestra la tabla creada con el contenido que se obtuvo
+async function mostrarSeries() {
+  formatearEstructura();
+  const contenedor = document.querySelector('.contenido_principal');
+  contenedor.innerHTML= 'Cargando... '
+  
+  try {
+    const series = await obtenerSeriesStrapi();
+    const tabla = crearTablaSeries(series);
+    contenedor.innerHTML = tabla;
+  } catch (error) {
+    console.error('Error al obtener series:', error);
+    contenedor.innerHTML= 'Se produjo un error al intentar cargar la tabla de series, asegurese de haber cargado los datos'
+  }
+}
+
 
 document.addEventListener('DOMContentLoaded', () => {
   const cargarDatosLink = document.querySelector('.setDatos');
