@@ -339,7 +339,7 @@ Integrantes: Felipe Andreau, Melissa Braunstein, Pilar Wagner
 Integrantes: Felipe Andreau, Melissa Braunstein, Pilar Wagner
 -	Persistencia de datos en Strapi 
 Integrantes: Felipe Andreau, Melissa Braunstein, Pilar Wagner
--	Implementación de los gráficos informativos con Google Chart                                                                                                   
+-	Implementación de los gráficos informativos con Chart JS                                                                                                 
 Integrante: Melissa Braunstein
 
 ---
