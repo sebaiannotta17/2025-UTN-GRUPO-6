@@ -40,8 +40,6 @@ El proyecto utiliza las siguientes APIs configuradas:
 - **URL**: `https://gestionweb.frlp.utn.edu.ar/api/g17s`
 - **Token**: Configurado en `script.js`
 
-Perfecto, aquí tenés tu bloque reorganizado con los nombres delante y las descripciones después de cada uno, en un estilo limpio para `README.md`:
-
 ---
 
 ### División de Tareas
