@@ -6,21 +6,16 @@ const token =
 
 let chartInstance = null;
 
-// Mostrar formulario
 document.getElementById("btnCargar").addEventListener("click", () => {
   document.getElementById("formulario").style.display = "block";
-  document.querySelector(".subtitulo").style.display = "block";  // <-- Aquí muestro el subtítulo cuando cargo datos
+  document.querySelector(".subtitulo").style.display = "block";
   document.getElementById("resultado").innerHTML = "";
   hideChart();
 });
 
-// Buscar y calcular promedio
 document.getElementById("btnBuscar").addEventListener("click", buscarDirector);
-
-// Visualizar datos guardados
 document.getElementById("btnVisualizar").addEventListener("click", visualizarDatos);
 
-// Oculta el gráfico y destruye instancia previa
 function hideChart() {
   const cont = document.getElementById("graficoSeries");
   cont.style.display = "none";
@@ -32,109 +27,179 @@ function hideChart() {
 
 async function buscarDirector() {
   const nombre = document.getElementById("directorInput").value.trim();
-  if (!nombre) return alert("Ingresa un nombre.");
+  if (!nombre) {
+    alert("Ingresa un nombre.");
+    return;
+  }
 
-  // 1) Obtener ID de TMDB
-  const res1 = await fetch(
-    `https://api.themoviedb.org/3/search/person?api_key=${apiKey}&query=${encodeURIComponent(
-      nombre
-    )}`
-  );
-  const data1 = await res1.json();
-  const id = data1.results?.[0]?.id;
-  if (!id) return alert("Director no encontrado.");
+  try {
+    const res1 = await fetch(
+      `https://api.themoviedb.org/3/search/person?api_key=${apiKey}&query=${encodeURIComponent(nombre)}`
+    );
+    const data1 = await res1.json();
+    const id = data1.results?.[0]?.id;
+    if (!id) {
+      alert("Director no encontrado.");
+      return;
+    }
 
-  // 2) Obtener créditos de película
-  const res2 = await fetch(
-    `https://api.themoviedb.org/3/person/${id}/movie_credits?api_key=${apiKey}`
-  );
-  const data2 = await res2.json();
-  const pelis = data2.crew
-    .filter((p) => p.job === "Director" && p.vote_average > 0)
-    .map((p) => ({ titulo: p.title, voto: p.vote_average }));
+    const res2 = await fetch(
+      `https://api.themoviedb.org/3/person/${id}/movie_credits?api_key=${apiKey}`
+    );
+    const data2 = await res2.json();
+    const pelis = data2.crew
+      .filter((p) => p.job === "Director" && p.vote_average > 0)
+      .map((p) => ({ titulo: p.title, voto: p.vote_average }));
 
-  if (pelis.length === 0) return alert("No dirige películas con votos.");
+    if (pelis.length === 0) {
+      alert("No dirige películas con votos.");
+      return;
+    }
 
-  // 3) Calcular promedio
-  const suma = pelis.reduce((a, p) => a + p.voto, 0);
-  const promedio = (suma / pelis.length).toFixed(2);
+    const suma = pelis.reduce((a, p) => a + p.voto, 0);
+    const promedio = (suma / pelis.length).toFixed(2);
 
-  // 4) Mostrar resultados
-  const cont = document.getElementById("resultado");
-  cont.innerHTML = `<div class="card">
-    <h3>Promedio de votación</h3>
-    <p>Director: <strong>${nombre}</strong></p>
-    <p>Promedio: <strong>${promedio}</strong></p>
-  </div>`;
-
-  pelis.forEach((p) => {
-    const div = document.createElement("div");
-    div.className = "card";
-    div.innerHTML = `<h3>${p.titulo}</h3><p>Voto: ${p.voto}</p>`;
-    cont.appendChild(div);
-  });
-
-  // 5) Gráfico
-  showChart(pelis);
-
-  // 6) Guardar en Strapi
-  await fetch(strapiDirectorURL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
-    body: JSON.stringify({ data: { Nombre: nombre, Promedio: parseFloat(promedio) } }),
-  });
-  for (const p of pelis) {
-    await fetch(strapiPeliURL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
-      body: JSON.stringify({ data: { Nombre: p.titulo, Voto: p.voto } }),
+    const cont = document.getElementById("resultado");
+    cont.innerHTML = `<div class="card">
+      <h3>Promedio de votación</h3>
+      <p>Director: <strong>${nombre}</strong></p>
+      <p>Promedio: <strong>${promedio}</strong></p>
+    </div>`;
+    pelis.forEach((p) => {
+      const div = document.createElement("div");
+      div.className = "card";
+      div.innerHTML = `<h3>${p.titulo}</h3><p>Voto: ${p.voto}</p>`;
+      cont.appendChild(div);
     });
+
+    showChart(nombre, promedio);
+
+    // GUARDAR DIRECTOR EN STRAPI
+    const resDirector = await fetch(strapiDirectorURL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        data: {
+          Nombre: nombre,
+          Promedio: parseFloat(promedio)
+        }
+      })
+    });
+
+    const directorData = await resDirector.json();
+
+    if (!resDirector.ok || !directorData.data) {
+      console.error("Error al guardar director:", directorData);
+      alert("No se pudo guardar el director en Strapi.");
+      return;
+    }
+
+    const directorId = directorData.data.id;
+
+    // GUARDAR CADA PELÍCULA EN STRAPI
+    for (const p of pelis) {
+      const peliRes = await fetch(strapiPeliURL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          data: {
+            Titulo: p.titulo,
+            Voto: p.voto,
+            g_32_director: directorId
+          }
+        })
+      });
+
+      if (!peliRes.ok) {
+        const error = await peliRes.json();
+        console.error(`Error al guardar película "${p.titulo}":`, error);
+      }
+    }
+  } catch (e) {
+    alert("Error al buscar o guardar datos: " + e.message);
   }
 }
 
-function showChart(pelis) {
-  document.getElementById("graficoSeries").style.display = "block";
+function showChart(nombre, promedio) {
+  // 1) Mostramos el contenedor
+  const cont = document.getElementById("graficoSeries");
+  cont.style.display = "block";
+
+  // 2) Reemplazamos el canvas por uno limpio
+  cont.innerHTML = '<canvas id="grafico"></canvas>';
+
+  // 3) Destruimos la instancia previa (si existe)
+  if (chartInstance) {
+    chartInstance.destroy();
+    chartInstance = null;
+  }
+
+  // 4) Creamos el nuevo gráfico
   const ctx = document.getElementById("grafico").getContext("2d");
-  if (chartInstance) chartInstance.destroy();
   chartInstance = new Chart(ctx, {
     type: "bar",
     data: {
-      labels: pelis.map((p) => p.titulo),
-      datasets: [
-        {
-          label: "Votación",
-          data: pelis.map((p) => p.voto),
-          backgroundColor: "rgba(33,150,243,0.6)",
-        },
-      ],
+      labels: [nombre],               // una sola etiqueta
+      datasets: [{
+        label: "Promedio de Votación",
+        data: [parseFloat(promedio)]   // un solo valor numérico
+      }]
     },
     options: {
       responsive: true,
-      scales: { y: { beginAtZero: true, max: 10 } },
-    },
+      scales: {
+        y: { beginAtZero: true, max: 10 }
+      }
+    }
   });
 }
 
-async function visualizarDatos() {
-  // Ocultar formulario y subtítulo
-  document.getElementById("formulario").style.display = "none";
-  document.querySelector(".subtitulo").style.display = "none";  // <-- Aquí oculto el subtítulo al visualizar datos
 
+async function visualizarDatos() {
+  document.getElementById("formulario").style.display = "none";
+  document.querySelector(".subtitulo").style.display = "none";
   document.getElementById("resultado").innerHTML = "";
   hideChart();
 
   try {
-    const res = await fetch(`${strapiDirectorURL}?populate=*`);
-    const data = await res.json();
-    if (!data.data?.length)
-      return (document.getElementById("resultado").innerHTML = "<p>No hay directores guardados.</p>");
+    const res = await fetch(`${strapiDirectorURL}?populate=*`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
 
-    data.data.forEach((d) => {
+    const data = await res.json();
+
+    console.log("Respuesta completa de Strapi:", data);
+
+    if (!data.data?.length) {
+      document.getElementById("resultado").innerHTML = "<p>No hay directores guardados.</p>";
+      return;
+    }
+
+    // Evitar duplicados por nombre
+    const nombresMostrados = new Set();
+
+    data.data.forEach(d => {
+      const attrs = d.attributes ?? d;
+      const nombre   = attrs.nombre   ?? attrs.Nombre   ?? "—";
+      const promedio = attrs.promedio ?? attrs.Promedio ?? "—";
+
+      if (nombresMostrados.has(nombre)) return; // ya lo mostramos antes
+      nombresMostrados.add(nombre);
+
       const div = document.createElement("div");
       div.className = "card";
-      div.innerHTML = `<h3>${d.attributes.Nombre}</h3><p>Promedio: ${d.attributes.Promedio}</p>`;
+      div.innerHTML = `<h3>${nombre}</h3><p>Promedio: ${promedio}</p>`;
       document.getElementById("resultado").appendChild(div);
     });
+
   } catch (e) {
     document.getElementById("resultado").innerHTML = `<p>Error: ${e.message}</p>`;
   }

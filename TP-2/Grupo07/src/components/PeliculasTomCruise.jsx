@@ -151,6 +151,7 @@ export default function PeliculasTomCruise() {
           <h2>{selectedMovie.titulo}</h2>
           <p><strong>Sinopsis:</strong> {selectedMovie.sinopsis}</p>
           <p><strong>Géneros:</strong> {selectedMovie.generos}</p>
+          <p><strong>Cantidad de Votos:</strong> {selectedMovie.votos}</p>
         </div>
       )}
     </div>
