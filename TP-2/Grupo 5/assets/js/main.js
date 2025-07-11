@@ -87,9 +87,15 @@ const visualizarAnalytics = (series, container) => {
     series.data.forEach((serie) => {
         const pais = serie.paisOrigen;
         const popularidad = parseFloat(serie.popularidad) || 0;
-        const generos = Array.isArray(serie.grupo_5_generos)
-        ? serie.grupo_5_generos.map(g => g.nombre.trim())
-        : ['No especificado'];    
+        let generos = [];
+        if (Array.isArray(serie.grupo_5_generos)) {
+          generos = serie.grupo_5_generos.map(g => g.nombre.trim());
+        } else if (serie.grupo_5_generos && typeof serie.grupo_5_generos === 'object') {
+          generos = [serie.grupo_5_generos.nombre.trim()];
+        } else {
+          generos = ['No especificado'];
+        }
+  
         if (!pais) return;  
         if (!datosPorPais[pais]) {
                 datosPorPais[pais] = {
@@ -140,10 +146,15 @@ const visualizarAnalytics = (series, container) => {
   
   series.data.forEach((serie) => {
       const popularidad = parseFloat(serie.popularidad) || 0;
-      const generos = Array.isArray(serie.grupo_5_generos)
-      ? serie.grupo_5_generos.map(g => g.nombre.trim())
-      : ['No especificado'];
-      
+      let generos = [];
+      if (Array.isArray(serie.grupo_5_generos)) {
+        generos = serie.grupo_5_generos.map(g => g.nombre.trim());
+      } else if (serie.grupo_5_generos && typeof serie.grupo_5_generos === 'object') {
+        generos = [serie.grupo_5_generos.nombre.trim()];
+      } else {
+        generos = ['No especificado'];
+      }
+
       generos.forEach((genero) => {
           if (!popularidadPorGenero[genero]) {
               popularidadPorGenero[genero] = 0;
