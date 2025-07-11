@@ -1,0 +1,77 @@
+footer {
+    color: white;
+    background-color: rgb(54, 54, 54);
+    text-align: right;
+    padding: 1em;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    height: 70px;
+    background-color: rgb(71, 71, 71);
+    padding: 1em;
+    color: white;
+
+}
+
+h2 {
+    margin: 0 auto;
+}
+
+#icono {
+    width: 5em;
+    left: 1em;
+}
+
+.main {
+    display: flex;
+    flex: auto; 
+}
+
+section {
+    padding: 1em;
+}
+
+aside {
+    width: 7em;
+    background-color: rgb(210, 210, 210);
+    padding: 1em;
+}
+
+footer, aside,header , div {
+    border: 1px solid black;
+}
+
+.estilo1 {
+    color: blue;
+    font-weight: bold;
+    font-style: italic;
+    background-color: lightskyblue;
+}
+
+.estilo2 {
+    color: red;
+    text-decoration: underline;
+    font-family:'Gill Sans';
+    border: 2px black solid;
+    border-radius: 5px;
+    background-color: rgb(112, 203, 255);
+}
+
+.estilo3 {
+    color: rgb(161, 255, 84);
+    text-decoration: underline;
+    font-family: Impact;
+    background-color: rgb(70, 70, 70);
+}
+
+button {
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 12px 24px;
+    cursor: pointer;
+    box-shadow:  0 5px #818181;
+    margin-bottom: 10px;
+    background-color: rgb(234, 234, 234);
+}

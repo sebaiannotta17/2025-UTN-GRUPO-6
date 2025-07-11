@@ -28,6 +28,9 @@
         <main class="content">
           <div v-if="loading" id="loader">Cargando...</div>
 
+          <div v-if="postLoadMessage && !loading && !showChartView" class="message">
+            <p>Nuevas películas cargadas. Presione el botón "Ver Peliculas Guardadas".</p>
+          </div>
           <div v-if="showChartView" class="chart-wrapper">
             <div class="chart-container">
               <canvas id="votesByGenre"></canvas>
@@ -35,8 +38,7 @@
           </div>
 
           <div
-            v-if="movies.length > 0 && !showChartView"
-            class="table-container"
+            v-if="showMovies && movies.length > 0 && !showChartView" class="table-container"
           >
             <table>
               <thead>

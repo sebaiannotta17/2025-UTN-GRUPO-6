@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>TP Grupo 13 - Series y Strapi</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header>
+    TP Nro 2 - Grupo 13
+  </header>
+  <div class="main-layout">
+    <aside>
+      <ul>
+        <li>
+          <button id="btnCargarGuardar">Cargar datos de APIs</button>
+        </li>
+        <li>
+          <button id="btnVisualizar">Visualizar datos</button>
+        </li>
+      </ul>
+    </aside>
+    <main>
+      <h2>Series más populares (2020+)</h2>
+      <p class="subtitulo">Consulta y visualiza información de series usando TheMovieDB y Strapi.</p>
+      <div id="resultado"></div>
+      <div style="width:100%;max-width:700px;margin:30px auto 0;">
+        <canvas id="graficoSeries"></canvas>
+      </div>
+    </main>
+  </div>
+  <footer>
+    TygWeb 2025
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>
