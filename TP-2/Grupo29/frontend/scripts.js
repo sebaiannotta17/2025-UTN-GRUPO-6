@@ -19,7 +19,7 @@ async function buscarPeliculas() {
   const popularidad = document.getElementById("popularidad").value;
 
   const url = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=es&page=1&primary_release_date.gte=${desde}&primary_release_date.lte=${hasta}&sort_by=popularity.${popularidad}`;
-
+  await limpiarStrapi();
   const res = await fetch(url, options);
   const data = await res.json();
 
@@ -66,10 +66,10 @@ async function visualizarDatos(){
     document.getElementById("resultados").innerHTML += `
       <div class="card" style="width: 18rem;">
         <img src="${IMAGE_BASE_URL}${peli.image}" class="card-img-top" alt="...">
+        <h2 class="card-title">${peli.titulo}</h2>
         <div class="card-body">
           <p>Popularidad: ${peli.popularidad}</p>
           <p>Fecha de estreno: ${peli.fecha_estreno}</p>
-          <h5 class="card-title">${peli.titulo}</h5>
           <p class="card-text">${peli.descripcion}</p>
         </div>
         
