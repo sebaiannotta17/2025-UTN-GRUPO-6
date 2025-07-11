@@ -10,7 +10,7 @@ Este proyecto consiste en una aplicación web que:
 
 ---
 
-## 🛠 Tecnologías utilizadas
+## Tecnologías utilizadas
 
 - **HTML**  
 - **CSS**  
