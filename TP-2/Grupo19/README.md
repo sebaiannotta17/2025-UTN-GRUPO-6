@@ -21,11 +21,11 @@ Este proyecto consiste en una aplicación web que:
 ---
 ## Integrantes
 
--WILT Juan Ignacio
--PÉRTILE DE LA VEGA, Valentina
--OYHENART, Franco
--ROMERO OLMO, Macarena
--FLORES, Lautaro
+- WILT Juan Ignacio
+- PÉRTILE DE LA VEGA, Valentina
+- OYHENART, Franco
+- ROMERO OLMO, Macarena
+- FLORES, Lautaro
 
 ---
 ##  Funcionalidades
