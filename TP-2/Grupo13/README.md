@@ -325,5 +325,22 @@ document.addEventListener('DOMContentLoaded', function() {
 2. Hacer clic en "Cargar datos de APIs" para obtener y guardar series
 3. Hacer clic en "Visualizar datos" para ver datos guardados en Strapi
 
+##  Tareas realizadas
+
+-	Investigación del sitio https://developer.themoviedb.org
+Integrante: Pilar Wagner
+-	Creación de cuenta y autenticación en el sitio
+Integrante: Felipe Andreau
+-	Relevamiento de las APIs necesarias 
+Integrantes: Felipe Andreau, Melissa Braunstein, Pilar Wagner
+-	Bosquejo del frontend
+Integrantes: Felipe Andreau, Melissa Braunstein, Pilar Wagner
+-	Visualización de lista de series obtenidas
+Integrantes: Felipe Andreau, Melissa Braunstein, Pilar Wagner
+-	Persistencia de datos en Strapi 
+Integrantes: Felipe Andreau, Melissa Braunstein, Pilar Wagner
+-	Implementación de los gráficos informativos con Google Chart                                                                                                   
+Integrante: Melissa Braunstein
+
 ---
 **Desarrollado por**: Grupo 13
