@@ -94,7 +94,7 @@ btnVisualizar.addEventListener('click', async function() {
         if (!response.ok) throw new Error(`Error Strapi: ${response.status}`);
         
         const { data } = await response.json();
-        console.log('Datos recibidos de Strapi:', data); // Verifica la estructura aquí
+        console.log('Datos recibidos de Strapi:', data);
 
         if (!data || data.length === 0) {
             contenido.innerHTML = '<p class="estilo3">No hay películas almacenadas aún.</p>';
@@ -102,10 +102,17 @@ btnVisualizar.addEventListener('click', async function() {
         }
         
         // Mapear los datos correctamente
-        const peliculas = data.map(item => item.data || item); // Compatibilidad con ambas estructuras
+        const peliculas = data.map(item => item.attributes || item); // Usar attributes para Strapi v4
         
-        contenido.innerHTML = `
+        // Calcular el total de votos para los porcentajes
+        const totalVotos = peliculas.reduce((sum, pelicula) => sum + (pelicula.votos_totales || 0), 0);
+        
+        // Crear HTML para la tabla
+        let html = `
             <h3>Películas almacenadas (${peliculas.length})</h3>
+            <div class="chart-container">
+                <canvas id="pieChart"></canvas>
+            </div>
             <table class="movie-table">
                 <thead>
                     <tr>
@@ -129,6 +136,52 @@ btnVisualizar.addEventListener('click', async function() {
                 </tbody>
             </table>
         `;
+        
+        contenido.innerHTML = html;
+        
+        // Crear el gráfico de torta después de que el HTML se haya renderizado
+        if (totalVotos > 0) {
+            setTimeout(() => {
+                const ctx = document.getElementById('pieChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: peliculas.map(p => p.titulo || 'Sin título'),
+                        datasets: [{
+                            data: peliculas.map(p => p.votos_totales || 0),
+                            backgroundColor: [
+                                '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF',
+                                '#FF9F40', '#8AC24A', '#607D8B', '#E91E63', '#00BCD4'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Distribución de votos por película',
+                                font: {
+                                    size: 16
+                                }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        const label = context.label || '';
+                                        const value = context.raw || 0;
+                                        const percentage = totalVotos > 0 ? 
+                                            Math.round((value / totalVotos) * 100) : 0;
+                                        return `${label}: ${value} votos (${percentage}%)`;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }, 100);
+        }
         
     } catch (error) {
         console.error('Error:', error);

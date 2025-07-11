@@ -22,10 +22,10 @@ function formatearEstructura() {
   divPrin.innerHTML = "";
 }
 
-// Funcion que obtiene las 10 series de la API de peliculas
+// Funcion que obtiene las 10 series de la API de series
 async function setMovies() {
-  const urlPeliculas = 'https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&primary_release_date.gte=2020-01-01';
-  const urlGeneros = 'https://api.themoviedb.org/3/genre/movie/list?language=en';
+  const urlSeries = 'https://api.themoviedb.org/3/discover/tv?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&first_air_date.gte=2020-01-01';
+  const urlGeneros = 'https://api.themoviedb.org/3/genre/tv/list?language=en';
 
   const options = {
       method: 'GET',
@@ -36,29 +36,29 @@ async function setMovies() {
   };
 
   try {
-    //Llamo a la API de peliculas
-    const responsePeliculas = await fetch(urlPeliculas, options);
+    //Llamo a la API de series
+    const responseSeries = await fetch(urlSeries , options);
     const responseGeneros = await fetch(urlGeneros, options);
     
     //Convierto lo que me devolvio a objetos JSON porque lo que me devuelve es un texto plano
-    const dataPeliculas = await responsePeliculas.json();
+    const dataSeries = await responseSeries.json();
     const dataGeneros = await responseGeneros.json();
 
-    //Creo un objeto genero que me permitira identificar los generos de una peliculas mas adelante
+    //Creo un objeto genero que me permitira identificar los generos de una series mas adelante
     let generos = {}
     dataGeneros.genres.forEach(g => {
       generos[g.id] = g.name
     });
 
-    let listaPeliculas = dataPeliculas.results.splice(0,10).map(p => ({ //Con el splice agarramos los primeros 10, con el map guardamos lo que se nos pidio de las peliculas en listaPeliculas
-      nombre: p.title,
+    let listaSeries = dataSeries.results.splice(0,10).map(p => ({ //Con el splice agarramos los primeros 10, con el map guardamos lo que se nos pidio de las series en listaSeires
+      nombre: p.name,
       sinopsis: p.overview,
-      generos: p.genre_ids.map(id => generos[id] || "desconocido"), //Dentro del objeto generos veremos que id coinciden con los id guardados en las peliculas
+      generos: p.genre_ids.map(id => generos[id] || "desconocido"), //Dentro del objeto generos veremos que id coinciden con los id guardados en las series
       cantidadDeVotos: p.vote_count,
       promedioDeVotos: p.vote_average
     }));
-    console.log(listaPeliculas);
-    return listaPeliculas;
+    console.log(listaSeries);
+    return listaSeries;
   } catch (error) {
       console.error('Error al cargar datos:', error);
   }
@@ -67,7 +67,7 @@ async function setMovies() {
 const STRAPI_TOKEN = '099da4cc6cbb36bf7af8de6f1f241f8c81e49fce15709c4cfcae1313090fa2c1ac8703b0179863b4eb2739ea65ae435e90999adb870d49f9f94dcadd88999763119edca01a6b34c25be92a80ed30db1bcacb20df40e4e7f45542bd501f059201ad578c18a11e4f5cd592cb25d6c31a054409caa99f11b6d2391440e9c72611ea';
 // Funcion que recibe una serie y la sube a Strapi
 async function guardarSerieEnStrapi(serie) {
-  await fetch('https://gestionweb.frlp.utn.edu.ar/api/g3-series', {
+  await fetch('https://gestionweb.frlp.utn.edu.ar/api/g03-series', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -103,7 +103,7 @@ async function subirSeriesStrapi() {
 
 // Funcion que obtiene series traidas desde Strapi
 async function obtenerSeriesStrapi() {
-  const response = await fetch('https://gestionweb.frlp.utn.edu.ar/api/g3-series?pagination[pageSize]=10', {
+  const response = await fetch('https://gestionweb.frlp.utn.edu.ar/api/g03-series?pagination[pageSize]=10', {
     headers: {
       Authorization: `Bearer ${STRAPI_TOKEN}`
     }
@@ -165,6 +165,7 @@ async function mostrarSeries() {
     contenedor.innerHTML= 'Se produjo un error al intentar cargar la tabla de series, asegurese de haber cargado los datos'
   }
 }
+
 
 document.addEventListener('DOMContentLoaded', () => {
   const cargarDatosLink = document.querySelector('.setDatos');

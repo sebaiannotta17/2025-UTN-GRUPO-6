@@ -19,9 +19,10 @@ Obtener 10 series de TV que hayan sido estrenadas a partir del 2020 y guardar: T
 1. Exploramos la documentacion oficial de TMDb: https://developer.themoviedb.org para conocer las diferentes APIs disponibles
 2. Creamos una cuenta para la API KEY
 3. Relevamos las APIs necesarias para resolver el problema:
-- Ver peliculas: https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&primary_release_date.gte=2020-01-01
-- Ver generos: https://api.themoviedb.org/3/genre/movie/list?language=en
-4. Diseñamos el frontend: incluyendo header, aside con botones para cargar y visualizar datos, main con tabla de series, y footer con créditos. 
+- Obteenr peliculas: https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&primary_release_date.gte=2020-01-01
+- Obtener generos: https://api.themoviedb.org/3/genre/movie/list?language=en
+4. Guardamos la informacion obtenida en Strapi
+5. Diseñamos el frontend: incluyendo header, aside con botones para cargar y visualizar datos, main con tabla de series, y footer con créditos. 
 
 ## Tecnologias usadas: 
 
