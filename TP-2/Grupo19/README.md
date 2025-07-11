@@ -1,4 +1,4 @@
-# TP-2 - Grupo 19
+# TP2 - Grupo 19
 
 ##  Descripción del Proyecto
 
