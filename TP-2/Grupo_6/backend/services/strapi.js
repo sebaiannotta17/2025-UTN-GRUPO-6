@@ -21,34 +21,51 @@ async function strapiFetch(path, opts = {}) {
 // Busca o crea una entidad (género o compañía)
 async function obtenerOCrearEntidad(entidad, tipo) {
   const nombre = typeof entidad === "string" ? entidad : entidad.nombre;
+  const logoUrl = (typeof entidad === "object" && entidad.logo) ? entidad.logo : null;
 
-  // 1) Buscar
+  // 1) Buscar entidad existente por nombre
   const busqRes = await strapiFetch(
     `/api/${tipo}?filters[nombre][$eq]=${encodeURIComponent(nombre)}`
   );
   const busqJson = await busqRes.json();
 
   if (Array.isArray(busqJson.data) && busqJson.data.length) {
-    return busqJson.data[0].id;
+    const entidadExistente = busqJson.data[0];
+    console.log(`Entidad '${nombre}' de tipo '${tipo}' ya existe con ID: ${entidadExistente.id}`);
+
+    // Si la entidad existe Y se proporciona un logo, y el logo_url actual es diferente, actualizar.
+    if (logoUrl && entidadExistente.attributes.logo !== logoUrl) {
+        console.log(`Actualizando logo_url para '${nombre}' de '${entidadExistente.attributes.logo_url}' a '${logoUrl}'`);
+        const updateRes = await strapiFetch(`/api/${tipo}/${entidadExistente.id}`, {
+            method: "PUT",
+            body: JSON.stringify({ data: { logo: logoUrl } }), 
+        });
+        await updateRes.json(); 
+        console.log(`Logo_url actualizado para ${nombre}.`);
+    }
+    return entidadExistente.id;
   }
 
-  // 2) Crear
-  const data = { nombre };
-  if (typeof entidad === "object" && entidad.logo) {
-    data.logo = entidad.logo;
+  // 2) Si no existe, crear la entidad
+  console.log(`Creando nueva entidad '${nombre}' de tipo '${tipo}'.`);
+  const dataToCreate = { nombre };
+  if (logoUrl) {
+    dataToCreate.logo = logoUrl; // Asume que el campo se llama 'logo_url'
   }
 
   const crearRes = await strapiFetch(`/api/${tipo}`, {
     method: "POST",
-    body: JSON.stringify({ data }),
+    body: JSON.stringify({ data: dataToCreate }),
   });
   const crearJson = await crearRes.json();
+  console.log(`Entidad '${nombre}' creada con ID: ${crearJson.data.id}`);
   return crearJson.data.id;
 }
 
 
 // Crea la película en Strapi (si no existe)
 async function crearPelicula(datos) {
+ 
   // 1) ¿Ya existe?
   const pelisRes = await strapiFetch(
     `/api/g6-peliculas?filters[nombre][$eq]=${encodeURIComponent(datos.nombre)}`
@@ -88,7 +105,6 @@ async function crearPelicula(datos) {
 
 // Controlador para cargar Matrix
 export async function cargarPelicula() {
-  await limpiarStrapi()
   const datos = await obtenerDatosDeTheMatrix();
   const pelicula = await crearPelicula(datos);
   return pelicula;
