@@ -1,7 +1,6 @@
-const STRAPI_URL = process.env.REACT_APP_STRAPI_API_URL;
 const STRAPI_TOKEN = process.env.REACT_APP_STRAPI_API_TOKEN;
 const TMDB_KEY = process.env.REACT_APP_TMDB_API_KEY;
-const CONTENT_TYPE = 'G25-Trailer';
+const url_api = `https://gestionweb.frlp.utn.edu.ar/api/G25-Trailers`;
 
 export const fetchTrailersFromTMDB = async (movieId) => {
     const url = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${TMDB_KEY}&append_to_response=videos`;
@@ -16,7 +15,6 @@ export const fetchTrailersFromTMDB = async (movieId) => {
 };
 
 export const saveTrailerToStrapi = async (movieId, movieTitle, trailer) => {
-    const url = `${STRAPI_URL}/api/${CONTENT_TYPE}s`;
     const payload = {
         data: {
             id_pelicula: movieId,
@@ -26,7 +24,7 @@ export const saveTrailerToStrapi = async (movieId, movieTitle, trailer) => {
         },
     };
 
-    const response = await fetch(url, {
+    const response = await fetch(url_api, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -39,8 +37,7 @@ export const saveTrailerToStrapi = async (movieId, movieTitle, trailer) => {
 };
 
 export const fetchTrailersFromStrapi = async () => {
-    const url = `${STRAPI_URL}/api/${CONTENT_TYPE}s`;
-    const response = await fetch(url, {
+    const response = await fetch(url_api, {
         headers: {
             'Authorization': `Bearer ${STRAPI_TOKEN}`,
         },

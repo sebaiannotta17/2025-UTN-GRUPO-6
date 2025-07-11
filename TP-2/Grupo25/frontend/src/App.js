@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 // Asegúrate de que la ruta a tu apiService sea correcta.
-// Este archivo no fue proporcionado, pero se asume que existe y exporta estas funciones.
 import { fetchTrailersFromTMDB, saveTrailerToStrapi, fetchTrailersFromStrapi } from './services/apiService';
-import './App.css'; // Usaremos los nuevos estilos
+import './App.css';
 
 function App() {
     // --- Lógica y estado del App.js original ---
@@ -29,7 +28,6 @@ function App() {
 
             setMessage(`Se encontraron ${fetchedTrailers.length} trailers de "${movieTitle}". Intentando guardar en Strapi...`);
             for (const trailer of fetchedTrailers) {
-                // La funcionalidad de guardado se mantiene intacta
                 await saveTrailerToStrapi(parseInt(movieId), movieTitle, trailer);
             }
 
@@ -62,11 +60,11 @@ function App() {
     return (
         <div id="app-container">
             <header id="header">
-                <a href="#!" onClick={() => window.location.reload()}>
-                    <img src="https://placehold.co/80x80/000000/FFFFFF?text=Logo" alt="Logo" id="logo" />
+                <a href="#!" id="header-logo-link" onClick={() => window.location.reload()}>
+                    Biblioteca de Trailers
                 </a>
                 <div id="titulo">
-                    <h1>TP N°2 - Grupo 25 (Conectado a Strapi)</h1>
+                    <h1>TP N°2 - Grupo 25</h1>
                 </div>
             </header>
 
