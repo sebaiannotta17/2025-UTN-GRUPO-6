@@ -8,23 +8,33 @@ createApp({
     const loading = ref(false);
     const showChartView = ref(false);
     let chartInstance = null;
+    const postLoadMessage = ref(false);
+    const showMovies = ref(false);
 
     const loadMovies = async () => {
       loading.value = true;
       showChartView.value = false;
+      showMovies.value = false;
+      postLoadMessage.value = false;
+      movies.value = [];
       await fetchAndSaveMovies();
       loading.value = false;
+      postLoadMessage.value = true;
     };
 
     const getMovies = async () => {
       loading.value = true;
+      postLoadMessage.value = false;
       showChartView.value = false;
       movies.value = await fetchSavedMovies();
       loading.value = false;
+      showMovies.value = true;
     };
 
     const showChart = async () => {
       loading.value = true;
+      postLoadMessage.value = false;
+      showMovies.value = false;
       showChartView.value = true;
 
       // Obtener películas si no las tenemos
@@ -88,6 +98,6 @@ createApp({
       });
     };
 
-    return { movies, loading, showChartView, loadMovies, getMovies, showChart };
+    return { movies, loading, showChartView, loadMovies, getMovies, showChart, postLoadMessage, showMovies };
   },
 }).mount("#app");
