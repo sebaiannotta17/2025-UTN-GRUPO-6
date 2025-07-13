@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    // Asociar eventos
+    // Asociacion
     form.addEventListener("submit", cargarDatos);
     cargarDatosBtn.addEventListener("click", cargarDatos);
 });
