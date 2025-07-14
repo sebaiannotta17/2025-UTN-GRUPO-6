@@ -59,3 +59,41 @@
     border-radius: 10px;
 
 }
+
+/* Agrega esto al final de tu archivo CSS */
+.pelicula {
+    display: inline-block;
+    margin: 20px;
+    padding: 15px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.pelicula img {
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+#popularidadChart {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+.chart-container {
+    width: 90%;
+    margin: 20px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    min-height: 600px;
+}
+
+#popularidadChart {
+    width: 100% !important;
+    height: 500px !important;
+}

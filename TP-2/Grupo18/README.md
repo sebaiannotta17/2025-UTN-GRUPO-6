@@ -37,6 +37,7 @@ Estas rutas tendran ademas `language=es-AR` agregado para dar los resultados en 
 - CSS3
 - JavaScript
 - Bootstrap 5
+- Chart.js
 
 ### APIs utilizadas
 
