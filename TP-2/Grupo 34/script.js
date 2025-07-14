@@ -28,8 +28,9 @@ async function guardarPeliculasEnStrapi(peliculas) {
         franquicia: franquiciaRandom,
       },
     };
+    console.log(`→ Asignando: ${pelicula.title} a ${franquiciaRandom}`);
 
-    await fetch(strapiBaseUrl, {
+    const response = await fetch(strapiBaseUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -37,8 +38,13 @@ async function guardarPeliculasEnStrapi(peliculas) {
       },
       body: JSON.stringify(payload),
     });
+    if (!response.ok) {
+      console.error(`❌ No se pudo guardar ${pelicula.title}:`, await response.text());
+    } else {
+      const resJson = await response.json();
+      console.log(`✅ Guardada: ${pelicula.title}`, resJson);
+    }
   }
-
   alert("✅ Películas cargadas en Strapi correctamente.");
 }
 
@@ -50,7 +56,7 @@ async function mostrarPeliculasYFranquiciaTop() {
         Authorization: `Bearer ${strapiToken}`,
       },
     });
-
+    
     const data = await res.json();
 
     if (!data || !data.data) {
@@ -63,12 +69,13 @@ async function mostrarPeliculasYFranquiciaTop() {
     const contador = {};
 
     data.data.forEach((pelicula) => {
-    const info = pelicula.attributes;
+      console.log(`Película: ${pelicula.titulo}, Franquicia: ${pelicula.franquicia}`);
+    const info = pelicula;
 
     // Verificamos que exista info y todos los campos
     if (!info || !info.titulo || !info.franquicia) return;
 
-     contenedor.innerHTML += `
+      contenedor.innerHTML += `
         <div style="margin-bottom: 20px; border-bottom: 1px solid #ddd; padding-bottom: 10px;">
             <h3>${info.titulo}</h3>
             <img src="${info.cartel}" width="150"/>
@@ -94,6 +101,60 @@ async function mostrarPeliculasYFranquiciaTop() {
         <p>Total: ${franquiciaTop[1]} películas</p>
       </div>
     `;
+    // Después de mostrar la franquicia top, agregamos el canvas para Chart.js
+const canvasId = "graficoFranquicias";
+
+// Crear un contenedor para el gráfico
+contenedor.innerHTML += `
+  <div style="margin-top: 40px; padding: 20px; background: #fff; border-radius: 10px; box-shadow: 0 0 8px #ccc; max-width: 300px;">
+    <h3>📊 Distribución de películas por franquicia</h3>
+    <canvas id="${canvasId}"></canvas>
+    <ul id="listaFranquicias" style="list-style:none; padding:0; margin-top: 20px;"></ul>
+  </div>
+`;
+
+// Crear el gráfico de torta
+const ctx = document.getElementById(canvasId).getContext("2d");
+
+new Chart(ctx, {
+  type: "doughnut",
+  data: {
+    labels: Object.keys(contador),
+    datasets: [{
+      label: "Cantidad de películas",
+      data: Object.values(contador),
+      backgroundColor: [
+        "#007bff", // Azul
+        "#28a745", // Verde
+        "#dc3545", // Rojo
+      ],
+      borderColor: "#fff",
+      borderWidth: 2,
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "bottom"
+      },
+      tooltip: {
+        callbacks: {
+          label: context => `${context.label}: ${context.parsed} películas`
+        }
+      }
+    }
+  }
+});
+
+// Mostrar lista con cantidad por franquicia debajo del gráfico
+const lista = document.getElementById("listaFranquicias");
+Object.entries(contador).forEach(([franquicia, cantidad]) => {
+  const li = document.createElement("li");
+  li.textContent = `🎬 ${franquicia}: ${cantidad} películas`;
+  lista.appendChild(li);
+});
+
   } catch (error) {
     console.error("❌ Error al mostrar películas y franquicia:", error);
     alert("Hubo un error al mostrar los datos. Revisá la consola.");
