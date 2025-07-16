@@ -1,0 +1,51 @@
+#grafico-promedios {
+  max-width: 500px;
+  max-height: 500px;
+  margin: 0 auto;
+  transition: transform 0.3s ease;
+}
+
+#grafico-promedios:hover {
+  transform: scale(1.03);
+}
+
+/* Estilos para la sección del gráfico */
+#grafico-section {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+#grafico-section h2 {
+  margin-bottom: 2rem;
+  color: #ffffff;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+/* Contenedor del gráfico */
+.grafico-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+/* Contenedor para leyenda y gráfico */
+.grafico-content {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 10rem;
+  width: 100%;
+  min-height: 900px;
+  position: relative;
+}
+
+/* Hacer que el canvas use todo su espacio */
+#grafico-promedios {
+  max-width: none !important;
+  max-height: none !important;
+  width: 900px !important;
+  height: 900px !important;
+}

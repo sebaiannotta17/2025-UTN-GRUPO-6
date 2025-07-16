@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TP2 - Películas Tom Cruise</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="chart_styles.css">
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DBYEWB3573');
+  </script>
+</head>
+<body>
+  <header>
+    <h1>TP2 - Tom Cruise</h1>
+  </header>
+
+  <main>
+    <div class="botones-container">
+      <button id="btn-cargar">Cargar Películas</button>
+      <button id="btn-mostrar">Mostrar Películas</button>
+    </div>
+    <p id="loading-message"></p>
+    <section id="peliculas-container"></section>
+
+    <!-- 📊 Gráfico de torta -->
+    <section id="grafico-section" style="display: none;">
+      <h2>Promedio de votos</h2>
+      <div class="grafico-container">
+        <div class="grafico-content">
+          <canvas id="grafico-promedios" width="900" height="900"></canvas>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Trabajo Práctico 2 - Grupo 17</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script type="module" src="script.js"></script>
+  <script type="module" src="chart.js"></script>
+</body>
+</html>
