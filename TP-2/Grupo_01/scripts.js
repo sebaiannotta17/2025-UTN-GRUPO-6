@@ -20,8 +20,6 @@ async function loadData() {
     });
 
     const data = await response.json();
-    console.log("Actores populares obtenidos correctamente:", data.results.slice(0, 10));
-
     const top10 = data.results.slice(0, 10);
 
     for (const actor of top10) {
@@ -63,15 +61,7 @@ async function loadData() {
             return genre ? genre.name : "Desconocido";
         });
 
-        console.log(`Datos procesados para ${nombre} ${apellido}:`, {
-            pelicula: title,
-            estreno: release_date,
-            generos: genreNames,
-            cantidad_votos: vote_count,
-            promedio_votos: vote_average
-        });
-
-        const strapiResponse = await fetch(strapiUrl, {
+        await fetch(strapiUrl, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -89,12 +79,6 @@ async function loadData() {
                 }
             })
         });
-
-        if (strapiResponse.ok) {
-            console.log(`✅ Datos de ${nombre} ${apellido} guardados en Strapi`);
-        } else {
-            console.error(`❌ Error al guardar en Strapi:`, await strapiResponse.text());
-        }
     }
     document.getElementById("contenido-api").innerHTML = "<p>Datos cargados correctamente en Strapi.</p>";
 }
@@ -147,4 +131,57 @@ async function showResults() {
 
     tablaHTML += "</tbody></table>";
     document.getElementById("contenido-api").innerHTML = tablaHTML;
+    const conteoGeneros = {};
+
+    for (const actor of uniqueEntries.values()) {
+        const generos = actor.generos || [];
+        generos.forEach(genero => {
+            if (conteoGeneros[genero]) {
+                conteoGeneros[genero]++;
+            } else {
+                conteoGeneros[genero] = 1;
+            }
+        });
+    }
+
+    const etiquetas = Object.keys(conteoGeneros);
+    const cantidades = Object.values(conteoGeneros);
+
+    if (window.miGrafico) {
+        window.miGrafico.destroy();
+    }
+
+    const ctx = document.getElementById('grafico').getContext('2d');
+    window.miGrafico = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: etiquetas,
+            datasets: [{
+                label: 'Distribución de géneros',
+                data: cantidades,
+                backgroundColor: etiquetas.map(() => `hsl(${Math.random() * 360}, 70%, 60%)`),
+                borderColor: '#333',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'right',
+                    labels: {
+                        color: '#fff'
+                    }
+                },
+                title: {
+                    display: true,
+                    text: 'Distribución de Géneros más Frecuentes',
+                    color: '#fff',
+                    font: {
+                        size: 18
+                    }
+                }
+            }
+        }
+    });
 }

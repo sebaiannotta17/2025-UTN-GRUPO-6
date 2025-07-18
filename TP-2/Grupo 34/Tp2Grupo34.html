@@ -4,25 +4,34 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tp2 Grupo 34</title>
-  <link rel="stylesheet"  href="tp1estilos.css"/>
+  <link rel="stylesheet" href="tp2estilos.css" />
 </head>
 <body>
   <div class="grid-container">
     <header>
-        <h1 id="titulo">Tp2 Grupo34</h1>
-        <div></div>
+      <h1 id="titulo">Tp2 Grupo34</h1>
+      <!-- <img id="icono" src="icono.png" alt="icono" /> -->
     </header>
     <aside>
-      <button onclick="">Cargar datos de API´s</button>
-      <button onclick="">Visualizar datos</button>
+      <button id="cargarDatos">
+        Cargar datos de API´s
+        <span class="loader"></span>
+      </button>
+      <button id="verDatos">
+        Visualizar datos
+        <span class="loader"></span>
+      </button>
+      
     </aside>
-    <main>
+    <main id="contenido">
     </main>
     <footer>
       <p>TYgWeb 2025</p>
     </footer>
   </div>
+
   <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

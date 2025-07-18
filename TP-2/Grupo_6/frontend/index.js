@@ -31,13 +31,13 @@ async function recuperarPeliculas() {
   try {
     const res = await fetch("http://localhost:3000/recuperar-matrix");
     const result = await res.json();
-    const peliculaRaw = result.data.data[1];
+    const peliculaRaw = result.data.data[result.data.data.length - 1];
 
     //  Géneros
     const etiquetasGeneros = peliculaRaw.g_6_generos
       .map(
         (genero) => `
-        <span class="badge rounded-pill bg-secondary me-1">${genero.nombre}</span>
+        <span class="badge rounded-pill bg-success me-1">${genero.nombre}</span>
       `
       )
       .join("");
@@ -45,7 +45,7 @@ async function recuperarPeliculas() {
     //  Info principal de la película
     const cardInfo = `
       <div class="col-md-6 d-flex">
-        <div class="card mb-3 w-100 h-100">
+        <div class="card w-100 h-100">
           <div class="card-body">
             <h5 class="card-title">${peliculaRaw.nombre}</h5>
             <p class="card-text"><strong>Estreno:</strong> ${peliculaRaw.estreno}</p>
@@ -59,7 +59,7 @@ async function recuperarPeliculas() {
     //  KPI Card
     const cardKpi = `
        <div class="col-md-6 d-flex">
-        <div class="card mb-3 w-100 h-100 text-dark">
+        <div class="card w-100 h-100 text-dark">
           <div class="card-body">
             <h5 class="card-title">Lanzada hace</h5>
             <p class="card-text">${calcularAniosDesdeEstreno(
@@ -98,6 +98,7 @@ async function recuperarPeliculas() {
       .join("");
 
     const cardCarrusel = `
+    <div class="col">
       <div class="card card-body mt-4">
         <h3 class="d-flex jutify-content-center justify-content-md-start ps-2 pt-2 mb-4">Compañías Productoras</h3>
         <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
@@ -114,19 +115,77 @@ async function recuperarPeliculas() {
           </button>
         </div>
       </div>
+    </div>
+    `;
+    const actores = peliculaRaw.g_6_actors;
+
+    // Obtener nacionalidades únicas
+    const nacionalidadesUnicas = [
+      ...new Set(actores.map((actor) => actor.nacionalidad)),
+    ];
+
+    // Contar cuántos actores hay por nacionalidad
+    const cantidadPorNacionalidad = nacionalidadesUnicas.map((nac) => {
+      return actores.filter((actor) => actor.nacionalidad === nac).length;
+    });
+
+    const colores = [
+      "rgb(255, 99, 132)",
+      "rgb(54, 162, 235)",
+      "rgb(255, 205, 86)",
+      "rgb(75, 192, 192)",
+      "rgb(153, 102, 255)",
+      "rgb(255, 159, 64)",
+      "rgb(201, 203, 207)",
+      "rgb(255, 99, 71)",
+      "rgb(60, 179, 113)",
+      "rgb(123, 104, 238)",
+    ];
+
+    const data = {
+      labels: nacionalidadesUnicas,
+      datasets: [
+        {
+          label: "Nacionalidad de los actores",
+          data: cantidadPorNacionalidad,
+          backgroundColor: colores.slice(0, nacionalidadesUnicas.length),
+          hoverOffset: 4,
+        },
+      ],
+    };
+
+    const graficoActores = `
+    <div class="col-12">
+      <div class="card card-body mt-4 centrar">
+        <h3 class="d-flex w-100 jutify-content-center justify-content-md-start ps-2 pt-2 mb-4">Nacionalidad de los actores</h3>
+        <canvas id="graficoActores"></canvas>
+      </div>
+    </div>
     `;
 
     // Render final
     document.getElementById("resultado").innerHTML = `
-      <div class="row gx-3 gy-4">
         ${cardInfo}
         ${cardKpi}
-      </div>
       ${cardCarrusel}
+      ${graficoActores}
     `;
+    const grafico = document.getElementById("graficoActores").getContext("2d");
+    new Chart(grafico, {
+      type: "pie",
+      data: data,
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: "bottom",
+          },
+        },
+      },
+    });
   } catch (err) {
-    document.getElementById("resultado").innerHTML =`
+    document.getElementById("resultado").innerHTML = `
       <p class="centrar">Error al recuperar películas: ${err.message};</p>
-      `
+      `;
   }
 }

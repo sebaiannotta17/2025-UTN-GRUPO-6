@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TP2 - Grupo 30 Películas</title>
+  <link rel="stylesheet" type="text/css" href="Styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<header>
+  <div class="contenedor-header">
+    <img src="unnamed.png" alt="Logo TMDB" id="logo" />
+    <h2>TP Nro 2 - Grupo 30 - Películas</h2>
+  </div>
+</header>
+
+<main>
+  <aside>
+    <button onclick="obtenerActoresConUltimaPelicula()" class="boton">Cargar y guardar películas</button>
+    <button onclick="mostrarActoresDesdeStrapi()" class="boton">Visualizar películas guardadas</button>
+    <button onclick="mostrarGraficoGeneros()" class="boton">Mostrar gráfico de géneros</button>
+    <button onclick="mostrarGraficoComparacion()" class="boton">Mostrar Promedio Individual sobre Promedio Total</button>
+  </aside>
+
+  <section>
+    <h1 class="titulo-principal">Top 10 Actores Populares</h1>
+    <div id="resultado">Presione un botón para cargar los datos.</div>
+    <canvas id="graficoGeneros" width="400" height="400" style="display: none; margin-top: 20px;"></canvas>
+    <canvas id="graficoComparacion" width="600" height="300" style="display: none;"></canvas>
+  </section>
+</main>
+
+<footer>
+  <p><em>Tecnología y Gestión Web - 07/07/2025</em></p>
+</footer>
+
+<script src="javaScript.js"></script>
+</body>
+</html>

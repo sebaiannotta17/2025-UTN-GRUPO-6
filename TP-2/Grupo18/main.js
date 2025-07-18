@@ -183,7 +183,14 @@ async function mostrarEpisodiosStrapi() {
                 </thead>
                 <tbody>
         `;
+        const labels = [];
+        const calificaciones = [];
         episodios.forEach((item, idx) => {
+            const num = item.numEpisodio || idx + 1;
+            const nom = item.nomEpisodio || 'Sin nombre';
+            const cal = parseFloat(item.promVotos) || 0;
+            labels.push(`Episodio ${num}`);
+            calificaciones.push(cal);
             tabla += `
                 <tr>
                     <td>${item.numEpisodio || idx + 1}</td>
@@ -200,7 +207,72 @@ async function mostrarEpisodiosStrapi() {
                 </tbody>
             </table>
             </div>
+            <div class="mt-4 mb-4">
+                <h5 class="text-center">Calificaciones por episodio</h5>
+                <canvas id="graphCalificaciones" height="150"></canvas>
+            </div>
         `;
         containerStrapi.innerHTML = tabla;
+
+        const ctx = document.getElementById('graphCalificaciones').getContext('2d');
+        const grads = calificaciones.map(() => { 
+            const grad = ctx.createLinearGradient(0, 0, 0, 600);
+            grad.addColorStop(0, '#0abf13ff');
+            grad.addColorStop(1, '#c80707ff');
+            return grad;
+        });
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Calificación',
+                    data: calificaciones,
+                    backgroundColor: grads
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 10,
+                        title: {
+                            display: true,
+                            text: 'Calificación',
+                            color: '#fff'
+                        },
+                        ticks: {
+                            color: '#fff'
+                        },
+                        grid: {
+                            color: '#fff'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Episodios',
+                            color: '#fff'
+                        },
+                        ticks: {
+                            color: '#fff'
+                        },
+                        grid: {
+                            color: '#fff'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: ctx => `Nota: ${ctx.parsed.y}`
+                        }
+                    }
+                }
+            }
+        });
     });
 }

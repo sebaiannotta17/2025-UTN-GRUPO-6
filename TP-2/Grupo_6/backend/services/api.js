@@ -12,10 +12,9 @@ const options = {
   },
 };
 
-// Paso 1: Buscar la primera película que coincida con "matrix"
 async function obtenerId() {
   const url =
-    "https://api.themoviedb.org/3/search/movie?query=The%20Matrix&include_adult=false&language=en-US&page=1";
+    "https://api.themoviedb.org/3/search/movie?query=The%20Matrix&include_adult=false&language=es-ES&page=1";
 
   const res = await fetch(url, options);
   const data = await res.json();
@@ -25,18 +24,48 @@ async function obtenerId() {
   }
 
   const peliculaID = data.results[0].id;
-  console.log(`ID de la primera película encontrada: ${peliculaID}`); // para debuggear
+  console.log(`ID de la primera película encontrada: ${peliculaID}`);
   return peliculaID;
 }
 
-// Paso 2: Obtener los datos completos con ese ID
+async function recuperarActores(idPelicula) {
+  const url = `https://api.themoviedb.org/3/movie/${idPelicula}/credits?language=es-ES`;
+  const res = await fetch(url, options);
+  const data = await res.json();
+
+  const primerosActores = data.cast.slice(0, 10); 
+  const actores = await Promise.all(
+    primerosActores.map((actor) => detalleActor(actor.id))
+  );
+  return actores;
+}
+
+async function detalleActor(idActor) {
+  const url = `https://api.themoviedb.org/3/person/${idActor}?language=es-ES`;
+  const res = await fetch(url, options);
+  const data = await res.json();
+
+  // Extraer país desde place_of_birth
+  let pais = "Desconocido";
+  if (data.place_of_birth) {
+    const partes = data.place_of_birth.split(",");
+    pais = partes[partes.length - 1].trim();
+  }
+
+  return {
+    nombre: data.name,
+    pais_origen: pais,
+  };
+}
+
 export async function obtenerDatosDeTheMatrix() {
   const peliculaID = await obtenerId();
 
-  const url = `https://api.themoviedb.org/3/movie/${peliculaID}?language=en-US`;
-
+  const url = `https://api.themoviedb.org/3/movie/${peliculaID}?language=es-ES`;
   const res = await fetch(url, options);
   const data = await res.json();
+
+  const actores = await recuperarActores(peliculaID);
 
   const resultado = {
     nombre: data.title,
@@ -50,8 +79,9 @@ export async function obtenerDatosDeTheMatrix() {
       : [],
     estreno: data.release_date,
     recaudacion: data.revenue,
+    actores: actores,
   };
 
-  console.log("Datos obtenidos:", resultado); // para debuggear
+  console.log("Datos obtenidos:", resultado);
   return resultado;
 }

@@ -50,3 +50,13 @@ footer {
   align-items: center;
   justify-content: center;
 }
+
+canvas{
+  max-width: 300px;
+  max-height: 300px;
+}
+
+aside {
+  overflow: hidden;
+}
+

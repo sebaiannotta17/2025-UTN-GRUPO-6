@@ -160,11 +160,79 @@ async function mostrarSeries() {
     const series = await obtenerSeriesStrapi();
     const tabla = crearTablaSeries(series);
     contenedor.innerHTML = tabla;
+    mostrarGraficoPromedios();
   } catch (error) {
     console.error('Error al obtener series:', error);
     contenedor.innerHTML= 'Se produjo un error al intentar cargar la tabla de series, asegurese de haber cargado los datos'
   }
 }
+
+async function mostrarGraficoPromedios() {
+  const series = await obtenerSeriesStrapi();
+
+  const titulos = series.map(serie => serie.titulo);
+  const promedios = series.map(serie => serie.prom_votos);
+
+  const ctx = document.getElementById('graficoPromedios').getContext('2d');
+
+  // Mostrar canvas (por si estaba oculto)
+  document.getElementById('graficoPromedios').style.display = 'block';
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: titulos,
+      datasets: [{
+        label: '⭐ Promedio de votos',
+        data: promedios,
+        backgroundColor: [
+          'rgba(54, 162, 235, 0.6)',
+          'rgba(255, 99, 132, 0.6)',
+          'rgba(255, 206, 86, 0.6)',
+          'rgba(75, 192, 192, 0.6)',
+          'rgba(153, 102, 255, 0.6)',
+          'rgba(255, 159, 64, 0.6)',
+          'rgba(199, 199, 199, 0.6)',
+          'rgba(83, 102, 255, 0.6)',
+          'rgba(255, 102, 153, 0.6)',
+          'rgba(102, 255, 178, 0.6)'
+        ],
+        borderColor: 'rgba(0,0,0,0.8)',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          labels: {
+            font: { size: 14 }
+          }
+        },
+        title: {
+          display: true,
+          text: 'Promedio de votos por serie',
+          font: { size: 18 }
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: { stepSize: 1 }
+        },
+        x: {
+          ticks: {
+            font: { size: 12 },
+            maxRotation: 45,
+            minRotation: 0
+          }
+        }
+      }
+    }
+  });
+}
+
+
 
 
 document.addEventListener('DOMContentLoaded', () => {

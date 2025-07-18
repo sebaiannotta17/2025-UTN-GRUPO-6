@@ -19,7 +19,7 @@ function initializeEventListeners() {
     location.reload()
   })
   
-  // Enter key support for director name input
+  // Evento de Enter en el campo de nombre del director
   document.getElementById("directorName").addEventListener("keypress", function(e) {
     if (e.key === "Enter") {
       loadAndSaveData()
@@ -155,7 +155,7 @@ async function saveToStrapi(director, movies) {
         body: JSON.stringify(newDirector),
       })
       const created = await res.json()
-      console.log(created)
+      // console.log(created)
       directorStrapiId = created.data.id
       console.log(`🆕 Director creado con directorID ${directorID}`)
     }
@@ -227,9 +227,9 @@ async function visualizeData() {
     };
     const res = await fetch(`${strapiUrl}/api/g26-peliculas?populate=g_26_director&pagination[pageSize]=100`, { headers });
     const data = await res.json();
-    console.log('Películas recibidas de Strapi:', data.data);
+    console.log('Peliculas recibidas de Strapi:', data.data);
     if (data.data && data.data.length > 0) {
-      console.log("Estructura de cada item:", data.data);
+      // console.log("Estructura de cada item:", data.data);
       // En visualizeData, asegúrate de que el mapeo de películas tenga las mismas propiedades que las que se pasan a displayResults en loadAndSaveData
       const peliculas = data.data
         .filter(item => item && (item.attributes || item.nombre)) // Permite ambos casos
@@ -245,7 +245,7 @@ async function visualizeData() {
             peliculaID: pel.peliculaID,
           };
         });
-      console.log("Películas mapeadas:", peliculas);
+      console.log("Peliculas mapeadas:", peliculas);
       // Filtrar películas no repetidas por peliculaID
       const peliculasUnicas = peliculas.filter((pel, idx, arr) =>
         arr.findIndex(p => p.peliculaID === pel.peliculaID) === idx

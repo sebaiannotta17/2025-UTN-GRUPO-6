@@ -37,13 +37,17 @@ html, body, #root, #app-container {
     background-color: black;
     align-items: center;
     color: white;
-    padding: 5px 0;
+    padding: 15px 0;
 }
 
-#header img {
-    margin-left: 20px;
-    height: 60px; /* Reducido para un look más compacto */
-    width: 60px;
+/* Estilo para el enlace de la izquierda que ahora es texto */
+#header-logo-link {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.2em;
+    font-weight: bold;
+    padding-left: 20px;
+    white-space: nowrap; /* Evita que el texto se parta en dos líneas */
 }
 
 #titulo {
@@ -106,7 +110,6 @@ html, body, #root, #app-container {
 }
 
 /* --- Estilos para el contenido específico de la App --- */
-
 .content-container {
     animation: fadeIn 0.5s ease-in-out forwards;
 }
@@ -263,4 +266,3 @@ html, body, #root, #app-container {
         padding: 15px 10px;
     }
 }
-

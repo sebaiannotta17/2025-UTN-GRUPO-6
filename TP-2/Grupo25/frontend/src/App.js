@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 // Asegúrate de que la ruta a tu apiService sea correcta.
-// Este archivo no fue proporcionado, pero se asume que existe y exporta estas funciones.
 import { fetchTrailersFromTMDB, saveTrailerToStrapi, fetchTrailersFromStrapi } from './services/apiService';
-import './App.css'; // Usaremos los nuevos estilos
+import './App.css';
 
 function App() {
-    // --- Lógica y estado del App.js original ---
-    const [activeView, setActiveView] = useState('cargar'); // 'cargar' o 'visualizar'
-    const [movieId, setMovieId] = useState('603'); // ID de "The Matrix" como ejemplo
+    const [activeView, setActiveView] = useState('cargar');
+    const [movieId, setMovieId] = useState('603');
     const [trailers, setTrailers] = useState([]);
     const [message, setMessage] = useState('Ingresa un ID de película y presiona "Buscar y Guardar".');
     const [isLoading, setIsLoading] = useState(false);
@@ -29,14 +27,13 @@ function App() {
 
             setMessage(`Se encontraron ${fetchedTrailers.length} trailers de "${movieTitle}". Intentando guardar en Strapi...`);
             for (const trailer of fetchedTrailers) {
-                // La funcionalidad de guardado se mantiene intacta
                 await saveTrailerToStrapi(parseInt(movieId), movieTitle, trailer);
             }
 
-            setMessage('¡Proceso de guardado finalizado! (O fallido si los permisos no están configurados en Strapi)');
+            setMessage('¡Proceso de guardado finalizado!');
         } catch (error) {
             console.error(error);
-            setMessage(`Error: ${error.message}. Este error es esperado si los permisos de escritura en Strapi no están habilitados.`);
+            setMessage(`Error: ${error.message}.`);
         } finally {
             setIsLoading(false);
         }
@@ -49,7 +46,7 @@ function App() {
         try {
             const data = await fetchTrailersFromStrapi();
             setTrailers(data);
-            setMessage(data.length > 0 ? `Se encontraron ${data.length} trailers guardados.` : 'No hay trailers guardados. Agrega algunos desde la pestaña "Cargar Datos" o manualmente en Strapi.');
+            setMessage(data && data.length > 0 ? `Se encontraron ${data.length} trailers guardados.` : 'No hay trailers guardados.');
         } catch (error) {
             console.error(error);
             setMessage(`Error al cargar desde Strapi: ${error.message}`);
@@ -58,15 +55,14 @@ function App() {
         }
     };
 
-    // --- Renderizado con la nueva estructura visual ---
     return (
         <div id="app-container">
             <header id="header">
-                <a href="#!" onClick={() => window.location.reload()}>
-                    <img src="https://placehold.co/80x80/000000/FFFFFF?text=Logo" alt="Logo" id="logo" />
+                <a href="#!" id="header-logo-link" onClick={() => window.location.reload()}>
+                    Biblioteca de Trailers
                 </a>
                 <div id="titulo">
-                    <h1>TP N°2 - Grupo 25 (Conectado a Strapi)</h1>
+                    <h1>TP N°2 - Grupo 25</h1>
                 </div>
             </header>
 
@@ -119,21 +115,32 @@ function App() {
                                 <strong>Estado:</strong> {message}
                             </div>
 
-                            {trailers.length > 0 && (
+                            {trailers && trailers.length > 0 && (
                                 <div className="trailers-list">
                                     <h3>Trailers Encontrados:</h3>
                                     <ul>
-                                        {trailers.map(item => (
-                                            <li key={item.id}>
-                                                <a 
-                                                  href={`http://googleusercontent.com/youtube.com/6${item.attributes.youtube_key}`} 
-                                                  target="_blank" 
-                                                  rel="noopener noreferrer"
-                                                >
-                                                    {item.attributes.titulo_pelicula} - <em>{item.attributes.nombre_trailer}</em>
-                                                </a>
-                                            </li>
-                                        ))}
+                                        {trailers.map(item => {
+                                            // ----- INICIO DE LA CORRECCIÓN -----
+                                            // Se comprueba si el item tiene las propiedades necesarias,
+                                            // en lugar de buscar dentro de 'attributes'.
+                                            if (!item || !item.youtube_key) {
+                                                console.warn("Se encontró un trailer con datos incompletos en Strapi y fue ignorado:", item);
+                                                return null; 
+                                            }
+                                            // ----- FIN DE LA CORRECCIÓN -----
+
+                                            return (
+                                                <li key={item.id || item.documentId}>
+                                                    <a 
+                                                      href={`https://www.youtube.com/watch?v=${item.youtube_key}`} 
+                                                      target="_blank" 
+                                                      rel="noopener noreferrer"
+                                                    >
+                                                        {item.titulo_pelicula} - <em>{item.nombre_trailer}</em>
+                                                    </a>
+                                                </li>
+                                            );
+                                        })}
                                     </ul>
                                 </div>
                             )}
@@ -150,3 +157,4 @@ function App() {
 }
 
 export default App;
+
