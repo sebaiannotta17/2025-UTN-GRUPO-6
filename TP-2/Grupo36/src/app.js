@@ -8,8 +8,8 @@ const tmdbToken = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiOWRiMDVkYWFjMzcxODliNzAwNzlj
 
 var chart;
 
-async function getLangDocId(tag) {
-    const res = await fetch(`${strapiURL}?filters[name][$eq]=${tag}`, {
+async function getLangData(tag) {
+    const res = await fetch(`${strapiURL}?filters[tag][$eq]=${tag}`, {
         method: "GET",
         headers: {
             Authorization: `Bearer ${strapiToken}`,
@@ -20,8 +20,12 @@ async function getLangDocId(tag) {
         console.error(await res.error());
         return ""
     } else {
-        const data = await res.json()
-        return data.data[0].documentId;
+        const data = await res.json();
+        if (data.meta.pagination.total == 0) {
+            return "";
+        } else {
+            return data.data[0];
+        }
     }
 }
 
@@ -45,9 +49,6 @@ async function cargarDatos(){
     }
     headers.headers.Authorization = `Bearer ${strapiToken}`;
     for (var key in langs) {
-        if (langs[key].count == 0) {
-            continue;
-        }
         const data = {
             data: {
                 tag: key,
@@ -59,9 +60,19 @@ async function cargarDatos(){
             ...headers,
             body: JSON.stringify(data),
         };
-        const docId = await getLangDocId(data.data.name);
-        (docId != "") ? options.method = "PUT" : options.method = "POST";
-        res = await fetch(`${strapiURL}/${docId}`, options);
+        const lData = await getLangData(data.data.tag);
+        if (lData != "") {
+            options.method = "PUT";
+            const docId = lData.documentId;
+            if (data.data.count == lData.count) {
+                console.log(`Skipped ${key}`);
+                continue;
+            }
+            res = await fetch(`${strapiURL}/${docId}`, options);
+        } else {
+            options.method = "POST";
+            res = await fetch(`${strapiURL}`, options);
+        }
         if (!res.ok) {
             console.error(await res.error());
         } else {
