@@ -11,33 +11,33 @@ const ticketsListDiv = document.getElementById('lista-peliculas');
 
 let myMoviesChart = null;
 
-btnCargar.addEventListener('click', cargarYGuardarPeliculas);
-btnVisualizar.addEventListener('click', obtenerYVisualizarPeliculas);
+btnCargar.addEventListener('click', cargarYGuardarPeliculas);  
+btnVisualizar.addEventListener('click', obtenerYVisualizarPeliculas); 
 
-async function cargarYGuardarPeliculas() {
+async function cargarYGuardarPeliculas() { // Carga y guarda las películas de TMDB en Strapi
     feedbackArea.textContent = "Iniciando proceso... Obteniendo películas ya guardadas en Strapi...";
     try {
-        const getResponse = await fetch(STRAPI_API_URL, {
-            headers: { 'Authorization': `Bearer ${STRAPI_API_TOKEN}` }
+        const getResponse = await fetch(STRAPI_API_URL, { // Obtener las películas ya guardadas en Strapi
+            headers: { 'Authorization': `Bearer ${STRAPI_API_TOKEN}` } // Usar el token de autorización
         });
-        if (!getResponse.ok) throw new Error(`No se pudo obtener la lista de películas existentes (Error ${getResponse.status}).`);
+        if (!getResponse.ok) throw new Error(`No se pudo obtener la lista de películas existentes (Error ${getResponse.status}).`); // Verificar si la respuesta es correcta
         
-        const strapiData = await getResponse.json();
-        const peliculasExistentes = strapiData.data.map(p => p.titulo);
+        const strapiData = await getResponse.json(); // Parsear la respuesta JSON
+        const peliculasExistentes = strapiData.data.map(p => p.titulo); // Extraer los títulos de las películas existentes
 
-        feedbackArea.textContent = `Se encontraron ${peliculasExistentes.length} películas en Strapi. Obteniendo datos de TMDB...`;
+        feedbackArea.textContent = `Se encontraron ${peliculasExistentes.length} películas en Strapi. Obteniendo datos de TMDB...`; // Actualizar el feedback con la cantidad de películas existentes
 
-        const discoverUrl = `https://api.themoviedb.org/3/discover/movie?with_companies=${FOX_COMPANY_ID}&sort_by=popularity.desc&api_key=${TMDB_API_KEY}`;
-        const discoverResponse = await fetch(discoverUrl);
+        const discoverUrl = `https://api.themoviedb.org/3/discover/movie?with_companies=${FOX_COMPANY_ID}&sort_by=popularity.desc&api_key=${TMDB_API_KEY}`; // URL para obtener películas de Fox desde TMDB
+        const discoverResponse = await fetch(discoverUrl); // Hacer la solicitud a TMDB para obtener películas de Fox
         if (!discoverResponse.ok) throw new Error('No se pudo obtener la lista de películas de TMDB.');
         const discoverData = await discoverResponse.json();
         const top10Movies = discoverData.results.slice(0, 10);
 
-        feedbackArea.textContent = `Comparando y guardando películas nuevas...`;
+        feedbackArea.textContent = `Comparando y guardando películas nuevas...`; // Actualizar el feedback para indicar que se compararán y guardarán las películas nuevas
         
-        let peliculasNuevasGuardadas = 0;
-        const savePromises = top10Movies.map(async (movie) => {
-            if (!peliculasExistentes.includes(movie.title)) {
+        let peliculasNuevasGuardadas = 0; 
+        const savePromises = top10Movies.map(async (movie) => { // Iterar sobre las películas obtenidas de TMDB
+            if (!peliculasExistentes.includes(movie.title)) { // Verificar si la película ya existe en Strapi
                 const movieDetailsUrl = `https://api.themoviedb.org/3/movie/${movie.id}?api_key=${TMDB_API_KEY}`;
                 const detailsResponse = await fetch(movieDetailsUrl);
                 const movieDetails = await detailsResponse.json();
@@ -54,7 +54,7 @@ async function cargarYGuardarPeliculas() {
                     }
                 };
 
-                const postResponse = await fetch(STRAPI_API_URL, {
+                const postResponse = await fetch(STRAPI_API_URL, { // Hacer la solicitud POST a Strapi para guardar la nueva película
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${STRAPI_API_TOKEN}` },
                     body: JSON.stringify(dataParaStrapi)
@@ -66,38 +66,38 @@ async function cargarYGuardarPeliculas() {
                     const errorBody = await postResponse.text();
                     console.error(`Error al guardar '${movieDetails.title}' en Strapi: ${postResponse.statusText}`, errorBody);
                 }
-            } else {
+            } else { // Si la película ya existe, no se guarda
                 console.log(`La película '${movie.title}' ya existe en Strapi. Se omitió.`);
             }
         });
 
-        await Promise.all(savePromises);
+        await Promise.all(savePromises); 
         
-        if (peliculasNuevasGuardadas > 0) {
+        if (peliculasNuevasGuardadas > 0) { // Si se guardaron nuevas películas, se actualiza el feedback
             feedbackArea.textContent = `¡Proceso completado! Se guardaron ${peliculasNuevasGuardadas} películas nuevas.`;
         } else {
             feedbackArea.textContent = "Proceso completado. No se encontraron películas nuevas para guardar (probablemente ya existían todas).";
         }
         
-    } catch (error) {
+    } catch (error) { // Manejo de errores
         feedbackArea.textContent = `Error en el proceso de carga: ${error.message}`;
         console.error("Error detallado en cargarYGuardarPeliculas:", error);
     }
 }
 
-async function obtenerYVisualizarPeliculas() {
+async function obtenerYVisualizarPeliculas() { // Obtiene y visualiza las películas guardadas en Strapi
     feedbackArea.textContent = "Obteniendo datos desde Strapi para visualizarlos...";
     if (ticketsListDiv) ticketsListDiv.innerHTML = '';
 
     try {
-        const response = await fetch(STRAPI_API_URL, {
-            headers: { 'Authorization': `Bearer ${STRAPI_API_TOKEN}` }
+        const response = await fetch(STRAPI_API_URL, { // Hacer la solicitud a Strapi para obtener las películas guardadas
+            headers: { 'Authorization': `Bearer ${STRAPI_API_TOKEN}` } 
         });
-        if (!response.ok) throw new Error(`Error HTTP: ${response.statusText}`);
+        if (!response.ok) throw new Error(`Error HTTP: ${response.statusText}`); // Verificar si la respuesta es correcta
         const strapiData = await response.json();
         if (!strapiData || !Array.isArray(strapiData.data)) throw new Error("La respuesta de Strapi no tiene el formato esperado.");
         
-        const peliculas = strapiData.data;
+        const peliculas = strapiData.data.slice(0, 10);
         if (peliculas.length === 0) {
             feedbackArea.textContent = "No hay películas guardadas para visualizar. Carga los datos primero.";
             return;
@@ -105,14 +105,14 @@ async function obtenerYVisualizarPeliculas() {
 
         feedbackArea.textContent = `Datos obtenidos. Mostrando gráfico y tickets.`;
         
-        const labels = peliculas.map(p => p.titulo);
-        const promedios = peliculas.map(p => p.promedio_votos);
+        const labels = peliculas.map(p => p.titulo); // Extraer los títulos de las películas para las etiquetas del gráfico
+        const promedios = peliculas.map(p => p.promedio_votos); // Extraer los promedios de votos de las películas
 
-        if (myMoviesChart) {
+        if (myMoviesChart) { // Si ya existe un gráfico, lo destruimos para evitar duplicados
             myMoviesChart.destroy();
         }
 
-        myMoviesChart = new Chart(chartCanvas, {
+        myMoviesChart = new Chart(chartCanvas, { // Crear un nuevo gráfico de barras
             type: 'bar', 
             data: {
                 labels: labels,
