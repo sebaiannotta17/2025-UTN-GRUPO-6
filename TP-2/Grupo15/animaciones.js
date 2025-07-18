@@ -41,10 +41,11 @@ async function getTVShowDetails(tvId) {
 //utilizando el método POST.
 
 async function subirSerieAStrapi(serie) {
-    await fetch('https://gestionweb.frlp.utn.edu.ar/api/serie-grupo15', {
+    const res =  await fetch('https://gestionweb.frlp.utn.edu.ar/api/serie-grupo15', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer 099da4cc6cbb36bf7af8de6f1f241f8c81e49fce15709c4cfcae1313090fa2c1ac8703b0179863b4eb2739ea65ae435e90999adb870d49f9f94dcadd88999763119edca01a6b34c25be92a80ed30db1bcacb20df40e4e7f45542bd501f059201ad578c18a11e4f5cd592cb25d6c31a054409caa99f11b6d2391440e9c72611ea'
         },
         body: JSON.stringify({
             data: {
@@ -56,6 +57,12 @@ async function subirSerieAStrapi(serie) {
             }
         })
     });
+    if (!res.ok) {
+    console.error("Error al subir la serie:", res.status, await res.text());
+    return;
+    }
+    const data = await res.json();
+    console.log("Respuesta de Strapi:", data);
 }
 
 
