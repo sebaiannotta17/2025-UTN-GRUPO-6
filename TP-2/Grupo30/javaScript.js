@@ -8,6 +8,8 @@ let resultadosActores = [];
 async function obtenerActoresConUltimaPelicula() {
   try {
     ocultarGraficoGeneros();
+    ocultarGraficoComparacion();
+
     document.getElementById('resultado').style.display = 'block';
 
     const div = document.getElementById('resultado');
@@ -83,6 +85,8 @@ async function obtenerActoresConUltimaPelicula() {
 async function mostrarActoresDesdeStrapi() {
   try {
     ocultarGraficoGeneros();
+    ocultarGraficoComparacion();
+
     document.getElementById('resultado').style.display = 'block';
 
     const div = document.getElementById('resultado');
@@ -124,6 +128,7 @@ async function mostrarActoresDesdeStrapi() {
 async function mostrarGraficoGeneros() {
   try {
     ocultarGraficoGeneros();
+    ocultarGraficoComparacion();
 
     const divResultado = document.getElementById('resultado');
     divResultado.style.display = 'none';
@@ -207,6 +212,169 @@ function ocultarGraficoGeneros() {
       window.graficoGenerosChart = null;
     }
 
+    canvas.style.display = 'none';
+    canvas.width = canvas.width;
+  }
+}
+
+async function mostrarGraficoComparacion() {
+  try {
+    ocultarGraficoGeneros();
+    ocultarGraficoComparacion();
+
+    // Oculta el contenido anterior
+    const divResultado = document.getElementById('resultado');
+    divResultado.style.display = 'none';
+
+    const res = await fetch(`${STRAPI_URL_PELICULAS}?pagination[limit]=100`, {
+      headers: {
+        'Authorization': `Bearer ${STRAPI_TOKEN}`
+      }
+    });
+    if (!res.ok) throw new Error('Error accediendo a Strapi para gráfico.');
+
+    const data = await res.json();
+    const actores = data.data;
+
+    if (!actores || actores.length === 0) {
+      alert('No hay datos para mostrar.');
+      return;
+    }
+
+    generarGraficoComparacion(actores);
+  } catch (err) {
+    console.error(err);
+    alert('Error generando gráfico de comparación.');
+  }
+}
+
+function generarGraficoComparacion(actores) {
+  const canvas = document.getElementById('graficoComparacion');
+  canvas.style.display = 'block';
+
+  if (window.graficoComparacionChart) {
+    window.graficoComparacionChart.destroy();
+  }
+
+  const peliculasMap = new Map();
+
+  actores.forEach(p => {
+    const titulo = p.titulo;
+    if (!peliculasMap.has(titulo)) {
+      peliculasMap.set(titulo, {
+        titulo: titulo,
+        promedio_votos: parseFloat(p.promedio_votos),
+        fecha_estreno: p.fecha_estreno
+      });
+    }
+  });
+
+  const peliculasUnicas = Array.from(peliculasMap.values())
+  .filter(p => p.promedio_votos > 0)
+  .sort((a, b) => new Date(b.fecha_estreno) - new Date(a.fecha_estreno))
+  .slice(-10); // las 10 últimas con votos
+
+
+  const titulos = peliculasUnicas.map(p => p.titulo);
+  const promedios = peliculasUnicas.map(p => p.promedio_votos);
+  const promedioTotal = promedios.length > 0
+  ? promedios.reduce((a, b) => a + b, 0) / promedios.length
+  : 0;
+
+  const ctx = canvas.getContext('2d');
+  window.graficoComparacionChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: titulos,
+      datasets: [
+        {
+          label: 'Promedio por película',
+          data: promedios,
+          backgroundColor: 'rgba(30, 144, 255, 0.75)',
+          borderRadius: 6,
+          barPercentage: 0.6,
+          categoryPercentage: 0.7
+        },
+        {
+          label: `Promedio general (${promedioTotal.toFixed(2)})`,
+          data: new Array(promedios.length).fill(promedioTotal),
+          type: 'line',
+          borderColor: 'rgba(255, 99, 132, 1)',
+          borderWidth: 2,
+          borderDash: [5, 5],
+          fill: false,
+          tension: 0,
+          pointRadius: 0
+        }
+      ]
+    },
+    options: {
+      layout: { padding: 10 },
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'top',
+          labels: {
+            font: {
+              size: 13,
+              family: 'Arial',
+              weight: 'bold'
+            }
+          }
+        },
+        title: {
+          display: true,
+          text: 'Comparación de promedios de votos',
+          font: {
+            size: 18,
+            family: 'Arial',
+            weight: 'bold'
+          }
+        },
+        tooltip: {
+          backgroundColor: '#222',
+          titleFont: { size: 14 },
+          bodyFont: { size: 12 },
+          padding: 10,
+          cornerRadius: 4
+        }
+      },
+      scales: {
+        x: {
+          grid: { display: false },
+          ticks: {
+            font: { size: 11, family: 'Arial' },
+            autoSkip: false,
+            maxRotation: 45,
+            minRotation: 0
+          }
+        },
+        y: {
+          beginAtZero: true,
+          max: 10,
+          grid: {
+            color: 'rgba(0, 0, 0, 0.05)'
+          },
+          ticks: {
+            font: { size: 12 }
+          }
+        }
+      },
+      animation: {
+        duration: 1000,
+        easing: 'easeOutQuart'
+      }
+    }
+  });
+}
+
+function ocultarGraficoComparacion() {
+  const canvas = document.getElementById('graficoComparacion');
+  if (canvas) {
+    if (window.graficoComparacionChart) {
+      window.graficoComparacionChart.destroy();
+      window.graficoComparacionChart = null;
+    }
     canvas.style.display = 'none';
     canvas.width = canvas.width;
   }

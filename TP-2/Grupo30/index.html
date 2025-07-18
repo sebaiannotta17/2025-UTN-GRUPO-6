@@ -21,12 +21,14 @@
     <button onclick="obtenerActoresConUltimaPelicula()" class="boton">Cargar y guardar películas</button>
     <button onclick="mostrarActoresDesdeStrapi()" class="boton">Visualizar películas guardadas</button>
     <button onclick="mostrarGraficoGeneros()" class="boton">Mostrar gráfico de géneros</button>
+    <button onclick="mostrarGraficoComparacion()" class="boton">Mostrar Promedio Individual sobre Promedio Total</button>
   </aside>
 
   <section>
     <h1 class="titulo-principal">Top 10 Actores Populares</h1>
     <div id="resultado">Presione un botón para cargar los datos.</div>
     <canvas id="graficoGeneros" width="400" height="400" style="display: none; margin-top: 20px;"></canvas>
+    <canvas id="graficoComparacion" width="600" height="300" style="display: none;"></canvas>
   </section>
 </main>
 
