@@ -30,10 +30,11 @@ header {
 }
 
 #logo {
+  position: absolute;
+  left: 15px;
   width: 50px;
   height: auto;
 }
-
 
 header h2 {
   font-weight: 700;
@@ -156,4 +157,13 @@ footer {
   list-style-type: disc;
   margin-left: 0;
   padding-left: 1.1em;
+}
+
+.contenedor-header h2 {
+  margin: 0;
+  font-weight: 700;
+  font-size: 1.4rem;
+  /* centrado y sin margen para que quede bien */
+  text-align: center;
+  width: 100%;
 }

@@ -7,6 +7,9 @@ let resultadosActores = [];
 
 async function obtenerActoresConUltimaPelicula() {
   try {
+    ocultarGraficoGeneros();
+    document.getElementById('resultado').style.display = 'block';
+
     const div = document.getElementById('resultado');
     div.innerText = 'Obteniendo actores populares...';
 
@@ -18,7 +21,6 @@ async function obtenerActoresConUltimaPelicula() {
     const resultados = [];
 
     for (const actor of top10) {
-
       const nombreCompleto = actor.name.trim().split(' ');
       const nombre = nombreCompleto[0];
       const apellido = nombreCompleto.slice(1).join(' ') || '';
@@ -43,49 +45,34 @@ async function obtenerActoresConUltimaPelicula() {
         promedio_votos: detalles.vote_average,
         nombre: nombre,
         apellido: apellido,
-        generos: JSON.stringify(detalles.genres?.map(g => g.name) || []),
+        generos: detalles.genres?.map(g => g.name) || [],
       };
       resultados.push(datosActor);
 
-      // 1) Hacer el POST y guardar la respuesta en postRes
-const postRes = await fetch(STRAPI_URL_PELICULAS, {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${STRAPI_TOKEN}`,
-  },
-  body: JSON.stringify({ data: datosActor })
-});
+      const postRes = await fetch(STRAPI_URL_PELICULAS, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${STRAPI_TOKEN}`,
+        },
+        body: JSON.stringify({ data: datosActor })
+      });
 
-// 2) Validar estado HTTP
-if (!postRes.ok) {
-  console.error('Error al guardar actor en Strapi:', postRes.status);
-  continue;  // o maneja el error como necesites
-}
+      if (!postRes.ok) {
+        console.error('Error al guardar actor en Strapi:', postRes.status);
+        continue;
+      }
 
-// 3) Leer el JSON de la respuesta
-const postData = await postRes.json();
-console.log('Strapi devolvió:', postData);
+      const postData = await postRes.json();
+      console.log('Strapi devolvió:', postData);
     }
 
     if (resultados.length === 0) {
       div.innerText = 'No se encontraron datos.';
       return;
+    } else {
+      div.innerText = 'Datos cargados a Strapi';
     }
-
-    resultadosActores = resultados;
-
-    div.innerHTML = resultados.map(a => `
-      <div class="tarjeta-actor">
-        <strong>${a.nombre} ${a.apellido}</strong><br>
-        <span class="etiqueta">Película:</span> ${a.titulo}<br>
-        <span class="etiqueta">Fecha de estreno:</span> ${a.fecha_estreno}<br>
-        <span class="etiqueta">Votos:</span> ${a.cantidad_votos} | 
-        <span class="etiqueta">Promedio:</span> ${a.promedio_votos}<br>
-        <span class="etiqueta">Géneros:</span>
-        <ul>${(JSON.parse(a.generos || '[]')).map(g => `<li>${g}</li>`).join('')}</ul>
-      </div>
-    `).join('');
 
   } catch (error) {
     console.error(error);
@@ -95,18 +82,20 @@ console.log('Strapi devolvió:', postData);
 
 async function mostrarActoresDesdeStrapi() {
   try {
+    ocultarGraficoGeneros();
+    document.getElementById('resultado').style.display = 'block';
+
     const div = document.getElementById('resultado');
     div.innerText = 'Consultando Strapi...';
 
-    const res = await fetch(`${STRAPI_URL_PELICULAS}`, {
+    const res = await fetch(`${STRAPI_URL_PELICULAS}?pagination[limit]=10&sort[0]=id:asc`, {
       headers: {
-      'Authorization': `Bearer ${STRAPI_TOKEN}`
+        'Authorization': `Bearer ${STRAPI_TOKEN}`
       }
     });
     if (!res.ok) throw new Error('Error accediendo a Strapi.');
 
     const data = await res.json();
-    console.log(data)
     const actores = data.data;
 
     if (!actores || actores.length === 0) {
@@ -114,23 +103,111 @@ async function mostrarActoresDesdeStrapi() {
       return;
     }
 
-    div.innerHTML = actores.map(entry => {
-      const a = entry.attributes;
-      return `
-        <div class="tarjeta-actor">
-          <strong>${a.nombre} ${a.apellido}</strong><br>
-          <span class="etiqueta">Película:</span> ${a.titulo}<br>
-          <span class="etiqueta">Fecha de estreno:</span> ${a.fecha_estreno}<br>
-          <span class="etiqueta">Votos:</span> ${a.cantidad_votos} | 
-          <span class="etiqueta">Promedio:</span> ${a.promedio_votos}<br>
-          <span class="etiqueta">Géneros:</span>
-          <ul>${JSON.parse(a.generos || '[]').map(g => `<li>${g}</li>`).join('')}</ul>
-        </div>
-      `;
-    }).join('');
+    div.innerHTML = actores.map(a => `
+      <div class="tarjeta-actor">
+        <strong>${a.nombre} ${a.apellido}</strong><br>
+        <span class="etiqueta">Película:</span> ${a.titulo}<br>
+        <span class="etiqueta">Fecha de estreno:</span> ${a.fecha_estreno}<br>
+        <span class="etiqueta">Votos:</span> ${a.cantidad_votos} | 
+        <span class="etiqueta">Promedio:</span> ${a.promedio_votos}<br>
+        <span class="etiqueta">Géneros:</span>
+        <ul>${(a.generos || []).map(g => `<li>${g}</li>`).join('')}</ul>
+      </div>
+    `).join('');
 
   } catch (err) {
     console.error(err);
     document.getElementById('resultado').innerText = 'No se pudo acceder a Strapi.';
+  }
+}
+
+async function mostrarGraficoGeneros() {
+  try {
+    ocultarGraficoGeneros();
+
+    const divResultado = document.getElementById('resultado');
+    divResultado.style.display = 'none';
+
+    const res = await fetch(`${STRAPI_URL_PELICULAS}?pagination[limit]=100`, {
+      headers: {
+        'Authorization': `Bearer ${STRAPI_TOKEN}`
+      }
+    });
+    if (!res.ok) throw new Error('Error accediendo a Strapi para gráfico.');
+
+    const data = await res.json();
+    const actores = data.data;
+
+    if (!actores || actores.length === 0) {
+      alert('No hay datos para mostrar en el gráfico.');
+      return;
+    }
+
+    generarGraficoGeneros(actores);
+  } catch (err) {
+    console.error(err);
+    alert('Error generando gráfico.');
+  }
+}
+
+function generarGraficoGeneros(actores) {
+  const conteoGeneros = {};
+
+  actores.forEach(a => {
+    const generos = a.generos || a.attributes?.generos || [];
+    generos.forEach(g => {
+      conteoGeneros[g] = (conteoGeneros[g] || 0) + 1;
+    });
+  });
+
+  const labels = Object.keys(conteoGeneros);
+  const data = Object.values(conteoGeneros);
+  const total = data.reduce((a, b) => a + b, 0);
+  const porcentajes = data.map(valor => ((valor / total) * 100).toFixed(1));
+
+  const colores = labels.map(() =>
+    `hsl(${Math.floor(Math.random() * 360)}, 60%, 60%)`
+  );
+
+  const canvas = document.getElementById('graficoGeneros');
+  canvas.style.display = 'block';
+
+  if (window.graficoGenerosChart) {
+    window.graficoGenerosChart.destroy();
+  }
+
+  const ctx = canvas.getContext('2d');
+  window.graficoGenerosChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: labels.map((l, i) => `${l} (${porcentajes[i]}%)`),
+      datasets: [{
+        label: 'Distribución de géneros',
+        data: data,
+        backgroundColor: colores,
+        borderColor: '#fff',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { position: 'bottom' },
+        title: { display: true, text: 'Porcentaje de cada género' }
+      }
+    }
+  });
+}
+
+function ocultarGraficoGeneros() {
+  const canvas = document.getElementById('graficoGeneros');
+  if (canvas) {
+    if (window.graficoGenerosChart) {
+      window.graficoGenerosChart.destroy();
+      window.graficoGenerosChart = null;
+    }
+
+    canvas.style.display = 'none';
+    canvas.width = canvas.width;
   }
 }
