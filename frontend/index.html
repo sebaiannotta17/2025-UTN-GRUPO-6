@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Marketplace — Búsqueda</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <main>
+    <h1>Buscar materiales</h1>
+
+    <!-- CA1 + CA2 -->
+    <form id="searchForm" role="search" autocomplete="off">
+      <input id="q" name="q" type="search" placeholder="Cemento, arena…" />
+      <button type="submit" id="btnSearch">Buscar</button>
+    </form>
+
+    <!-- Reservado para futuro listado (CA3) -->
+    <section id="feedback" class="muted">Aún no mostramos resultados.</section>
+    <ul id="results" class="grid" aria-live="polite"></ul>
+  </main>
+
+  <script src="./app.js" type="module"></script>
+</body>
+</html>
