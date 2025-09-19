@@ -1,0 +1,6 @@
+backend/node_modules/
+backend/.env
+backend/market.db
+.vscode/
+.DS_Store
+Thumbs.db

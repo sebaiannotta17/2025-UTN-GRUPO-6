@@ -1,35 +1,62 @@
-// Por ahora NO mostramos resultados ni llamamos a la API.
-// Solo capturamos el texto y dejamos preparado el lugar del listado.
+// --- Config ---
+const USE_MOCK = false; // <— ahora usamos la API
+const API_URL = "http://localhost:3000/api/materials";
 
+// --- DOM ---
 const $form = document.getElementById("searchForm");
 const $q = document.getElementById("q");
-const $btn = document.getElementById("btnSearch");
 const $feedback = document.getElementById("feedback");
 const $results = document.getElementById("results");
 
-// Estado inicial
-$feedback.textContent = "Escribí algo y tocá Buscar. (Resultados ocultos por ahora)";
-$results.innerHTML = ""; // reservado para el futuro
-
-$form.addEventListener("submit", (e) => {
-  e.preventDefault();
-
-  const text = $q.value.trim();
-
-  // Validación mínima
-  if (!text) {
-    $feedback.textContent = "Ingresá un texto para buscar.";
+// --- Render ---
+function render(items, text = "") {
+  if (!items.length) {
+    $feedback.textContent = text
+      ? `No se encontraron materiales para “${text}”`
+      : "No hay materiales para mostrar";
+    $results.innerHTML = "";
     return;
   }
+  $feedback.textContent = text
+    ? `Resultados para “${text}” (${items.length})`
+    : `Mostrando todos (${items.length})`;
 
-  // “Simulamos” que busca (sin mostrar nada todavía)
-  $btn.disabled = true;
-  $feedback.textContent = `Buscando “${text}”… (aún no mostramos resultados)`;
+  $results.innerHTML = items.map(m => `
+    <li class="card">
+      <h3>${m.name}</h3>
+      <p>${m.desc ?? ""}</p>
+      <div class="price">$${(m.price ?? "-").toLocaleString("es-AR")}</div>
+    </li>
+  `).join("");
+}
 
-  // Acá después irá: fetch(...) o filtro de mock/DB
-  setTimeout(() => {
-    // Por ahora no renderizamos nada en #results
-    $feedback.textContent = `Búsqueda lista para “${text}”. (Resultados ocultos)`;
-    $btn.disabled = false;
-  }, 400);
+// --- Buscar ---
+async function search(text) {
+  const q = (text || "").trim();
+  try {
+    const res = await fetch(`${API_URL}?text=${encodeURIComponent(q)}`);
+    const data = await res.json();
+    return Array.isArray(data) ? data : (data.items ?? []);
+  } catch (e) {
+    console.error(e);
+    $feedback.textContent = "Error consultando la API";
+    return [];
+  }
+}
+
+// --- Evento ---
+$form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const text = $q.value.trim();
+  $feedback.textContent = text ? `Buscando “${text}”…` : "Buscando…";
+  $results.innerHTML = "";
+  const items = await search(text);
+  render(items, text);
 });
+
+// --- Estado inicial: traer todo desde la API ---
+(async () => {
+  $feedback.textContent = "Cargando materiales…";
+  const items = await search("");
+  render(items, "");
+})();
