@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Marketplace de Materiales</title>
+        <link rel="stylesheet" href="styles.css" />
+    </head>
+    <body>
+        <h1>Publicar material</h1>
+
+        <form id="form-material">
+            <input
+                type="text"
+                name="nombre"
+                placeholder="Nombre del material"
+                required
+            />
+            <input
+                type="text"
+                name="descripcion"
+                placeholder="Descripción"
+                required
+            />
+            <input
+                type="number"
+                name="precio"
+                placeholder="Precio"
+                required
+                min="1"
+            />
+            <input
+                type="number"
+                name="cantidad"
+                placeholder="Cantidad"
+                required
+                min="1"
+            />
+
+            <label for="categoria">Categoría:</label>
+            <select name="categoria" id="categoria" required>
+                <option value="">Seleccionar categoría</option>
+                <option value="Pintura">Pintura</option>
+                <option value="Ladrillos">Ladrillos</option>
+                <option value="Baldosas y azulejos">Baldosas y azulejos</option>
+                <option value="Madera">Madera</option>
+                <option value="Plomería">Plomería</option>
+            </select>
+
+            <div id="subcategoria-container"></div>
+
+            <div class="form-buttons">
+                <button type="submit" id="btn-publicar">Publicar</button>
+                <button type="button" id="btn-cancelar" class="cancelar">
+                    Cancelar
+                </button>
+            </div>
+        </form>
+
+        <div id="toast-container"></div>
+
+        <h2>Materiales cargados</h2>
+        <ul id="lista-materiales" class="grid"></ul>
+
+        <script src="app.js"></script>
+    </body>
+</html>
