@@ -1,0 +1,4 @@
+instalar express en la carpeta con: 
+npm install express
+antes de ejecutar con:
+node server.js

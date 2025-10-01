@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Ejemplo 1 - Básico</title>
+<link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+<h2>Catálogo Básico</h2>
+
+<div id="contenedor"></div>
+
+<script src="data.js"></script>
+<script>
+const contenedor = document.getElementById("contenedor");
+
+materiales.forEach(grupo => {
+  const titulo = document.createElement("h3");
+  titulo.textContent = grupo.categoria;
+  contenedor.appendChild(titulo);
+
+  grupo.subcategorias.forEach(sub => {
+    const subtitulo = document.createElement("h4");
+    subtitulo.textContent = sub.nombre;
+    contenedor.appendChild(subtitulo);
+
+    const tabla = document.createElement("table");
+    tabla.innerHTML = `
+      <thead>
+        <tr><th>Material</th><th>Precio</th><th>Cantidad</th></tr>
+      </thead>
+      <tbody>
+        ${sub.items.map(m => `
+          <tr><td>${m.nombre}</td><td>${m.precio}</td><td>${m.cantidad}</td></tr>
+        `).join("")}
+      </tbody>
+    `;
+    contenedor.appendChild(tabla);
+  });
+});
+</script>
+</body>
+</html>

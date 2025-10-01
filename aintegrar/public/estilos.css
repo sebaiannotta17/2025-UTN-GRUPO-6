@@ -1,0 +1,90 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #1a1a24;
+    color: #e9e9ee;
+    padding: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 400px;
+    margin-bottom: 20px;
+}
+
+input,
+select {
+    flex: 1;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid #363645;
+    background: #15151c;
+    color: #e9e9ee;
+}
+
+.form-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+button {
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#btn-publicar {
+    background: #4caf50;
+    color: white;
+}
+
+#btn-cancelar {
+    background: #e53935;
+    color: white;
+}
+
+#toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+}
+
+.toast {
+    background: #4caf50;
+    color: white;
+    padding: 10px 15px;
+    margin-bottom: 8px;
+    border-radius: 5px;
+    opacity: 0.9;
+}
+
+.toast.error {
+    background: #e53935;
+}
+
+.grid {
+    display: grid;
+    gap: 12px;
+    list-style: none;
+    padding: 0;
+}
+
+.grid li {
+    background: #252532;
+    padding: 12px;
+    border-radius: 10px;
+}
+
+#subcategoria-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+#subcategoria-container label {
+    font-weight: bold;
+    margin-top: 8px;
+}

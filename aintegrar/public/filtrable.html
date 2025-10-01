@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Ejemplo 2 - Filtrado por Clic</title>
+<link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+<h2>Filtrado por Clic</h2>
+
+<div>
+  <label for="ordenar">Ordenar por:</label>
+  <select id="ordenar" onchange="renderCategorias()">
+    <option value="precio">Precio</option>
+    <option value="cantidad">Cantidad</option>
+    <option value="nombre">Nombre</option>
+  </select>
+  <button onclick="cambiarOrden()">Cambiar a Descendente</button>
+  <button onclick="resetFiltros()">Mostrar Todo</button>
+</div>
+
+<div id="contenedor"></div>
+
+<script src="datae.js"></script>
+<script>
+let ascendente = true;
+let filtroCategoria = null;
+let filtroSubcategoria = null;
+
+function renderCategorias() {
+  const criterio = document.getElementById("ordenar").value;
+  const contenedor = document.getElementById("contenedor");
+  contenedor.innerHTML = "";
+
+  materiales.forEach(grupo => {
+    if (filtroCategoria && grupo.categoria !== filtroCategoria) return;
+    const titulo = document.createElement("div");
+    titulo.textContent = grupo.categoria;
+    titulo.className = "categoria";
+    titulo.onclick = () => { filtroCategoria = grupo.categoria; filtroSubcategoria = null; renderCategorias(); };
+    contenedor.appendChild(titulo);
+
+    grupo.subcategorias.forEach(sub => {
+      if (filtroSubcategoria && sub.nombre !== filtroSubcategoria) return;
+      const subtitulo = document.createElement("div");
+      subtitulo.textContent = "→ " + sub.nombre;
+      subtitulo.className = "subcategoria";
+      subtitulo.onclick = () => { filtroCategoria = grupo.categoria; filtroSubcategoria = sub.nombre; renderCategorias(); };
+      contenedor.appendChild(subtitulo);
+
+      let items = [...sub.items];
+      items.sort((a,b) => {
+        if (criterio === "nombre") return ascendente ? a.nombre.localeCompare(b.nombre) : b.nombre.localeCompare(a.nombre);
+        return ascendente ? a[criterio]-b[criterio] : b[criterio]-a[criterio];
+      });
+
+      const tabla = document.createElement("table");
+      tabla.innerHTML = `
+        <thead><tr><th>Material</th><th>Precio</th><th>Cantidad</th></tr></thead>
+        <tbody>${items.map(m=>`<tr><td>${m.nombre}</td><td>${m.precio}</td><td>${m.cantidad}</td></tr>`).join("")}</tbody>
+      `;
+      contenedor.appendChild(tabla);
+    });
+  });
+}
+
+function cambiarOrden(){ ascendente = !ascendente; renderCategorias(); }
+function resetFiltros(){ filtroCategoria = null; filtroSubcategoria = null; renderCategorias(); }
+
+renderCategorias();
+</script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Ejemplo 3 - Paginación</title>
+<link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+<h2>Filtrado + Paginación</h2>
+
+<div>
+  <label for="ordenar">Ordenar por:</label>
+  <select id="ordenar" onchange="renderCategorias()">
+    <option value="precio">Precio</option>
+    <option value="cantidad">Cantidad</option>
+    <option value="nombre">Nombre</option>
+  </select>
+  <button onclick="cambiarOrden()">Cambiar a Descendente</button>
+  <button onclick="resetFiltros()">Mostrar Todo</button>
+</div>
+
+<div id="contenedor"></div>
+
+<div class="paginacion">
+  <button onclick="paginaAnterior()">Anterior</button>
+  <button onclick="paginaSiguiente()">Siguiente</button>
+  <span id="infoPagina"></span>
+</div>
+
+<script src="data.js"></script>
+<script>
+let ascendente = true;
+let filtroCategoria = null;
+let filtroSubcategoria = null;
+const porPagina = 5;
+let paginaActual = 1;
+let materialesFiltrados = [];
+
+function renderCategorias() {
+  const criterio = document.getElementById("ordenar").value;
+  const contenedor = document.getElementById("contenedor");
+  contenedor.innerHTML = "";
+
+  // recolectar todos los materiales filtrados
+  materialesFiltrados = [];
+  materiales.forEach(grupo => {
+    if(filtroCategoria && grupo.categoria!==filtroCategoria) return;
+    grupo.subcategorias.forEach(sub => {
+      if(filtroSubcategoria && sub.nombre!==filtroSubcategoria) return;
+      sub.items.forEach(m => {
+        materialesFiltrados.push({categoria: grupo.categoria, subcategoria: sub.nombre, ...m});
+      });
+    });
+  });
+
+  // ordenar
+  materialesFiltrados.sort((a,b)=> {
+    if(criterio==='nombre') return ascendente ? a.nombre.localeCompare(b.nombre) : b.nombre.localeCompare(a.nombre);
+    return ascendente ? a[criterio]-b[criterio] : b[criterio]-a[criterio];
+  });
+
+  // paginación
+  const total = materialesFiltrados.length;
+  const inicio = (paginaActual-1)*porPagina;
+  const fin = inicio+porPagina;
+  const pagina = materialesFiltrados.slice(inicio,fin);
+
+  if(pagina.length>0){
+    const tabla = document.createElement("table");
+    tabla.innerHTML = `
+      <thead><tr><th>Categoria</th><th>Subcategoria</th><th>Material</th><th>Precio</th><th>Cantidad</th></tr></thead>
+      <tbody>${pagina.map(m=>`<tr><td>${m.categoria}</td><td>${m.subcategoria}</td><td>${m.nombre}</td><td>${m.precio}</td><td>${m.cantidad}</td></tr>`).join("")}</tbody>
+    `;
+    contenedor.appendChild(tabla);
+  } else {
+    contenedor.innerHTML="<p>No se encontraron materiales.</p>";
+  }
+
+  // info de página
+  const info = document.getElementById("infoPagina");
+  const totalPaginas = Math.ceil(total/porPagina)||1;
+  info.textContent = `Página ${paginaActual} de ${totalPaginas} (Total: ${total} materiales)`;
+}
+
+function cambiarOrden(){ ascendente = !ascendente; renderCategorias(); }
+function resetFiltros(){ filtroCategoria=null; filtroSubcategoria=null; paginaActual=1; renderCategorias(); }
+function paginaAnterior(){ if(paginaActual>1){ paginaActual--; renderCategorias(); } }
+function paginaSiguiente(){ const totalPaginas=Math.ceil(materialesFiltrados.length/porPagina); if(paginaActual<totalPaginas){ paginaActual++; renderCategorias(); } }
+
+renderCategorias();
+</script>
+</body>
+</html>
