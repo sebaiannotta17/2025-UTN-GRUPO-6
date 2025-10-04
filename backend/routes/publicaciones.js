@@ -3,7 +3,7 @@ import db from "../db.js";
 
 const router = express.Router();
 
-// 📦 Obtener todas las publicaciones
+// Obtener todas las publicaciones
 router.get("/", (req, res) => {
   try {
     const stmt = db.prepare(`
@@ -22,7 +22,7 @@ router.get("/", (req, res) => {
   }
 });
 
-// 🆕 Crear nueva publicación
+// Crear nueva publicación
 router.post("/", (req, res) => {
   try {
     const {

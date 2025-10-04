@@ -5,5 +5,5 @@ const db = new Database("./backend/database/materiales.db", {
   verbose: console.log,
 });
 
-// Exportar la conexión (ESM usa "export default")
+// Exportar la conexión
 export default db;

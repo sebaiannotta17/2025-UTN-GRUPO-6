@@ -1,5 +1,5 @@
 // --- Config ---
-const USE_MOCK = true; // true = usa MOCK_LOCAL; false = intenta API primero
+const USE_MOCK = true;
 const API_URL = "http://localhost:3000/api/materials";
 
 // --- MOCK local (para desarrollo) ---
@@ -12,7 +12,8 @@ const MOCK_LOCAL = [
     price: 9500,
     category: "Materiales",
     qty: 1,
-    image_url: "https://images.unsplash.com/photo-1581091215367-59ab6d104511?q=80&w=1200&auto=format&fit=crop"
+    image_url:
+      "https://images.unsplash.com/photo-1581091215367-59ab6d104511?q=80&w=1200&auto=format&fit=crop",
   },
   {
     id: 2,
@@ -22,7 +23,8 @@ const MOCK_LOCAL = [
     price: 18000,
     category: "Áridos",
     qty: 1,
-    image_url: "https://images.unsplash.com/photo-1566404791238-8c9a9a0f0b11?q=80&w=1200&auto=format&fit=crop"
+    image_url:
+      "https://images.unsplash.com/photo-1566404791238-8c9a9a0f0b11?q=80&w=1200&auto=format&fit=crop",
   },
   {
     id: 3,
@@ -32,7 +34,8 @@ const MOCK_LOCAL = [
     price: 11000,
     category: "Acero",
     qty: 1,
-    image_url: "https://images.unsplash.com/photo-1563371351-e53ebb744a1a?q=80&w=1200&auto=format&fit=crop"
+    image_url:
+      "https://images.unsplash.com/photo-1563371351-e53ebb744a1a?q=80&w=1200&auto=format&fit=crop",
   },
   {
     id: 12,
@@ -42,7 +45,8 @@ const MOCK_LOCAL = [
     price: 65000,
     category: "Pinturas",
     qty: 1,
-    image_url: "https://images.unsplash.com/photo-1582582429416-0ef7f5a1d3a1?q=80&w=1200&auto=format&fit=crop"
+    image_url:
+      "https://images.unsplash.com/photo-1582582429416-0ef7f5a1d3a1?q=80&w=1200&auto=format&fit=crop",
   },
   {
     id: 6,
@@ -52,7 +56,8 @@ const MOCK_LOCAL = [
     price: 350,
     category: "Ladrillos",
     qty: 50,
-    image_url: "https://images.unsplash.com/photo-1606229365485-93a3aa54be4d?q=80&w=1200&auto=format&fit=crop"
+    image_url:
+      "https://images.unsplash.com/photo-1606229365485-93a3aa54be4d?q=80&w=1200&auto=format&fit=crop",
   },
   {
     id: 7,
@@ -62,8 +67,9 @@ const MOCK_LOCAL = [
     price: 2900,
     category: "Plomería",
     qty: 5,
-    image_url: "https://images.unsplash.com/photo-1600861194942-ed7b0e2f24b8?q=80&w=1200&auto=format&fit=crop"
-  }
+    image_url:
+      "https://images.unsplash.com/photo-1600861194942-ed7b0e2f24b8?q=80&w=1200&auto=format&fit=crop",
+  },
 ];
 
 // --- DOM ---
@@ -77,7 +83,13 @@ let LAST_ITEMS = [];
 
 // --- Utils ---
 function escapeHtml(s = "") {
-  return s.replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+  return s.replace(
+    /[&<>"']/g,
+    (c) =>
+      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[
+        c
+      ],
+  );
 }
 function formatAr(n) {
   const x = Number(n);
@@ -85,7 +97,7 @@ function formatAr(n) {
 }
 function initials(name = "") {
   const parts = name.trim().split(/\s+/).slice(0, 2);
-  return parts.map(p => p[0]?.toUpperCase() ?? "").join("");
+  return parts.map((p) => p[0]?.toUpperCase() ?? "").join("");
 }
 
 // --- Render (cards de resultados) ---
@@ -104,18 +116,19 @@ function render(items, text = "") {
     ? `Resultados para “${text}” (${items.length})`
     : `Mostrando todos (${items.length})`;
 
-  $results.innerHTML = items.map((m, i) => {
-    const ini = initials(m.name ?? "");
-    const url = (m.image_url ?? m.imageUrl ?? "").toString().trim();
-    const hasImg = !!url;
-    const desc = (m.desc ?? m.descripcion ?? "").toString();
+  $results.innerHTML = items
+    .map((m, i) => {
+      const ini = initials(m.name ?? "");
+      const url = (m.image_url ?? m.imageUrl ?? "").toString().trim();
+      const hasImg = !!url;
+      const desc = (m.desc ?? m.descripcion ?? "").toString();
 
-    const thumb = hasImg
-      ? `<img class="thumb-img" src="${escapeHtml(url)}"
+      const thumb = hasImg
+        ? `<img class="thumb-img" src="${escapeHtml(url)}"
                alt="${escapeHtml(m.name ?? "")}" loading="lazy" decoding="async">`
-      : `<div class="thumb" data-initial="${ini}"></div>`;
+        : `<div class="thumb" data-initial="${ini}"></div>`;
 
-    return `
+      return `
       <li class="card" data-idx="${i}">
         ${thumb}
         <h3>${escapeHtml(m.name ?? "—")}</h3>
@@ -123,7 +136,8 @@ function render(items, text = "") {
         <div class="price">$${formatAr(m.price)}</div>
       </li>
     `;
-  }).join("");
+    })
+    .join("");
 }
 
 // --- Buscar (API -> enrich -> fallback MOCK) ---
@@ -146,7 +160,9 @@ async function search(text) {
   // Fallback MOCK local (con filtro en front)
   if (!q) return MOCK_LOCAL;
   const qlow = q.toLowerCase();
-  return MOCK_LOCAL.filter(m => (`${m.name} ${m.desc ?? m.descripcion ?? ""}`).toLowerCase().includes(qlow));
+  return MOCK_LOCAL.filter((m) =>
+    `${m.name} ${m.desc ?? m.descripcion ?? ""}`.toLowerCase().includes(qlow),
+  );
 }
 
 // --- Submit de búsqueda ---
@@ -177,17 +193,21 @@ $results.addEventListener("click", (e) => {
 });
 
 // --- Helpers de texto para modal ---
-function setText(id, value){
+function setText(id, value) {
   const el = document.getElementById(id);
   if (!el) return;
   el.replaceChildren(document.createTextNode(String(value ?? "")));
 }
-function setTextOrHide(id, value){
+function setTextOrHide(id, value) {
   const el = document.getElementById(id);
   if (!el) return;
   const v = (value ?? "").toString().trim();
-  if (v) { el.style.display = ""; el.replaceChildren(document.createTextNode(v)); }
-  else   { el.style.display = "none"; }
+  if (v) {
+    el.style.display = "";
+    el.replaceChildren(document.createTextNode(v));
+  } else {
+    el.style.display = "none";
+  }
 }
 
 // --- Modal de detalle ---
@@ -214,7 +234,9 @@ function openModal(m) {
       img.alt = name;
       img.loading = "lazy";
       img.src = url;
-      img.onerror = () => { thumb.textContent = initials(name); };
+      img.onerror = () => {
+        thumb.textContent = initials(name);
+      };
       thumb.appendChild(img);
     } else {
       thumb.textContent = initials(name);
@@ -226,7 +248,10 @@ function openModal(m) {
   const $ul = document.getElementById("mDetails");
   if ($ul) {
     $ul.innerHTML = Object.keys(details)
-      .map(k => `<li><strong>${escapeHtml(k)}:</strong> ${escapeHtml(String(details[k]))}</li>`)
+      .map(
+        (k) =>
+          `<li><strong>${escapeHtml(k)}:</strong> ${escapeHtml(String(details[k]))}</li>`,
+      )
       .join("");
   }
 
@@ -245,28 +270,38 @@ function closeModal() {
 document.getElementById("materialModal")?.addEventListener("click", (e) => {
   if (e.target.dataset.close === "1") closeModal();
 });
-document.querySelector("#materialModal .modal-close")?.addEventListener("click", closeModal);
-document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeModal(); });
+document
+  .querySelector("#materialModal .modal-close")
+  ?.addEventListener("click", closeModal);
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") closeModal();
+});
 
 // --- Fallback si la imagen de la card falla ---
-$results.addEventListener("error", (e) => {
-  if (!e.target.matches(".thumb-img")) return;
-  const li = e.target.closest("li.card");
-  const idx = Number(li?.dataset.idx);
-  const m = LAST_ITEMS[idx];
-  const ph = document.createElement("div");
-  ph.className = "thumb";
-  ph.setAttribute("data-initial", initials(m?.name ?? ""));
-  e.target.replaceWith(ph);
-}, true);
+$results.addEventListener(
+  "error",
+  (e) => {
+    if (!e.target.matches(".thumb-img")) return;
+    const li = e.target.closest("li.card");
+    const idx = Number(li?.dataset.idx);
+    const m = LAST_ITEMS[idx];
+    const ph = document.createElement("div");
+    ph.className = "thumb";
+    ph.setAttribute("data-initial", initials(m?.name ?? ""));
+    e.target.replaceWith(ph);
+  },
+  true,
+);
 
 // --- Enriquecer items de la API con imágenes del mock (por nombre) ---
-function enrichWithImages(arr){
-  const byName = new Map(MOCK_LOCAL.map(x => [String(x.name||"").toLowerCase(), x.image_url]));
-  return arr.map(m => {
+function enrichWithImages(arr) {
+  const byName = new Map(
+    MOCK_LOCAL.map((x) => [String(x.name || "").toLowerCase(), x.image_url]),
+  );
+  return arr.map((m) => {
     const url = (m.image_url ?? m.imageUrl ?? "").toString().trim();
     if (url) return m;
-    const fromMock = byName.get(String(m.name||"").toLowerCase());
+    const fromMock = byName.get(String(m.name || "").toLowerCase());
     return fromMock ? { ...m, image_url: fromMock } : m;
   });
 }

@@ -1,67 +1,83 @@
 <!doctype html>
 <html lang="es">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Marketplace — Carga</title>
-  <link rel="stylesheet" href="./styles.css" />
-</head>
-<body>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <title>Marketplace — Carga</title>
+        <link rel="stylesheet" href="./styles.css" />
+    </head>
+    <body>
+        <header class="topbar">
+            <div class="brand">Marketplace Materiales</div>
 
-  <header class="topbar">
-  <div class="brand">Marketplace Materiales</div>
+            <nav class="cats" aria-label="Categorías">
+                <a id="nav-carga" href="./carga.html">Carga</a>
+            </nav>
 
-  <nav class="cats" aria-label="Categorías">
-    <a id="nav-carga" href="./carga.html">Carga</a>
-  </nav>
+            <div class="actions">
+                <button class="btn ghost">Sign up</button>
+                <button class="btn dark">Log in</button>
+            </div>
+        </header>
+        <div class="float-actions">
+            <a id="go-carga" href="./carga.html" class="fab">Sell items</a>
+            <button class="fab-cart" aria-label="Carrito">🛒</button>
+        </div>
 
-  <div class="actions">
-    <button class="btn ghost">Sign up</button>
-    <button class="btn dark">Log in</button>
-  </div>
-</header>
-<div class="float-actions">
-  <a id="go-carga" href="./carga.html" class="fab">Sell items</a>
-  <button class="fab-cart" aria-label="Carrito">🛒</button>
-</div>
+        <main>
+            <h1>Buscar materiales</h1>
 
-  <!-- TU CONTENIDO ORIGINAL -->
-  <main>
-    <h1>Buscar materiales</h1>
+            <form id="searchForm" role="search" autocomplete="off">
+                <input
+                    id="q"
+                    name="q"
+                    type="search"
+                    placeholder="Cemento, arena…"
+                />
+                <button type="submit" id="btnSearch">Buscar</button>
+            </form>
 
-    <!-- CA1 + CA2 -->
-    <form id="searchForm" role="search" autocomplete="off">
-      <input id="q" name="q" type="search" placeholder="Cemento, arena…" />
-      <button type="submit" id="btnSearch">Buscar</button>
-    </form>
+            <section id="feedback" class="muted">
+                Aún no mostramos resultados.
+            </section>
+            <ul id="results" class="grid" aria-live="polite"></ul>
+        </main>
 
-    <!-- Reservado para futuro listado (CA3) -->
-    <section id="feedback" class="muted">Aún no mostramos resultados.</section>
-    <ul id="results" class="grid" aria-live="polite"></ul>
-  </main>
-<!-- Modal de detalle -->
-<div id="materialModal" class="modal" aria-hidden="true" role="dialog" aria-modal="true">
-  <div class="modal-backdrop" data-close="1"></div>
-  <div class="modal-card">
-    <button class="modal-close" aria-label="Cerrar" data-close="1">×</button>
-    <div class="modal-content">
-      <div id="mThumb" class="modal-thumb">--</div>
-      <h2 id="mName"></h2>
-      <p id="mDesc" class="muted"></p>
-      <p id="mLongDesc" class="longdesc"></p>
+        <div
+            id="materialModal"
+            class="modal"
+            aria-hidden="true"
+            role="dialog"
+            aria-modal="true"
+        >
+            <div class="modal-backdrop" data-close="1"></div>
+            <div class="modal-card">
+                <button class="modal-close" aria-label="Cerrar" data-close="1">
+                    ×
+                </button>
+                <div class="modal-content">
+                    <div id="mThumb" class="modal-thumb">--</div>
+                    <h2 id="mName"></h2>
+                    <p id="mDesc" class="muted"></p>
+                    <p id="mLongDesc" class="longdesc"></p>
 
-      <div id="mPrice" class="price"></div>
+                    <div id="mPrice" class="price"></div>
 
-      <div class="m-extra">
-        <div><strong>Categoría:</strong> <span id="mCategory">—</span></div>
-        <div><strong>Cantidad:</strong> <span id="mQty">—</span></div>
-      </div>
+                    <div class="m-extra">
+                        <div>
+                            <strong>Categoría:</strong>
+                            <span id="mCategory">—</span>
+                        </div>
+                        <div>
+                            <strong>Cantidad:</strong> <span id="mQty">—</span>
+                        </div>
+                    </div>
 
-      <ul id="mDetails"></ul>
-    </div>
-  </div>
-</div>
+                    <ul id="mDetails"></ul>
+                </div>
+            </div>
+        </div>
 
-<script src="./Busqueda.js" type="module"></script>
-</body>
+        <script src="./Busqueda.js" type="module"></script>
+    </body>
 </html>
