@@ -1,4 +1,4 @@
-# 2025 UTN GRUPO 6
+# MaterialesYA
 Proyecto marketplace para materiales de construcción, centrado en que particulares puedan crear publicaciones para vender algun sobrante que tengan. La cualidad principal del sistema es que los usuarios al buscar puedan filtrar por categorias de materiales y sus respectivas subcategorias, haciendo la búsqueda más fácil y los resultados más precisos.
 
 ## Herramientas Utilizadas
