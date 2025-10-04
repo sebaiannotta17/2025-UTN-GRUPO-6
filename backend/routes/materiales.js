@@ -1,9 +1,8 @@
-import express from "express"; // 1. Cambiar require por import
-import db from "../db.js"; // 1. Cambiar require por import y añadir la extensión .js
+import express from "express";
+import db from "../db.js";
 
 const router = express.Router();
 
-// ✅ Obtener todos los materiales
 router.get("/", (req, res) => {
   try {
     const rows = db.prepare("SELECT * FROM publicacion").all();
@@ -13,7 +12,6 @@ router.get("/", (req, res) => {
   }
 });
 
-// ✅ Crear un nuevo material
 router.post("/", (req, res) => {
   try {
     const {
@@ -48,5 +46,4 @@ router.post("/", (req, res) => {
   }
 });
 
-// 2. Cambiar module.exports por export default
 export default router;
