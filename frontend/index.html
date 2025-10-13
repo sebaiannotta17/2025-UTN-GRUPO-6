@@ -25,42 +25,43 @@
 
                 <form id="form-material">
                     <input
-                        type="text"
+                        id="nombre"
                         name="nombre"
+                        type="text"
                         placeholder="Nombre del material"
                         required
                     />
                     <input
-                        type="text"
+                        id="descripcion"
                         name="descripcion"
+                        type="text"
                         placeholder="Descripción"
                         required
                     />
                     <input
-                        type="number"
+                        id="precio"
                         name="precio"
+                        type="number"
                         placeholder="Precio"
-                        required
                         min="1"
+                        required
                     />
                     <input
-                        type="number"
+                        id="cantidad"
                         name="cantidad"
+                        type="number"
                         placeholder="Cantidad"
-                        required
                         min="1"
+                        required
                     />
-
                     <label for="categoria">Categoría:</label>
                     <select name="categoria" id="categoria" required>
                         <option value="">Seleccionar categoría</option>
-                        <option value="Pintura">Pintura</option>
-                        <option value="Ladrillos">Ladrillos</option>
-                        <option value="Baldosas y azulejos">
-                            Baldosas y azulejos
-                        </option>
-                        <option value="Madera">Madera</option>
-                        <option value="Plomería">Plomería</option>
+                        <option value="1">Pintura</option>
+                        <option value="2">Ladrillos</option>
+                        <option value="3">Baldosas y azulejos</option>
+                        <option value="4">Madera</option>
+                        <option value="5">Plomería</option>
                     </select>
 
                     <div id="subcategoria-container"></div>
