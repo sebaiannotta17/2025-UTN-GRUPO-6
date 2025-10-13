@@ -24,23 +24,26 @@ router.get("/", (req, res) => {
 
 // Crear nueva publicación
 router.post("/", (req, res) => {
-  try {
-    const {
-      usuario_id,
-      categoria_id,
-      subcategoria1_id,
-      subcategoria2_id,
-      titulo,
-      descripcion,
-      precio,
-      cantidad,
-      imagen,
-    } = req.body;
+  console.log("📥 Body recibido:", req.body);
 
+  const {
+    usuario_id,
+    categoria_id,
+    subcategoria1_id,
+    subcategoria2_id,
+    titulo,
+    descripcion,
+    precio,
+    cantidad,
+    imagen,
+  } = req.body;
+
+  try {
     const stmt = db.prepare(`
-      INSERT INTO publicaciones
-      (usuario_id, categoria_id, subcategoria1_id, subcategoria2_id, titulo, descripcion, precio, cantidad, imagen)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+      INSERT INTO publicaciones (
+        usuario_id, categoria_id, subcategoria1_id, subcategoria2_id,
+        titulo, descripcion, precio, cantidad, imagen
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     `);
 
     const info = stmt.run(
@@ -56,8 +59,9 @@ router.post("/", (req, res) => {
     );
 
     res.json({ success: true, id: info.lastInsertRowid });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+  } catch (err) {
+    console.error("❌ Error insertando:", err);
+    res.status(500).json({ success: false, error: err.message });
   }
 });
 

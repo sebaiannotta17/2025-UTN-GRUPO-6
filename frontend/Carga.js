@@ -1,156 +1,206 @@
-const form = document.getElementById("form-material");
-const lista = document.getElementById("lista-materiales");
-const btnCancelar = document.getElementById("btn-cancelar");
-const toastContainer = document.getElementById("toast-container");
-const selectCategoria = document.getElementById("categoria");
-const subcatContainer = document.getElementById("subcategoria-container");
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("form-material");
+  const toastContainer = document.getElementById("toast-container");
+  const listaMateriales = document.getElementById("lista-materiales");
+  const subcatContainer = document.getElementById("subcategoria-container");
 
-let materiales = [];
+  // ======== 1️⃣ CATEGORÍAS Y SUBCATEGORÍAS ========
+  const categorias = {
+    1: {
+      nombre: "Pintura",
+      sub1: {
+        label: "Tipo de pintura",
+        opciones: [
+          "Plástica (látex)",
+          "Esmalte",
+          "Sintética",
+          "Imprimación y selladora",
+          "Spray",
+        ],
+      },
+      sub2: {
+        label: "Acabado",
+        opciones: ["Mate", "Satinado", "Brillante"],
+      },
+    },
+    2: {
+      nombre: "Ladrillos",
+      sub1: {
+        label: "Tipo de ladrillo",
+        opciones: ["Cerámico (tradicional)", "Cara vista", "Refractario"],
+      },
+    },
+    3: {
+      nombre: "Baldosas y azulejos",
+      sub1: {
+        label: "Material",
+        opciones: ["Cerámica", "Gres porcelánico", "Terracota"],
+      },
+      sub2: {
+        label: "Uso",
+        opciones: ["Piso", "Pared", "Exterior"],
+      },
+    },
+    4: {
+      nombre: "Madera",
+      sub1: {
+        label: "Tipo",
+        opciones: ["Maciza", "Aglomerado", "Listones"],
+      },
+    },
+    5: {
+      nombre: "Plomería",
+      sub1: {
+        label: "Material",
+        opciones: ["PVC", "Cobre", "Polipropileno (PPR)"],
+      },
+      sub2: {
+        label: "Elemento",
+        opciones: ["Tubos y caños", "Grifería y accesorios", "Conexiones"],
+      },
+    },
+  };
 
-const categorias = {
-  Pintura: {
-    "Tipo de pintura": [
-      "Plástica (látex): Para paredes de interior",
-      "Esmalte: Para madera y metal",
-      "Sintética: Para acabados resistentes",
-      "Imprimación y selladora: Para preparar superficies",
-      "Spray: Para acabados decorativos y pequeños objetos",
-    ],
-    Acabado: ["Mate", "Satinado", "Brillante"],
-  },
-  Ladrillos: {
-    "Tipo de ladrillo": [
-      "Cerámico (tradicional): Para muros",
-      "Cara vista: Con acabado estético para fachadas",
-      "Refractario: Para chimeneas y hornos",
-    ],
-  },
-  "Baldosas y azulejos": {
-    Material: [
-      "Cerámica: Para pisos y paredes",
-      "Gres porcelánico: Para zonas de alto tránsito",
-      "Terracota: Para pisos rústicos",
-    ],
-    Uso: ["Piso", "Pared", "Exterior"],
-  },
-  Madera: {
-    Tipo: [
-      "Maciza: Viga, tabla, listón",
-      "Aglomerado: MDF, contrachapado",
-      "Listones: Para estructuras y marcos",
-    ],
-  },
-  Plomería: {
-    Material: ["PVC", "Cobre", "Polipropileno (PPR)"],
-    Elemento: ["Tubos y caños", "Grifería y accesorios", "Conexiones"],
-  },
-};
+  // ======== 2️⃣ CARGAR CATEGORÍAS ========
+  function cargarCategorias() {
+    const selectCat = document.getElementById("categoria");
+    selectCat.innerHTML =
+      `<option value="">Seleccionar categoría</option>` +
+      Object.entries(categorias)
+        .map(([id, cat]) => `<option value="${id}">${cat.nombre}</option>`)
+        .join("");
 
-selectCategoria.addEventListener("change", () => {
-  const categoria = selectCategoria.value;
-  subcatContainer.innerHTML = "";
-
-  if (categoria && categorias[categoria]) {
-    const opciones = categorias[categoria];
-    Object.keys(opciones).forEach((grupo) => {
-      const label = document.createElement("label");
-      label.textContent = grupo;
-
-      const select = document.createElement("select");
-      select.name = grupo.toLowerCase().replace(/\s+/g, " ");
-
-      select.required = true;
-      select.innerHTML = `<option value="">Selecciona ${grupo}</option>`;
-
-      opciones[grupo].forEach((opt) => {
-        const option = document.createElement("option");
-        option.value = opt;
-        option.textContent = opt;
-        select.appendChild(option);
-      });
-
-      subcatContainer.appendChild(label);
-      subcatContainer.appendChild(select);
+    selectCat.addEventListener("change", (e) => {
+      mostrarSubcategorias(e.target.value);
     });
   }
-});
 
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
+  // ======== 3️⃣ MOSTRAR SUBCATEGORÍAS ========
+  function mostrarSubcategorias(categoriaId) {
+    subcatContainer.innerHTML = "";
+    const categoria = categorias[categoriaId];
+    if (!categoria) return;
 
-  const data = new FormData(form);
-  const precio = parseFloat(data.get("precio"));
-  const cantidad = parseInt(data.get("cantidad"));
+    if (categoria.sub1) {
+      const label1 = document.createElement("label");
+      label1.textContent = categoria.sub1.label;
+      const select1 = document.createElement("select");
+      select1.name = "subcategoria1";
+      select1.innerHTML =
+        `<option value="">Seleccionar</option>` +
+        categoria.sub1.opciones
+          .map((opt, i) => `<option value="${i + 1}">${opt}</option>`)
+          .join("");
+      subcatContainer.append(label1, select1);
+    }
 
-  if (precio <= 0 || cantidad <= 0) {
-    mostrarToast("⚠️ Precio y cantidad deben ser positivos", true);
-    return;
-  }
-
-  const categoria = data.get("categoria");
-  const detalles = {};
-  for (let [key, value] of data.entries()) {
-    if (
-      !["nombre", "descripcion", "precio", "cantidad", "categoria"].includes(
-        key,
-      )
-    ) {
-      detalles[key] = value;
+    if (categoria.sub2) {
+      const label2 = document.createElement("label");
+      label2.textContent = categoria.sub2.label;
+      const select2 = document.createElement("select");
+      select2.name = "subcategoria2";
+      select2.innerHTML =
+        `<option value="">Seleccionar</option>` +
+        categoria.sub2.opciones
+          .map((opt, i) => `<option value="${i + 1}">${opt}</option>`)
+          .join("");
+      subcatContainer.append(label2, select2);
     }
   }
 
-  const material = {
-    nombre: data.get("nombre"),
-    descripcion: data.get("descripcion"),
-    precio,
-    cantidad,
-    categoria,
-    detalles,
-  };
+  // ======== 4️⃣ ENVÍO DEL FORMULARIO ========
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-  materiales.push(material);
-  renderMateriales();
-  mostrarToast("✅ Material publicado con éxito");
-  form.reset();
-  subcatContainer.innerHTML = "";
-});
+    const data = new FormData(form);
+    const precio = parseFloat(data.get("precio"));
+    const cantidad = parseInt(data.get("cantidad"));
+    const categoriaId = parseInt(data.get("categoria")) || null;
+    const subcat1Id = parseInt(data.get("subcategoria1")) || null;
+    const subcat2Id = parseInt(data.get("subcategoria2")) || null;
 
-btnCancelar.addEventListener("click", () => {
-  form.reset();
-  subcatContainer.innerHTML = "";
-});
+    if (precio <= 0 || cantidad <= 0) {
+      mostrarToast("⚠️ Precio y cantidad deben ser positivos", true);
+      return;
+    }
 
-function mostrarToast(mensaje, error = false) {
-  const toast = document.createElement("div");
-  toast.classList.add("toast");
-  if (error) toast.classList.add("error");
-  toast.innerText = mensaje;
+    const material = {
+      usuario_id: 1,
+      categoria_id: categoriaId,
+      subcategoria1_id: subcat1Id,
+      subcategoria2_id: subcat2Id,
+      titulo: data.get("nombre"),
+      descripcion: data.get("descripcion"),
+      precio,
+      cantidad,
+      imagen: null,
+    };
 
-  toastContainer.appendChild(toast);
+    console.log("📤 Enviando material:", material);
 
-  setTimeout(() => {
-    toast.remove();
-  }, 3000);
-}
+    try {
+      const res = await fetch("http://localhost:3000/api/publicaciones", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(material),
+      });
+      const result = await res.json();
 
-function renderMateriales() {
-  lista.innerHTML = "";
-  materiales.forEach((m) => {
-    const li = document.createElement("li");
-
-    let detallesHTML = "<ul>";
-    Object.keys(m.detalles).forEach((k) => {
-      detallesHTML += `<li><strong>${k}:</strong> ${m.detalles[k]}</li>`;
-    });
-    detallesHTML += "</ul>";
-
-    li.innerHTML = `
-      <strong>${m.nombre}</strong><br>
-      <em>Categoría:</em> ${m.categoria}<br>
-      ${detallesHTML}
-      ${m.descripcion}<br>
-      <strong>Precio:</strong> $${m.precio} - <strong>Cantidad:</strong> ${m.cantidad}
-    `;
-    lista.appendChild(li);
+      if (result.success) {
+        mostrarToast("✅ Material publicado con éxito");
+        form.reset();
+        subcatContainer.innerHTML = "";
+        cargarPublicaciones();
+      } else {
+        mostrarToast("⚠️ Error al guardar la publicación", true);
+      }
+    } catch (err) {
+      console.error("❌ Error al enviar:", err);
+      mostrarToast("❌ Error al conectar con el servidor", true);
+    }
   });
-}
+
+  // ======== 5️⃣ MOSTRAR PUBLICACIONES ========
+  async function cargarPublicaciones() {
+    try {
+      const res = await fetch("http://localhost:3000/api/publicaciones");
+      const data = await res.json();
+
+      listaMateriales.innerHTML = data
+        .map(
+          (m) => `
+        <li class="card">
+          <div class="thumb" data-initial="${m.titulo[0] || "?"}"></div>
+          <h3>${m.titulo}</h3>
+          <p>${m.descripcion}</p>
+          <p class="price">$${m.precio}</p>
+          <p>Cantidad: ${m.cantidad}</p>
+        </li>
+      `,
+        )
+        .join("");
+    } catch (err) {
+      console.error("❌ Error al cargar publicaciones:", err);
+    }
+  }
+
+  // ======== 6️⃣ MENSAJE TOAST ========
+  function mostrarToast(texto, error = false) {
+    const toast = document.createElement("div");
+    toast.className = "toast" + (error ? " error" : "");
+    toast.textContent = texto;
+    toastContainer.appendChild(toast);
+    setTimeout(() => toast.remove(), 3000);
+  }
+
+  // ======== 7️⃣ BOTÓN CANCELAR ========
+  document.getElementById("btn-cancelar").addEventListener("click", () => {
+    form.reset();
+    subcatContainer.innerHTML = "";
+    mostrarToast("❌ Publicación cancelada", true);
+  });
+
+  // ======== Inicialización ========
+  cargarCategorias();
+  cargarPublicaciones();
+});
