@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const listaMateriales = document.getElementById("lista-materiales");
   const subcatContainer = document.getElementById("subcategoria-container");
 
-  // ======== 1️⃣ CATEGORÍAS Y SUBCATEGORÍAS ========
+  //CATEGORÍAS Y SUBCATEGORÍAS
   const categorias = {
     1: {
       nombre: "Pintura",
@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   };
 
-  // ======== 2️⃣ CARGAR CATEGORÍAS ========
+  //CARGAR CATEGORÍAS
   function cargarCategorias() {
     const selectCat = document.getElementById("categoria");
     selectCat.innerHTML =
@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ======== 3️⃣ MOSTRAR SUBCATEGORÍAS ========
+  //MOSTRAR SUBCATEGORÍAS
   function mostrarSubcategorias(categoriaId) {
     subcatContainer.innerHTML = "";
     const categoria = categorias[categoriaId];
@@ -108,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // ======== 4️⃣ ENVÍO DEL FORMULARIO ========
+  //ENVÍO DEL FORMULARIO
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -160,7 +160,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // ======== 5️⃣ MOSTRAR PUBLICACIONES ========
+  //MOSTRAR PUBLICACIONES
   async function cargarPublicaciones() {
     try {
       const res = await fetch("http://localhost:3000/api/publicaciones");
@@ -184,7 +184,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // ======== 6️⃣ MENSAJE TOAST ========
+  //MENSAJE TOAST
   function mostrarToast(texto, error = false) {
     const toast = document.createElement("div");
     toast.className = "toast" + (error ? " error" : "");
@@ -193,14 +193,14 @@ document.addEventListener("DOMContentLoaded", () => {
     setTimeout(() => toast.remove(), 3000);
   }
 
-  // ======== 7️⃣ BOTÓN CANCELAR ========
+  //BOTÓN CANCELAR
   document.getElementById("btn-cancelar").addEventListener("click", () => {
     form.reset();
     subcatContainer.innerHTML = "";
     mostrarToast("❌ Publicación cancelada", true);
   });
 
-  // ======== Inicialización ========
+  //Inicialización
   cargarCategorias();
   cargarPublicaciones();
 });
