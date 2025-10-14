@@ -1,0 +1,138 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap");
+
+body {
+    font-family: "Inter", sans-serif;
+    margin: 0;
+    color: #333;
+    background-color: #f9f9f9;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+}
+
+header .logo {
+    font-weight: bold;
+    font-size: 24px;
+    text-decoration: none;
+    color: #000;
+}
+
+header .search-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    max-width: 500px;
+    background: #fff;
+    border: 2px solid #ccc;
+    border-radius: 40px;
+    padding: 6px 12px;
+    transition: all 0.3s ease;
+}
+
+header .search-bar:hover,
+header .search-bar:focus-within {
+    border-color: #6c5ce7;
+    box-shadow: 0 0 8px rgba(108, 92, 231, 0.3);
+}
+
+header .search-bar input[type="search"] {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 40px;
+    background: transparent;
+    color: #333;
+}
+
+header .search-bar input[type="search"]::placeholder {
+    color: #999;
+    font-size: 15px;
+}
+
+header .search-bar .search-button {
+    background-color: #6c5ce7;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 42px;
+    height: 42px;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition:
+        background 0.3s ease,
+        transform 0.2s ease;
+}
+
+header .search-bar .search-button:hover {
+    background-color: #5b47d1;
+    transform: scale(1.05);
+}
+
+header .header-actions a {
+    text-decoration: none;
+    color: #6c5ce7;
+    margin-left: 20px;
+    font-weight: 500;
+}
+
+.hero {
+    background-image: url("./materiales.webp");
+    background-size: cover;
+    background-position: center;
+    text-align: center;
+    padding: 120px 0;
+    color: white;
+    border-radius: 20px;
+    margin: 0 20px 40px 20px;
+}
+
+.hero h1 {
+    font-size: 52px;
+    margin: 0;
+    font-weight: 700;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+.recent-listings {
+    padding: 40px 20px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.section-header h2 {
+    font-size: 28px;
+    margin: 0;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+    text-align: center;
+}
+
+.product-card p {
+    margin-top: 10px;
+    font-weight: 500;
+}
