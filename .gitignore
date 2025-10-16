@@ -1,6 +1,19 @@
+# === BACKEND ===
 backend/node_modules/
 backend/.env
+backend/database/*.db
 backend/market.db
+
+# === FRONTEND ===
+frontend/node_modules/
+frontend/.env
+frontend/dist/
+frontend/build/
+
+# === ENTORNO DE DESARROLLO ===
 .vscode/
+*.code-workspace
+
+# === SISTEMA OPERATIVO ===
 .DS_Store
 Thumbs.db
