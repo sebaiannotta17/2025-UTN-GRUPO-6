@@ -22,6 +22,7 @@ La cualidad principal del sistema es que los usuarios, al buscar, puedan **filtr
 | `Node.js` | Lógica del servidor, conexión con la base de datos e intercambio de datos con el frontend |
 | `Express` | Framework para construir la API REST y servir archivos estáticos |
 | `CORS` | Permite comunicación entre frontend y backend durante el desarrollo |
+| `Body-Parser` | Permite procesar datos enviados en el cuerpo de las peticiones HTTP |
 
 ### Base de Datos
 
@@ -29,3 +30,28 @@ La cualidad principal del sistema es que los usuarios, al buscar, puedan **filtr
 |------------|-----|
 | `SQLite` | Almacenamiento local de usuarios, categorías y publicaciones |
 | `Better-SQLite3` | Manejador eficiente de consultas SQL dentro del servidor Node |
+
+---
+
+## Instalación y ejecución del proyecto
+
+### 1 - Clonar repositorio
+```bash
+git clone https://github.com/sebaiannotta17/2025-UTN-GRUPO-6.git
+cd 2025-UTN-GRUPO-6
+```
+### 2 - Instalar dependencias del backend
+```bash
+cd backend
+npm install
+```
+Nota: se instalan las siguientes dependencias
+- better-sqlite3
+- express
+- CORS
+- body-parser
+### 3 - Iniciar servidor
+```bash
+npm start
+```
+
