@@ -86,9 +86,7 @@ function escapeHtml(s = "") {
   return s.replace(
     /[&<>"']/g,
     (c) =>
-      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[
-        c
-      ],
+      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c],
   );
 }
 function formatAr(n) {
@@ -169,17 +167,30 @@ async function search(text) {
 $form.addEventListener("submit", async (e) => {
   e.preventDefault();
   const text = $q.value.trim();
+
+  // ✅ Actualizar la URL con ?q=... sin recargar
+  const newUrl = text ? `?q=${encodeURIComponent(text)}` : location.pathname;
+  history.replaceState(null, "", newUrl);
+
   $feedback.textContent = text ? `Buscando “${text}”…` : "Buscando…";
   $results.innerHTML = "";
   const items = await search(text);
   render(items, text);
 });
 
+// --- Cargar búsqueda desde la URL (auto-relleno + auto-búsqueda) ---
+const params = new URLSearchParams(location.search);
+const Q_FROM_URL = (params.get("q") || "").trim();
+if ($q) $q.value = Q_FROM_URL;
+
 // --- Estado inicial ---
 (async () => {
-  $feedback.textContent = "Cargando materiales…";
-  const items = await search("");
-  render(items, "");
+  const initialText = Q_FROM_URL; // si venís de main con ?q=...
+  $feedback.textContent = initialText
+    ? `Buscando “${initialText}”…`
+    : "Cargando materiales…";
+  const items = await search(initialText);
+  render(items, initialText);
 })();
 
 // --- Click en card: abrir modal ---
@@ -305,3 +316,85 @@ function enrichWithImages(arr) {
     return fromMock ? { ...m, image_url: fromMock } : m;
   });
 }
+// ================= Header dinámico (igual que main) =================
+(() => {
+  const user = JSON.parse(localStorage.getItem("user") || "null");
+  const $actions = document.querySelector(".header-actions");
+  if (!$actions) return;
+
+  const $loginBtn = document.getElementById("btn-login");
+  const $publicarBtn = document.getElementById("btn-publicar");
+
+  // Control de acceso a "Publicar"
+  if ($publicarBtn) {
+    $publicarBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      if (!user) {
+        alert("Tenés que iniciar sesión para publicar.");
+        location.href = "./Login.html";
+      } else {
+        location.href = "./Carga.html";
+      }
+    });
+  }
+
+  // Cambiar "Login" -> "Mi cuenta" y agregar "Salir"
+  if (user && $loginBtn) {
+    $loginBtn.textContent = "Mi cuenta";
+    $loginBtn.setAttribute("href", "./perfil.html");
+
+    const logout = document.createElement("a");
+    logout.href = "#";
+    logout.className = "btn btn-secondary";
+    logout.textContent = "Salir";
+    logout.style.marginLeft = "8px";
+    logout.addEventListener("click", (e) => {
+      e.preventDefault();
+      localStorage.removeItem("user");
+      localStorage.removeItem("token");
+      location.href = "./Login.html";
+    });
+    $actions.appendChild(logout);
+  }
+})();
+// ================= Header dinámico (igual que en main) =================
+(() => {
+  const user = JSON.parse(localStorage.getItem("user") || "null");
+  const $actions = document.querySelector(".header-actions");
+  if (!$actions) return;
+
+  const $loginBtn = document.getElementById("btn-login");
+  const $publicarBtn = document.getElementById("btn-publicar");
+
+  // Control de acceso a "Publicar"
+  if ($publicarBtn) {
+    $publicarBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      if (!user) {
+        alert("Tenés que iniciar sesión para publicar.");
+        location.href = "./Login.html";
+      } else {
+        location.href = "./Carga.html";
+      }
+    });
+  }
+
+  // Cambiar "Login" -> "Mi cuenta" y agregar "Salir"
+  if (user && $loginBtn) {
+    $loginBtn.textContent = "Mi cuenta";
+    $loginBtn.setAttribute("href", "./perfil.html");
+
+    const logout = document.createElement("a");
+    logout.href = "#";
+    logout.className = "btn btn-secondary";
+    logout.textContent = "Salir";
+    logout.style.marginLeft = "8px";
+    logout.addEventListener("click", (e) => {
+      e.preventDefault();
+      localStorage.removeItem("user");
+      localStorage.removeItem("token");
+      location.href = "./Login.html";
+    });
+    $actions.appendChild(logout);
+  }
+})();

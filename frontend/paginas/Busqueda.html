@@ -7,18 +7,28 @@
         <link rel="stylesheet" href="../css/styles.css" />
     </head>
     <body>
-        <header class="topbar">
-            <div class="brand">Marketplace Materiales</div>
+<header class="topbar">
+  <div class="container">
+    <!-- Logo / Inicio -->
+    <a href="./main.html" class="logo">MaterialesYA</a>
 
-            <nav class="cats" aria-label="Categorías">
-                <a id="nav-carga" href="./carga.html">Carga</a>
-            </nav>
+    <!-- Acciones -->
+    <nav class="header-actions">
+      <a href="./main.html" class="btn btn-secondary">Inicio</a>
+      <a href="./Carga.html" class="btn btn-secondary" id="btn-publicar">Publicar</a>
+      <a href="./registro.html" class="btn btn-primary" id="btn-login">Login</a>
+    </nav>
+  </div>
+</header>
 
-            <div class="actions">
-                <button class="btn ghost">Sign up</button>
-                <button class="btn dark">Log in</button>
-            </div>
-        </header>
+<!-- FIX visual rápido si se ve desalineado -->
+<style>
+  .topbar .container { display:flex; align-items:center; gap:16px; }
+  .topbar .logo { margin-right:auto; }
+  .topbar .header-actions { display:flex; align-items:center; gap:8px; }
+</style>
+</header>
+
         <div class="float-actions">
             <a id="go-carga" href="./carga.html" class="fab">Sell items</a>
             <button class="fab-cart" aria-label="Carrito">🛒</button>

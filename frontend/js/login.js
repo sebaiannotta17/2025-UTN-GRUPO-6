@@ -5,6 +5,7 @@ const $error = document.getElementById("form-error");
 
 // Config: permitir login local solo en desarrollo
 const ALLOW_LOCAL_LOGIN = false; // Cambiá a true solo para test offline
+const API_URL = "http://localhost:3000/api/auth"; // centralizo base URL
 
 // --- Mostrar / limpiar error ---
 function showError(msg) {
@@ -39,7 +40,7 @@ $form.addEventListener("submit", async (e) => {
 
   try {
     // Intento backend real
-    const res = await fetch("http://localhost:3000/api/auth/login", {
+    const res = await fetch(`${API_URL}/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
@@ -59,9 +60,16 @@ $form.addEventListener("submit", async (e) => {
     // Si responde OK
     const payload = await res.json().catch(() => ({}));
     if (payload.token && payload.user) {
+      // Limpio sesión previa (por las dudas)
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+
+      // Guardo sesión nueva
       localStorage.setItem("token", payload.token);
       localStorage.setItem("user", JSON.stringify(payload.user));
-      location.href = "./busqueda.html";
+
+      // ✅ Redirige a main.html
+      location.href = "./main.html";
       return;
     }
 
@@ -78,9 +86,15 @@ $form.addEventListener("submit", async (e) => {
       if (email === DEV_EMAIL && password === DEV_PASS) {
         const token = "local." + btoa(email) + ".token";
         const user = { id: Date.now(), email, name: "dev" };
+
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+
         localStorage.setItem("token", token);
         localStorage.setItem("user", JSON.stringify(user));
-        location.href = "./busqueda.html";
+
+        // ✅ Redirige a main también en modo dev
+        location.href = "./main.html";
         return;
       }
     }
