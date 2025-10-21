@@ -92,7 +92,7 @@ header .header-actions a {
 }
 
 .hero {
-    background-image: url("./materiales.webp");
+    background-image: url("../imgs/materiales.webp");
     background-size: cover;
     background-position: center;
     text-align: center;
