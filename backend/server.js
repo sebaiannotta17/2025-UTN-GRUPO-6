@@ -1,22 +1,22 @@
 import express from "express";
 import cors from "cors";
-import publicacionesRoutes from "./routes/publicaciones.js";
-import authRoutes from "./routes/auth.js"; // 👈 nueva importación
+import path from "path";
 
 const app = express();
-const PORT = 3000;
+const __dirname = path.resolve();
 
-// Permite peticiones desde el frontend
 app.use(cors());
-
-// Permite leer JSON del body
 app.use(express.json());
 
-// Rutas de la API
-app.use("/api/publicaciones", publicacionesRoutes);
-app.use("/api/auth", authRoutes); // 👈 nueva ruta de autenticación
+// Servir los archivos del frontend
+app.use(express.static(path.join(__dirname, "frontend")));
 
-// Inicio del servidor
+// Ruta raíz -> muestra el index.html
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "frontend/paginas/main.html"));
+});
+
+const PORT = 3000;
 app.listen(PORT, () => {
-  console.log(`✅ Servidor corriendo en http://localhost:${PORT}`);
+  console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
