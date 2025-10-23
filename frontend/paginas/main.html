@@ -1,63 +1,82 @@
 <!doctype html>
 <html lang="es">
-  <head>
-    <meta charset="utf-8" />
-    <title>Inicio | MaterialesYA</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!-- Estilos -->
-    <link rel="stylesheet" href="../css/estiloMain.css" />
-  </head>
+    <head>
+        <meta charset="utf-8" />
+        <title>Inicio | MaterialesYA</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <!-- Estilos -->
+        <link rel="stylesheet" href="../css/estiloMain.css" />
+    </head>
 
-  <body>
-    <header class="topbar">
-      <div class="container">
-        <!-- Logo -->
-        <a href="./index.html" class="logo">MaterialesYA</a>
+    <body>
+        <header class="topbar">
+            <div class="container">
+                <!-- Logo -->
+                <a href="./index.html" class="logo">MaterialesYA</a>
 
-        <!-- Buscador -->
-        <form class="search-bar" id="search-form" autocomplete="off">
-          <input type="search" id="search-input" placeholder="¿Qué necesitás?" />
-          <button type="submit" class="search-button" aria-label="Buscar">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path
-                d="M21 21l-4.3-4.3M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-            </svg>
-          </button>
-        </form>
+                <!-- Buscador -->
+                <form class="search-bar" id="search-form" autocomplete="off">
+                    <input
+                        type="search"
+                        id="search-input"
+                        placeholder="¿Qué necesitás?"
+                    />
+                    <button
+                        type="submit"
+                        class="search-button"
+                        aria-label="Buscar"
+                    >
+                        <svg
+                            width="18"
+                            height="18"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            aria-hidden="true"
+                        >
+                            <path
+                                d="M21 21l-4.3-4.3M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                            />
+                        </svg>
+                    </button>
+                </form>
 
-        <!-- Acciones -->
-        <div class="header-actions">
-          <a href="./index.html" class="btn btn-secondary">Inicio</a>
-          <a href="./Carga.html" class="btn btn-secondary">Publicar</a>
-          <!-- 🔁 Login ahora apunta a Login.html -->
-          <a href="./Login.html" class="btn btn-primary">Login</a>
-        </div>
-      </div>
-    </header>
+                <!-- Acciones -->
+                <div class="header-actions">
+                    <a href="./main.html" class="btn btn-secondary">Inicio</a>
+                    <a href="./Carga.html" class="btn btn-secondary"
+                        >Publicar</a
+                    >
+                    <!-- 🔁 Login ahora apunta a Login.html -->
+                    <a href="./Login.html" class="btn btn-primary">Login</a>
+                </div>
+            </div>
+        </header>
 
-    <main>
-      <!-- Hero -->
-      <section class="hero">
-        <div class="container">
-          <h1>Comprá lo justo y necesario. Al mejor precio.</h1>
-        </div>
-      </section>
+        <main>
+            <!-- Hero -->
+            <section class="hero">
+                <div class="container">
+                    <h1>Comprá lo justo y necesario. Al mejor precio.</h1>
+                </div>
+            </section>
 
-      <!-- Materiales destacados -->
-      <section class="home-list">
-        <div class="container">
-          <div class="section-header">
-            <h2>Materiales destacados</h2>
-          </div>
-          <p id="home-feedback" class="muted">Cargando materiales…</p>
-          <ul id="home-grid" class="grid"></ul>
-        </div>
-      </section>
-    </main>
+            <!-- Materiales destacados -->
+            <section class="home-list">
+                <div class="container">
+                    <div class="section-header">
+                        <h2>Materiales destacados</h2>
+                    </div>
+                    <p id="home-feedback" class="muted">Cargando materiales…</p>
+                    <ul id="home-grid" class="grid"></ul>
+                </div>
+            </section>
+        </main>
 
-    <footer></footer>
+        <footer></footer>
 
-    <script src="../js/main.js"></script>
-  </body>
+        <script src="../js/main.js"></script>
+    </body>
 </html>
