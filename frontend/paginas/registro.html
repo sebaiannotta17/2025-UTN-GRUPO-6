@@ -1,47 +1,103 @@
 <!doctype html>
 <html lang="es">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Registro | MaterialesYA</title>
-    <link rel="stylesheet" href="../css/styles.css" />
-    <style>
-      .card{max-width:520px;margin:40px auto;padding:20px;border-radius:12px;background:#252532;border:1px solid #2a2d3d}
-      #form-error{display:none;margin:10px 0 6px;padding:10px 12px;border:1px solid #e53935;border-radius:8px;background:#3a1b1b;color:#ffd7d7;font-weight:700}
-      .field-error{border-color:#e53935 !important; outline:0}
-    </style>
-  </head>
-  <body>
-    <header class="topbar">
-      <div class="brand">Marketplace Materiales</div>
-      <nav class="cats"><a href="./index.html">Inicio</a></nav>
-      <div class="actions"><a class="btn outline" href="./Login.html">Iniciar sesión</a></div>
-    </header>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <title>Registro | MaterialesYA</title>
+        <link rel="stylesheet" href="../css/styles.css" />
+        <style>
+            .card {
+                max-width: 520px;
+                margin: 40px auto;
+                padding: 20px;
+                border-radius: 12px;
+                background: #252532;
+                border: 1px solid #2a2d3d;
+            }
+            #form-error {
+                display: none;
+                margin: 10px 0 6px;
+                padding: 10px 12px;
+                border: 1px solid #e53935;
+                border-radius: 8px;
+                background: #3a1b1b;
+                color: #ffd7d7;
+                font-weight: 700;
+            }
+            .field-error {
+                border-color: #e53935 !important;
+                outline: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <header class="topbar">
+            <div class="brand">Marketplace Materiales</div>
+            <nav class="cats"><a href="./main.html">Inicio</a></nav>
+            <div class="actions">
+                <a class="btn outline" href="./Login.html">Iniciar sesión</a>
+            </div>
+        </header>
 
-    <main>
-      <section class="card">
-        <h2>Crear cuenta</h2>
+        <main>
+            <section class="card">
+                <h2>Crear cuenta</h2>
 
-        <!-- acá aparece el error -->
-        <div id="form-error" role="alert" aria-live="assertive"></div>
+                <!-- acá aparece el error -->
+                <div id="form-error" role="alert" aria-live="assertive"></div>
 
-        <form id="form-reg" autocomplete="on" novalidate>
-          <input type="text"     name="name"      placeholder="Nombre de usuario" required />
-          <input type="email"    name="email"     placeholder="Email"             required />
-          <input id="pw1" type="password" name="password"  placeholder="Contraseña"            required />
-          <input id="pw2" type="password" name="password2" placeholder="Repetí la contraseña"  required />
+                <form id="form-reg" autocomplete="on" novalidate>
+                    <input
+                        type="text"
+                        name="name"
+                        placeholder="Nombre de usuario"
+                        required
+                    />
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Email"
+                        required
+                    />
+                    <input
+                        id="pw1"
+                        type="password"
+                        name="password"
+                        placeholder="Contraseña"
+                        required
+                    />
+                    <input
+                        id="pw2"
+                        type="password"
+                        name="password2"
+                        placeholder="Repetí la contraseña"
+                        required
+                    />
 
-          <div class="form-buttons">
-            <button type="submit" class="btn" id="btn-registrar">Registrarme</button>
-            <a href="./Login.html" class="btn ghost" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;padding:10px 12px;">Volver</a>
-          </div>
-        </form>
+                    <div class="form-buttons">
+                        <button type="submit" class="btn" id="btn-registrar">
+                            Registrarme
+                        </button>
+                        <a
+                            href="./Login.html"
+                            class="btn ghost"
+                            style="
+                                text-decoration: none;
+                                display: inline-flex;
+                                align-items: center;
+                                justify-content: center;
+                                padding: 10px 12px;
+                            "
+                            >Volver</a
+                        >
+                    </div>
+                </form>
 
-        <div id="toast-container"></div>
-      </section>
-    </main>
+                <div id="toast-container"></div>
+            </section>
+        </main>
 
-    <!-- Importante: el script va al final -->
-<script src="../js/registro.js"></script>
-  </body>
+        <!-- Importante: el script va al final -->
+        <script src="../js/registro.js"></script>
+    </body>
 </html>
