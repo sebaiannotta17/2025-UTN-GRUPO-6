@@ -10,38 +10,11 @@ const __dirname = path.dirname(__filename);
 app.use(cors());
 app.use(express.json());
 
-// Servir contenido estático (CSS, JS, imágenes, etc.)
-app.use(express.static(path.join(__dirname, "../frontend")));
-
-// Página de inicio (main.html)
-app.get("/main.html", (req, res) => {
-  res.sendFile(path.join(__dirname, "../frontend/paginas/main.html"));
-});
-
-// Página de búsqueda
-app.get("/busqueda.html", (req, res) => {
-  res.sendFile(path.join(__dirname, "../frontend/paginas/Busqueda.html"));
-});
-
-// Página de carga/publicación
-app.get("/carga.html", (req, res) => {
-  res.sendFile(path.join(__dirname, "../frontend/paginas/Carga.html"));
-});
-
-// Página de login
-app.get("/login.html", (req, res) => {
-  res.sendFile(path.join(__dirname, "../frontend/paginas/Login.html"));
-});
-
-// Página de registro
-app.get("/registro.html", (req, res) => {
-  res.sendFile(path.join(__dirname, "../frontend/paginas/registro.html"));
-});
-
-// Página de recuperar contraseña
-app.get("/recuperar.html", (req, res) => {
-  res.sendFile(path.join(__dirname, "../frontend/paginas/recuperar.html"));
-});
+// Servir carpetas estáticas del frontend
+app.use(express.static(path.join(__dirname, "../frontend/paginas")));
+app.use("/css", express.static(path.join(__dirname, "../frontend/css")));
+app.use("/js", express.static(path.join(__dirname, "../frontend/js")));
+app.use("/imgs", express.static(path.join(__dirname, "../frontend/imgs")));
 
 // Iniciar servidor
 const PORT = 3000;
