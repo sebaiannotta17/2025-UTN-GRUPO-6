@@ -24,7 +24,7 @@ router.get("/", (req, res) => {
 
 // Crear nueva publicación
 router.post("/", (req, res) => {
-  console.log("📥 Body recibido:", req.body);
+  console.log("Body recibido:", req.body);
 
   const {
     usuario_id,
@@ -60,7 +60,7 @@ router.post("/", (req, res) => {
 
     res.json({ success: true, id: info.lastInsertRowid });
   } catch (err) {
-    console.error("❌ Error insertando:", err);
+    console.error("Error insertando:", err);
     res.status(500).json({ success: false, error: err.message });
   }
 });

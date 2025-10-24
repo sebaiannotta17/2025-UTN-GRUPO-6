@@ -76,7 +76,13 @@ document.addEventListener("DOMContentLoaded", () => {
     return s.replace(
       /[&<>"']/g,
       (c) =>
-        ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c],
+        ({
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#39;",
+        })[c],
     );
   }
   function formatAr(n) {
@@ -92,34 +98,31 @@ document.addEventListener("DOMContentLoaded", () => {
     return a;
   }
 
- 
   const $searchForm = $("#search-form");
   const $searchInput = $("#search-input");
   if ($searchForm) {
     $searchForm.addEventListener("submit", (e) => {
       e.preventDefault();
       const q = ($searchInput?.value || "").trim();
-      const url = "./Busqueda.html" + (q ? `?q=${encodeURIComponent(q)}` : "");
+      const url = "./busqueda.html" + (q ? `?q=${encodeURIComponent(q)}` : "");
       location.href = url;
     });
   }
 
- 
   const user = JSON.parse(localStorage.getItem("user") || "null");
   const $actions = document.querySelector(".header-actions");
   if ($actions) {
-   
-    const $loginBtn = $actions.querySelector('a[href="./Login.html"]');
-    const $publicarBtn = $actions.querySelector('a[href="./Carga.html"]');
+    const $loginBtn = $actions.querySelector('a[href="./login.html"]');
+    const $publicarBtn = $actions.querySelector('a[href="./carga.html"]');
 
     if ($publicarBtn) {
       $publicarBtn.addEventListener("click", (e) => {
         e.preventDefault();
         if (!user) {
           alert("Tenés que iniciar sesión para publicar.");
-          location.href = "./Login.html";
+          location.href = "./login.html";
         } else {
-          location.href = "./Carga.html";
+          location.href = "./carga.html";
         }
       });
     }
@@ -137,7 +140,7 @@ document.addEventListener("DOMContentLoaded", () => {
         e.preventDefault();
         localStorage.removeItem("user");
         localStorage.removeItem("token");
-        location.href = "./Login.html";
+        location.href = "./login.html";
       });
       $actions.appendChild(logout);
     }
@@ -196,7 +199,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!USE_MOCK) {
         const res = await fetch(`${API_URL}`);
         const data = await res.json();
-        const arr = Array.isArray(data) ? data : data.items ?? [];
+        const arr = Array.isArray(data) ? data : (data.items ?? []);
         const enriched = enrichWithImages(arr);
         renderHome(shuffle(enriched).slice(0, n));
         return;

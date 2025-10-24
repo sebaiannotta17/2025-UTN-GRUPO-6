@@ -1,4 +1,3 @@
-
 const USE_MOCK = true;
 const API_URL = "http://localhost:3000/api/materials";
 
@@ -71,7 +70,6 @@ const MOCK_LOCAL = [
   },
 ];
 
-
 const $form = document.getElementById("searchForm");
 const $q = document.getElementById("q");
 const $feedback = document.getElementById("feedback");
@@ -83,7 +81,9 @@ function escapeHtml(s = "") {
   return s.replace(
     /[&<>"']/g,
     (c) =>
-      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c],
+      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[
+        c
+      ],
   );
 }
 function formatAr(n) {
@@ -145,14 +145,11 @@ async function search(text) {
       const data = await res.json();
       const arr = Array.isArray(data) ? data : (data.items ?? []);
       if (arr.length) return enrichWithImages(arr);
-      
     } catch (e) {
       console.error("API error:", e);
-      
     }
   }
 
-  
   if (!q) return MOCK_LOCAL;
   const qlow = q.toLowerCase();
   return MOCK_LOCAL.filter((m) =>
@@ -173,21 +170,18 @@ $form.addEventListener("submit", async (e) => {
   render(items, text);
 });
 
-
 const params = new URLSearchParams(location.search);
 const Q_FROM_URL = (params.get("q") || "").trim();
 if ($q) $q.value = Q_FROM_URL;
 
-
 (async () => {
-  const initialText = Q_FROM_URL; 
+  const initialText = Q_FROM_URL;
   $feedback.textContent = initialText
     ? `Buscando “${initialText}”…`
     : "Cargando materiales…";
   const items = await search(initialText);
   render(items, initialText);
 })();
-
 
 $results.addEventListener("click", (e) => {
   const li = e.target.closest("li.card");
@@ -215,7 +209,6 @@ function setTextOrHide(id, value) {
   }
 }
 
-
 function openModal(m) {
   const modal = document.getElementById("materialModal");
   if (!modal) return;
@@ -227,7 +220,6 @@ function openModal(m) {
   setText("mPrice", ` $${formatAr(m.price)}`);
   setText("mCategory", m.category ?? m.categoria ?? "—");
   setText("mQty", m.qty ?? m.cantidad ?? "—");
-
 
   const thumb = document.getElementById("mThumb");
   if (thumb) {
@@ -315,20 +307,18 @@ function enrichWithImages(arr) {
   const $loginBtn = document.getElementById("btn-login");
   const $publicarBtn = document.getElementById("btn-publicar");
 
-  
   if ($publicarBtn) {
     $publicarBtn.addEventListener("click", (e) => {
       e.preventDefault();
       if (!user) {
         alert("Tenés que iniciar sesión para publicar.");
-        location.href = "./Login.html";
+        location.href = "./login.html";
       } else {
-        location.href = "./Carga.html";
+        location.href = "./carga.html";
       }
     });
   }
 
-  
   if (user && $loginBtn) {
     $loginBtn.textContent = "Mi cuenta";
     $loginBtn.setAttribute("href", "./perfil.html");
@@ -342,7 +332,7 @@ function enrichWithImages(arr) {
       e.preventDefault();
       localStorage.removeItem("user");
       localStorage.removeItem("token");
-      location.href = "./Login.html";
+      location.href = "./login.html";
     });
     $actions.appendChild(logout);
   }
@@ -356,15 +346,14 @@ function enrichWithImages(arr) {
   const $loginBtn = document.getElementById("btn-login");
   const $publicarBtn = document.getElementById("btn-publicar");
 
-  
   if ($publicarBtn) {
     $publicarBtn.addEventListener("click", (e) => {
       e.preventDefault();
       if (!user) {
         alert("Tenés que iniciar sesión para publicar.");
-        location.href = "./Login.html";
+        location.href = "./login.html";
       } else {
-        location.href = "./Carga.html";
+        location.href = "./carga.html";
       }
     });
   }
@@ -382,7 +371,7 @@ function enrichWithImages(arr) {
       e.preventDefault();
       localStorage.removeItem("user");
       localStorage.removeItem("token");
-      location.href = "./Login.html";
+      location.href = "./login.html";
     });
     $actions.appendChild(logout);
   }

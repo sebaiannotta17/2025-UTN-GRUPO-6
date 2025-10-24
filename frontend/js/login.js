@@ -1,11 +1,9 @@
-
 const $form = document.getElementById("form-login");
 const $btnCancelar = document.getElementById("btn-cancelar");
 const $error = document.getElementById("form-error");
 
-
-const ALLOW_LOCAL_LOGIN = false; 
-const API_URL = "http://localhost:3000/api/auth"; 
+const ALLOW_LOCAL_LOGIN = true;
+const API_URL = "http://localhost:3000/api/auth";
 
 // --- Mostrar / limpiar error ---
 function showError(msg) {
@@ -76,7 +74,6 @@ $form.addEventListener("submit", async (e) => {
     // Si no llega payload válido, mostrar error
     showError("No se pudo iniciar sesión. Intentalo de nuevo.");
     return;
-
   } catch (err) {
     // Si el backend no responde
     if (ALLOW_LOCAL_LOGIN) {
@@ -93,7 +90,6 @@ $form.addEventListener("submit", async (e) => {
         localStorage.setItem("token", token);
         localStorage.setItem("user", JSON.stringify(user));
 
-       
         location.href = "./main.html";
         return;
       }

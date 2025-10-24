@@ -197,7 +197,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("btn-cancelar").addEventListener("click", () => {
     form.reset();
     subcatContainer.innerHTML = "";
-    mostrarToast("❌ Publicación cancelada", true);
+    mostrarToast("Publicación cancelada", true);
   });
 
   // Inicialización
