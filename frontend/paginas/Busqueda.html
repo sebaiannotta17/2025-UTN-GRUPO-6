@@ -4,20 +4,15 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <title>Marketplace — Búsqueda</title>
-        
-        <!-- 1. ESTILOS BASE/GLOBALES (Ej. topbar, botones primarios/secundarios, containers) -->
         <link rel="stylesheet" href="../css/estiloMain.css" /> 
-        
-        <!-- 2. ESTILOS ESPECÍFICOS DE LA PÁGINA DE BÚSQUEDA (Formulario, Grilla de Resultados, Modal) -->
         <link rel="stylesheet" href="../css/busqueda.css" /> 
     </head>
     <body>
         <header class="topbar">
             <div class="container">
-                <!-- Logo / Inicio -->
+                <!-- Logo de Inicio -->
                 <a href="./main.html" class="logo">MaterialesYA</a>
 
-                <!-- Acciones -->
                 <nav class="header-actions">
                     <a href="./main.html" class="btn btn-secondary">Inicio</a>
                     <a href="./carga.html" class="btn btn-secondary" id="btn-publicar">Publicar</a>
@@ -26,12 +21,6 @@
             </div>
         </header>
 
-        <div class="float-actions">
-            <!-- El FAB de cargar es el primario -->
-            <a id="go-carga" href="./carga.html" class="fab">Vender Material</a>
-        </div>
-
-        <!-- NOTA: Se ha añadido la clase 'container' al main para centrar el contenido, asumiendo que está definido en estiloMain.css -->
         <main class="container">
             <h1>Buscar materiales</h1>
 
@@ -49,9 +38,7 @@
                 Aún no mostramos resultados.
             </section>
             
-            <!-- LISTA DE RESULTADOS CON ESTILO MARKETPLACE -->
             <ul id="results" class="grid" aria-live="polite">
-                <!-- Tarjeta de resultado 1 (Mockup) -->
                 <li class="material-card">
                     <div class="card-thumb">
                         <img src="https://placehold.co/300x200/6c5ce7/ffffff?text=Cemento" alt="Cemento" />
@@ -63,7 +50,7 @@
                         <button class="btn btn-small btn-primary">Ver detalle</button>
                     </div>
                 </li>
-                <!-- Tarjeta de resultado 2 (Mockup) -->
+                
                 <li class="material-card">
                     <div class="card-thumb">
                         <img src="https://placehold.co/300x200/2ecc71/ffffff?text=Arena" alt="Arena" />
@@ -75,7 +62,7 @@
                         <button class="btn btn-small btn-primary">Ver detalle</button>
                     </div>
                 </li>
-                <!-- Tarjeta de resultado 3 (Mockup) -->
+        
                 <li class="material-card">
                     <div class="card-thumb">
                         <img src="https://placehold.co/300x200/e67e22/ffffff?text=Ladrillo" alt="Ladrillo" />
@@ -90,7 +77,6 @@
             </ul>
         </main>
 
-        <!-- MODAL DE DETALLE -->
         <div
             id="materialModal"
             class="modal"
@@ -101,7 +87,7 @@
             <div class="modal-backdrop" data-close="1"></div>
             <div class="modal-card">
                 <button class="modal-close" aria-label="Cerrar" data-close="1">
-                    ×
+                    
                 </button>
                 <div class="modal-content">
                     <div id="mThumb" class="modal-thumb">

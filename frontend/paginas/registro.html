@@ -5,22 +5,17 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <title>Registro | MaterialesYA</title>
-        <!-- 1. Estilos globales (Header, Container, Tipografía) -->
         <link rel="stylesheet" href="../css/estiloMain.css" />
-        <!-- 2. Estilos específicos para la página de Registro -->
         <link rel="stylesheet" href="../css/registro.css" /> 
     </head>
     <body>
         <header class="topbar">
             <div class="container">
-                <!-- Logo -->
                 <a href="./main.html" class="logo">MaterialesYA</a>
 
-                <!-- Acciones -->
                 <div class="header-actions">
                     <a href="./main.html" class="btn btn-secondary">Inicio</a>
                     <a href="./carga.html" class="btn btn-secondary">Publicar</a>
-                    <!-- Cambiamos el botón "Iniciar Sesión" por el estilo primario -->
                     <a href="./login.html" class="btn btn-primary">Iniciar Sesión</a>
                 </div>
             </div>
@@ -30,7 +25,6 @@
             <section class="auth-card">
                 <h2>Crear cuenta</h2>
 
-                <!-- Bloque de error persistente -->
                 <div id="form-error" role="alert" aria-live="assertive"></div>
 
                 <form id="form-reg" autocomplete="on" novalidate>
@@ -62,11 +56,10 @@
                     />
 
                     <div class="form-buttons">
-                        <!-- El botón de registrar usa el estilo primario del Login (#btn-login) para consistencia -->
                         <button type="submit" id="btn-registrar">
                             Registrarme
                         </button>
-                        <!-- El botón de volver ahora usa la clase secundaria/outline del Login (#btn-cancelar) para consistencia -->
+
                         <a href="./login.html" id="btn-cancelar-link">Volver</a>
                     </div>
                 </form>
@@ -74,8 +67,6 @@
                 <div id="toast-container"></div>
             </section>
         </main>
-
-        <!-- Script externo -->
         <script src="../js/registro.js"></script>
     </body>
 </html>

@@ -1,6 +1,5 @@
-/* ------------------------------------ */
-/* ESTILOS DE FORMULARIO DE CARGA - ADAPTADO A LA PALETA NARANJA/CORAL */
-/* ------------------------------------ */
+/* Estilos para el formulario de carga de materiales publicados - Escritorio */
+
 
 .topbar {
     background-color: var(--color-background-light);
@@ -13,13 +12,12 @@ body {
     background-color: var(--color-secondary);
 }
 
-/* Tarjeta más ancha para formularios más grandes */
+
 .card-large {
     max-width: 720px;
     margin: 40px auto;
     padding: 30px;
     border-radius: 12px;
-    /* Fondo claro con borde sutil, siguiendo el estilo de la home */
     background: var(--color-background);
     border: 1px solid #ddd;
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
@@ -32,10 +30,6 @@ body {
     margin-bottom: 25px;
     text-align: center;
 }
-
-/* ------------------------------------ */
-/* ESTILOS DE INPUTS Y SELECTS */
-/* ------------------------------------ */
 
 #form-material input[type="text"],
 #form-material input[type="number"],
@@ -53,7 +47,6 @@ body {
     resize: vertical;
 }
 
-/* Estilo para el label (Categoría, Imagen) */
 #form-material label {
     display: block;
     font-weight: 600;
@@ -65,13 +58,10 @@ body {
 #form-material input:focus,
 #form-material textarea:focus,
 #form-material select:focus {
-    /* Borde de enfoque: NARANJA PRIMARIO */
     border-color: var(--color-primary);
-    /* Sombra de enfoque: Usando el RGB del color primario */
     box-shadow: 0 0 0 3px rgba(255, 87, 10, 0.2);
 }
 
-/* Estilo para agrupar Precio y Cantidad en una fila */
 .input-group {
     display: flex;
     gap: 15px;
@@ -82,16 +72,10 @@ body {
     margin-bottom: 0;
 }
 
-
-/* Estilo específico para el input de tipo file (subir imagen) */
 #form-material input[type="file"] {
     padding: 8px 15px;
     display: block;
 }
-
-/* ------------------------------------ */
-/* BOTONES Y MENSAJES */
-/* ------------------------------------ */
 
 .form-buttons {
     display: flex;
@@ -107,14 +91,12 @@ body {
 }
 
 .form-buttons .cancelar {
-    /* Botón Cancelar (Secundario/Outline): Adaptado a la paleta */
     background-color: var(--color-background-light);
     color: var(--color-text-dark);
     border: 1px solid #ccc;
 }
 
 .form-buttons .cancelar:hover {
-    /* Damos un toque de color secundario al hover de cancelar */
     border-color: var(--color-secondary);
     color: var(--color-secondary);
 }
@@ -127,13 +109,13 @@ body {
     list-style: none;
     padding: 0;
     margin: 20px 0;
-    color: #FFFF; /* Esto parece un override, lo mantenemos */
-}
-#lista-materiales.grid P {
-    color: #FFFF; /* Esto parece un override, lo mantenemos */
+    color: #FFFF;
 }
 
-/* Estilos de respuesta (muted) */
+#lista-materiales.grid P {
+    color: #FFFF;
+}
+
 .muted {
     color: var(--color-text-muted);
     font-style: italic;
@@ -143,28 +125,22 @@ body {
     margin-top: 10px;
 }
 
-/* ------------------------------------ */
-/* ADAPTACIÓN RESPONSIVE (Tablet y Móvil) */
-/* ------------------------------------ */
+/* Estilos para Mobile (Responsive) */
 
-/* Media query para tabletas pequeñas (<= 800px) */
 @media (max-width: 800px) {
     .card-large {
-        /* Reducimos el margen vertical y lo ajustamos a los lados */
         margin: 20px 15px;
-        /* Reducimos un poco el padding interno */
         padding: 25px;
     }
-    
+
     .card-large h1 {
-        /* Reducimos el tamaño del título principal */
         font-size: 28px;
         margin-bottom: 20px;
     }
 }
 
 
-/* Media query original para móviles (<= 600px) */
+
 @media (max-width: 600px) {
     .input-group {
         flex-direction: column;
@@ -172,13 +148,12 @@ body {
     }
 
     .card-large {
-        /* Ajuste para móviles muy pequeños (toma precedencia aquí si el width es < 600) */
-        margin: 10px; /* Margen muy reducido */
+        margin: 10px;
         padding: 15px;
     }
 
     .form-buttons {
-        flex-direction: column-reverse; /* Cancelar arriba, Publicar abajo */
+        flex-direction: column-reverse;
     }
 
     .form-buttons .btn {

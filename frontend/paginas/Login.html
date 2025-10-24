@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <title>Login | MaterialesYA</title>
         <link rel="stylesheet" href="../css/estiloMain.css" />
-        <link rel="stylesheet" href="../css/Login.css" />
+        <link rel="stylesheet" href="../css/login.css" />
     </head>
 
     <body>
@@ -70,7 +70,6 @@
         <div id="toast-container"></div>
 
         <script>
-            // 🚀 Si ya hay sesión iniciada, redirige directamente a main
             const token = localStorage.getItem("token");
             if (token) {
                 location.href = "./main.html";
@@ -79,111 +78,3 @@
         <script src="../js/login.js"></script>
     </body>
 </html>
-<!-- <!doctype html>
-<html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Login | 2025-UTN-GRUPO-6</title>
-    <link rel="stylesheet" href="../css/styles.css" />
-    <style>
-      .auth-wrap {
-        min-height: 100dvh;
-        display: grid;
-        place-items: center;
-      }
-      .auth-card {
-        background: #252532;
-        border: 1px solid #2a2d3d;
-        border-radius: 14px;
-        padding: 22px;
-        width: min(420px, 92vw);
-      }
-      .auth-card h1 {
-        margin: 0 0 10px;
-      }
-      .auth-extras {
-        margin-top: 12px;
-        display: flex;
-        justify-content: space-between;
-        gap: 10px;
-        font-size: 0.95rem;
-        align-items: center;
-      }
-      .auth-extras a {
-        color: var(--brand);
-        text-decoration: none;
-        font-weight: 700;
-      }
-      .auth-extras a:hover {
-        text-decoration: underline;
-      }
-      #form-error {
-        display: none;
-        margin: 10px 0 6px;
-        padding: 10px 12px;
-        border: 1px solid #e53935;
-        border-radius: 8px;
-        background: #3a1b1b;
-        color: #ffd7d7;
-        font-weight: 700;
-      }
-    </style>
-  </head>
-
-  <body>
-    <header class="topbar">
-      <div class="brand">Marketplace Materiales</div>
-      <nav class="cats"><a href="./main.html">Inicio</a></nav>
-      <div class="actions">
-        <a class="btn outline" href="./login.html">Ingresar</a>
-      </div>
-    </header>
-
-    <main class="auth-wrap">
-      <section class="auth-card">
-        <h1>Iniciar sesión</h1>
-        <form id="form-login" autocomplete="on">
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            required
-          />
-          <input
-            type="password"
-            name="password"
-            placeholder="Contraseña"
-            required
-          />
-
-
-          <div id="form-error" role="alert" aria-live="assertive"></div>
-
-          <div class="form-buttons">
-            <button id="btn-login" type="submit">Entrar</button>
-            <button id="btn-cancelar" type="button">Cancelar</button>
-          </div>
-
-          <div class="auth-extras">
-            <a id="link-registrate" href="./registro.html">Regístrate</a>
-            <a id="link-olv" href="./recuperar.html">¿Olvidaste tu contraseña?</a>
-          </div>
-        </form>
-      </section>
-    </main>
-
-    <div id="toast-container"></div>
-
-
-    <script>
-      // 🚀 Si ya hay sesión iniciada, redirige directamente a main
-      const token = localStorage.getItem("token");
-      if (token) {
-        location.href = "./main.html";
-      }
-    </script>
-
-    <script src="../js/login.js"></script>
-  </body>
-</html> -->
