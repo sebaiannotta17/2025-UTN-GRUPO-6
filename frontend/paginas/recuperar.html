@@ -1,30 +1,33 @@
-<!doctype html>
+
+ <!doctype html>
 <html lang="es">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
-        <title>Recuperar contraseña</title>
-        <link rel="stylesheet" href="../css/styles.css" />
-        <style>
-            .card {
-                max-width: 480px;
-                margin: 40px auto;
-                padding: 20px;
-                border-radius: 12px;
-                background: #252532;
-                border: 1px solid #2a2d3d;
-            }
-        </style>
+        <title>Recuperar contraseña | MaterialesYA</title>
+        
+        <!-- 1. Estilos base/globales (Header, botones, tipografía) -->
+        <link rel="stylesheet" href="../css/estiloMain.css" /> 
+        
+        <!-- 2. Estilos específicos del formulario (Tarjeta y centrado) -->
+        <link rel="stylesheet" href="../css/recuperar.css" /> 
     </head>
     <body>
         <header class="topbar">
-            <div class="brand">Marketplace Materiales</div>
+            <div class="container">
+                <a href="./main.html" class="logo">MaterialesYA</a>
+            </div>
         </header>
 
         <main>
             <section class="card">
                 <h2>Recuperar contraseña</h2>
-                <form id="form-rec">
+                
+                <p class="muted" style="margin-bottom: 20px;">
+                    Ingresá tu email para que te enviemos un enlace para restablecer tu clave de acceso.
+                </p>
+
+                <form id="form-rec" autocomplete="on" novalidate>
                     <input
                         type="email"
                         name="email"
@@ -32,20 +35,13 @@
                         required
                     />
                     <div class="form-buttons">
-                        <button type="submit" class="btn" id="btn-rec">
+                        <button type="submit" class="btn btn-primary" id="btn-rec">
                             Enviar
                         </button>
                         <a
-                            href="../login.html"
+                            href="./Login.html"
                             class="btn ghost"
-                            style="
-                                text-decoration: none;
-                                display: inline-flex;
-                                align-items: center;
-                                justify-content: center;
-                                padding: 10px 12px;
-                            "
-                            >Volver</a
+                            >Volver al Login</a
                         >
                     </div>
                 </form>
@@ -53,27 +49,7 @@
             </section>
         </main>
 
-        <script>
-            const form = document.getElementById("form-rec");
-            const toasts = document.getElementById("toast-container");
-            function toast(m, e = false) {
-                const d = document.createElement("div");
-                d.className = "toast" + (e ? " error" : "");
-                d.textContent = m;
-                toasts.appendChild(d);
-                setTimeout(() => d.remove(), 3000);
-            }
-            form.addEventListener("submit", (e) => {
-                e.preventDefault();
-                const email = (new FormData(form).get("email") || "").trim();
-                if (!email) {
-                    toast("Ingresá un email válido", true);
-                    return;
-                }
-                toast(
-                    "Email de recuperación enviado (modo mock). Revisa tu bandeja.",
-                );
-            });
-        </script>
+        <!-- Script de lógica de recuperación -->
+        <script src="../js/recuperar.js"></script>
     </body>
 </html>

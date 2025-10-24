@@ -3,38 +3,36 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
-        <title>Marketplace — Busqueda</title>
-        <link rel="stylesheet" href="../css/styles.css" />
+        <title>Marketplace — Búsqueda</title>
+        
+        <!-- 1. ESTILOS BASE/GLOBALES (Ej. topbar, botones primarios/secundarios, containers) -->
+        <link rel="stylesheet" href="../css/estiloMain.css" /> 
+        
+        <!-- 2. ESTILOS ESPECÍFICOS DE LA PÁGINA DE BÚSQUEDA (Formulario, Grilla de Resultados, Modal) -->
+        <link rel="stylesheet" href="../css/busqueda.css" /> 
     </head>
     <body>
-<header class="topbar">
-  <div class="container">
-    <!-- Logo / Inicio -->
-    <a href="./main.html" class="logo">MaterialesYA</a>
+        <header class="topbar">
+            <div class="container">
+                <!-- Logo / Inicio -->
+                <a href="./main.html" class="logo">MaterialesYA</a>
 
-    <!-- Acciones -->
-    <nav class="header-actions">
-      <a href="./main.html" class="btn btn-secondary">Inicio</a>
-      <a href="./Carga.html" class="btn btn-secondary" id="btn-publicar">Publicar</a>
-      <a href="./registro.html" class="btn btn-primary" id="btn-login">Login</a>
-    </nav>
-  </div>
-</header>
-
-<!-- FIX visual rápido si se ve desalineado -->
-<style>
-  .topbar .container { display:flex; align-items:center; gap:16px; }
-  .topbar .logo { margin-right:auto; }
-  .topbar .header-actions { display:flex; align-items:center; gap:8px; }
-</style>
-</header>
+                <!-- Acciones -->
+                <nav class="header-actions">
+                    <a href="./main.html" class="btn btn-secondary">Inicio</a>
+                    <a href="./Carga.html" class="btn btn-secondary" id="btn-publicar">Publicar</a>
+                    <a href="./registro.html" class="btn btn-primary" id="btn-login">Login</a>
+                </nav>
+            </div>
+        </header>
 
         <div class="float-actions">
-            <a id="go-carga" href="./carga.html" class="fab">Sell items</a>
-            <button class="fab-cart" aria-label="Carrito">🛒</button>
+            <!-- El FAB de cargar es el primario -->
+            <a id="go-carga" href="./carga.html" class="fab">Vender Material</a>
         </div>
 
-        <main>
+        <!-- NOTA: Se ha añadido la clase 'container' al main para centrar el contenido, asumiendo que está definido en estiloMain.css -->
+        <main class="container">
             <h1>Buscar materiales</h1>
 
             <form id="searchForm" role="search" autocomplete="off">
@@ -50,9 +48,49 @@
             <section id="feedback" class="muted">
                 Aún no mostramos resultados.
             </section>
-            <ul id="results" class="grid" aria-live="polite"></ul>
+            
+            <!-- LISTA DE RESULTADOS CON ESTILO MARKETPLACE -->
+            <ul id="results" class="grid" aria-live="polite">
+                <!-- Tarjeta de resultado 1 (Mockup) -->
+                <li class="material-card">
+                    <div class="card-thumb">
+                        <img src="https://placehold.co/300x200/6c5ce7/ffffff?text=Cemento" alt="Cemento" />
+                    </div>
+                    <div class="card-info">
+                        <h3>Cemento Portland x50kg</h3>
+                        <p class="muted">El mejor para estructuras.</p>
+                        <div class="card-price">$8.500</div>
+                        <button class="btn btn-small btn-primary">Ver detalle</button>
+                    </div>
+                </li>
+                <!-- Tarjeta de resultado 2 (Mockup) -->
+                <li class="material-card">
+                    <div class="card-thumb">
+                        <img src="https://placehold.co/300x200/2ecc71/ffffff?text=Arena" alt="Arena" />
+                    </div>
+                    <div class="card-info">
+                        <h3>Arena Fina embolsada</h3>
+                        <p class="muted">Ideal para revoques.</p>
+                        <div class="card-price">$1.200</div>
+                        <button class="btn btn-small btn-primary">Ver detalle</button>
+                    </div>
+                </li>
+                <!-- Tarjeta de resultado 3 (Mockup) -->
+                <li class="material-card">
+                    <div class="card-thumb">
+                        <img src="https://placehold.co/300x200/e67e22/ffffff?text=Ladrillo" alt="Ladrillo" />
+                    </div>
+                    <div class="card-info">
+                        <h3>Ladrillo Hueco 12x18x33</h3>
+                        <p class="muted">Cerámico de alta calidad.</p>
+                        <div class="card-price">$350</div>
+                        <button class="btn btn-small btn-primary">Ver detalle</button>
+                    </div>
+                </li>
+            </ul>
         </main>
 
+        <!-- MODAL DE DETALLE -->
         <div
             id="materialModal"
             class="modal"
@@ -66,28 +104,35 @@
                     ×
                 </button>
                 <div class="modal-content">
-                    <div id="mThumb" class="modal-thumb">--</div>
-                    <h2 id="mName"></h2>
-                    <p id="mDesc" class="muted"></p>
-                    <p id="mLongDesc" class="longdesc"></p>
+                    <div id="mThumb" class="modal-thumb">
+                         <img src="https://placehold.co/300x300/6c5ce7/ffffff?text=Material" alt="Vista detallada" />
+                    </div>
+                    <h2 id="mName">Nombre del Material Detallado</h2>
+                    <p id="mDesc" class="muted">Breve descripción del material.</p>
+                    <p id="mLongDesc" class="longdesc">Descripción larga y detallada del producto, incluyendo especificaciones técnicas y uso recomendado.</p>
 
-                    <div id="mPrice" class="price"></div>
+                    <div id="mPrice" class="price">$15.000 ARS</div>
 
                     <div class="m-extra">
                         <div>
                             <strong>Categoría:</strong>
-                            <span id="mCategory">—</span>
+                            <span id="mCategory">Cementos</span>
                         </div>
                         <div>
-                            <strong>Cantidad:</strong> <span id="mQty">—</span>
+                            <strong>Cantidad en Stock:</strong> <span id="mQty">50 unidades</span>
                         </div>
                     </div>
 
-                    <ul id="mDetails"></ul>
+                    <ul id="mDetails">
+                        <li>Ficha técnica</li>
+                        <li>Origen</li>
+                    </ul>
+                    <button class="btn btn-primary" style="margin-top: 20px; width: 100%;">Añadir al Carrito</button>
                 </div>
             </div>
         </div>
 
+        <div id="toast-container"></div>
         <script src="../js/Busqueda.js" type="module"></script>
     </body>
 </html>

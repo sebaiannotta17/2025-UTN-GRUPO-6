@@ -1,0 +1,133 @@
+/* ------------------------------------ */
+/* ESTILOS DE REGISTRO (ADAPTADO A LA PALETA NARANJA/CORAL) */
+/* ------------------------------------ */
+
+/* Estilo principal de la página de Auth */
+.auth-wrap {
+    min-height: 100dvh;
+    display: grid;
+    place-items: center;
+    /* Fondo: Usamos el gris claro de la paleta */
+    background-color: var(--color-secondary); /* Antes #f9f9f9 */
+    padding: 20px;
+}
+
+/* Tarjeta del formulario */
+.auth-card {
+    background: var(--color-background); /* Antes #ffffff */
+    border: 1px solid #ddd;
+    border-radius: 14px;
+    padding: 30px;
+    width: min(520px, 92vw); /* Más ancho para más campos */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); 
+}
+
+.auth-card h2 {
+    font-size: 28px;
+    margin: 0 0 25px; 
+    font-weight: 700;
+    text-align: center;
+    /* Título: Usa el negro oscuro */
+    color: var(--color-text-dark); /* Antes #333 */
+}
+
+/* ------------------------------------ */
+/* ESTILOS DE FORMULARIO (Mismos que Login con nueva paleta) */
+/* ------------------------------------ */
+
+#form-reg input {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    font-size: 16px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    outline: none;
+    transition: border-color 0.3s ease;
+    background: var(--color-background); /* Antes #fff */
+    color: var(--color-text-dark); /* Antes #333 */
+}
+
+#form-reg input:focus {
+    /* Borde de enfoque: NARANJA PRIMARIO */
+    border-color: var(--color-primary); /* Antes #6c5ce7 */
+    /* Sombra de enfoque: Usando el RGB del color primario */
+    box-shadow: 0 0 0 3px rgba(255, 87, 10, 0.2); /* Antes rgba(108, 92, 231, 0.2) */
+}
+
+/* Contenedor de botones */
+.form-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+/* Botón principal (Registrarme) */
+#btn-registrar {
+    flex: 1;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    font-size: 16px;
+    /* Fondo: NARANJA PRIMARIO */
+    background-color: var(--color-primary); /* Antes #6c5ce7 */ 
+    color: var(--color-background); /* Antes white */
+    border: none;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+#btn-registrar:hover {
+    /* Hover: NARANJA SECUNDARIO (Coral) */
+    background-color: var(--color-secondary); /* Antes #5b47d1 */
+}
+
+/* Enlace de Volver (#btn-cancelar-link) */
+#btn-cancelar-link {
+    flex: 1;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 47px; 
+    padding: 0 15px; 
+    margin-bottom: 15px;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: transparent;
+    /* Texto y Borde: NARANJA PRIMARIO */
+    color: var(--color-primary); /* Antes #6c5ce7 */
+    border: 2px solid var(--color-primary); /* Antes #6c5ce7 */
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+#btn-cancelar-link:hover {
+    /* Hover: Invertir colores con la paleta */
+    background-color: var(--color-primary); /* Antes #6c5ce7 */
+    color: var(--color-background); /* Antes white */
+    border-color: var(--color-primary);
+}
+
+
+/* Bloque de error */
+#form-error {
+    display: none;
+    margin: 10px 0 6px;
+    padding: 10px 12px;
+    /* Manteniendo los colores de error estándar, ya que no definiste variables específicas para errores */
+    border: 1px solid #e53935; 
+    border-radius: 8px;
+    background: #ffe0e0; 
+    color: #e53935; 
+    font-weight: 700;
+}
+
+/* Estilo para marcar campos con error */
+.field-error {
+    border-color: #e53935 !important;
+    outline: 0;
+}

@@ -1,10 +1,21 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap");
 
+/* --- VARIABLES DE PALETA DE COLORES --- */
+:root {
+    /* Colores Principales (Basado en tu paleta) */
+    --color-primary: #ff570aff;   /* Orange Pantone (Naranja vibrante para acciones principales) */
+    --color-secondary: #fa824cff; /* Coral (Naranja suave o secundario/hover) */
+    --color-text-dark: #0c0f0aff; /* Night (Negro muy oscuro para texto principal) */
+    --color-text-muted: #6c6f7dff; /* Dim Gray (Gris para texto secundario/apagado) */
+    --color-background: #ffffffff; /* White (Fondo principal/tarjetas) */
+    --color-background-light: #f9f9f9; /* Fondo del body */
+}
+
 body {
     font-family: "Inter", sans-serif;
     margin: 0;
-    color: #333;
-    background-color: #f9f9f9;
+    color: var(--color-text-dark);
+    background-color: var(--color-background-light);
 }
 
 .container {
@@ -18,13 +29,14 @@ header .container {
     justify-content: space-between;
     align-items: center;
     padding: 20px;
+    gap: 10px;
 }
 
 header .logo {
     font-weight: bold;
     font-size: 24px;
     text-decoration: none;
-    color: #000;
+    color: var(--color-text-dark);
 }
 
 header .search-bar {
@@ -33,7 +45,7 @@ header .search-bar {
     justify-content: center;
     flex: 1;
     max-width: 500px;
-    background: #fff;
+    background: var(--color-background);
     border: 2px solid #ccc;
     border-radius: 40px;
     padding: 6px 12px;
@@ -42,8 +54,8 @@ header .search-bar {
 
 header .search-bar:hover,
 header .search-bar:focus-within {
-    border-color: #6c5ce7;
-    box-shadow: 0 0 8px rgba(108, 92, 231, 0.3);
+    border-color: var(--color-primary);
+    box-shadow: 0 0 8px rgba(255, 87, 10, 0.3);
 }
 
 header .search-bar input[type="search"] {
@@ -54,17 +66,17 @@ header .search-bar input[type="search"] {
     font-size: 16px;
     border-radius: 40px;
     background: transparent;
-    color: #333;
+    color: var(--color-text-dark);
 }
 
 header .search-bar input[type="search"]::placeholder {
-    color: #999;
+    color: var(--color-text-muted);
     font-size: 15px;
 }
 
 header .search-bar .search-button {
-    background-color: #6c5ce7;
-    color: white;
+    background-color: var(--color-primary);
+    color: var(--color-background);
     border: none;
     border-radius: 50%;
     width: 42px;
@@ -80,16 +92,41 @@ header .search-bar .search-button {
 }
 
 header .search-bar .search-button:hover {
-    background-color: #5b47d1;
+    background-color: var(--color-secondary);
     transform: scale(1.05);
 }
 
 header .header-actions a {
     text-decoration: none;
-    color: #6c5ce7;
+    color: var(--color-primary);
     margin-left: 20px;
     font-weight: 500;
 }
+
+/* 💡 Estilos de botones para la consistencia del color */
+.btn-secondary {
+    color: var(--color-primary) !important;
+    border: 1px solid var(--color-primary);
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: background-color 0.3s;
+}
+.btn-secondary:hover {
+    background-color: rgba(255, 87, 10, 0.1);
+}
+.btn-primary {
+    background-color: var(--color-primary);
+    color: var(--color-background) !important;
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: background-color 0.3s;
+    border: 1px solid var(--color-primary);
+}
+.btn-primary:hover {
+    background-color: var(--color-secondary);
+    border-color: var(--color-secondary);
+}
+
 
 .hero {
     background-image: url("../imgs/materiales.webp");
@@ -97,7 +134,7 @@ header .header-actions a {
     background-position: center;
     text-align: center;
     padding: 120px 0;
-    color: white;
+    color: var(--color-background);
     border-radius: 20px;
     margin: 0 20px 40px 20px;
 }
@@ -135,4 +172,150 @@ header .header-actions a {
 .product-card p {
     margin-top: 10px;
     font-weight: 500;
+}
+
+/*
+ * --- ESTILOS PARA LA SECCIÓN HOME-LIST (MATERIALES DESTACADOS) ---
+ */
+
+/* 1. Estilos del Contenedor de la Sección */
+.home-list {
+    padding: 40px 0;
+    background-color: var(--color-background-light);
+}
+
+/* 2. Ajuste del mensaje de carga */
+#home-feedback.muted {
+    text-align: center;
+    color: var(--color-text-muted);
+    font-style: italic;
+    margin-bottom: 25px;
+}
+
+/* 3. Estilos de la Cuadrícula de Productos (ul#home-grid.grid) */
+.grid {
+    list-style: none;
+    padding: 0;
+    margin: 0; 
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px; 
+    justify-content: flex-start; 
+}
+
+/* 4. Estilos para cada Ítem (Card) dentro del Grid */
+.grid .product-card {
+    /* Base: 4 columnas en desktop */
+    width: calc(25% - 18.75px); 
+    
+    /* Estilos visuales de la tarjeta (Marketplace) */
+    background-color: var(--color-background); 
+    border: 3px solid var(--color-primary); 
+    border-radius: 10px; 
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); 
+    padding: 20px; 
+    box-sizing: border-box; 
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    
+    /* Centrado de Contenido */
+    display: flex; 
+    flex-direction: column;
+    align-items: center; 
+    text-align: center; 
+}
+
+.grid .product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2); 
+    border-color: var(--color-secondary);
+}
+
+/*
+ * 5. Adaptación para dispositivos (Responsiveness)
+ */
+
+/* --- ADAPTACIÓN RESPONSIVE PARA MÓVILES Y TABLETS PEQUEÑAS (<= 800px) --- */
+@media (max-width: 800px) {
+    /* A. Encabezado: Apilamos el logo y la barra de búsqueda */
+    header .container {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+        padding: 15px 10px; /* Reducimos padding horizontal */
+    }
+
+    header .logo {
+        text-align: center;
+        margin-bottom: 5px; /* Pequeña separación del buscador */
+    }
+
+    header .search-bar {
+        max-width: 100%; /* El buscador ocupa todo el ancho */
+        padding: 5px 10px;
+    }
+    
+    /* Los botones de acción (login/registro) se mueven al final del contenedor o se ocultan/ajustan si es necesario */
+    header .header-actions {
+        display: flex;
+        justify-content: space-around;
+    }
+    header .header-actions a {
+        margin: 0 5px;
+    }
+
+    /* B. Sección Hero: Reducimos padding y tamaño de texto */
+    .hero {
+        padding: 80px 0;
+        margin: 0 10px 30px 10px;
+    }
+    
+    .hero h1 {
+        font-size: 36px;
+    }
+
+    /* C. Grilla de Productos: Pasamos a 2 columnas */
+    .grid {
+        gap: 15px; /* Reducimos el espacio entre tarjetas */
+    }
+    
+    .grid .product-card {
+        width: calc(50% - 7.5px); /* 2 columnas con gap de 15px */
+        padding: 15px;
+    }
+    
+    /* D. Aseguramos el tamaño de la fuente para el resto de los elementos de la lista */
+    .section-header h2 {
+        font-size: 24px;
+    }
+}
+/* ----------------------------------------------------------------------------------- */
+
+
+/* @media (max-width: 992px) { (Estilo que ya estaba, pero 800px lo sobrescribe si es más bajo)
+    .grid .product-card {
+        width: calc(33.333% - 16.666px); 
+    }
+} */
+
+/* @media (max-width: 768px) { (Este ya no es tan necesario con el de 800px, pero mantenemos el de 480px)
+    .grid .product-card {
+        width: calc(50% - 12.5px); 
+        padding: 15px;
+    }
+} */
+
+@media (max-width: 480px) {
+    /* Aquí se aplica la vista de 1 columna para móviles muy pequeños */
+    .grid {
+        gap: 15px;
+    }
+    .grid .product-card {
+        width: 100%; /* 1 columna completa */
+    }
+
+    /* Ajuste final del logo/acciones para el móvil más pequeño */
+    header .header-actions a {
+        font-size: 14px;
+        padding: 6px 10px;
+    }
 }

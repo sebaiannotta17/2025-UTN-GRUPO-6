@@ -1,0 +1,175 @@
+/* ------------------------------------ */
+/* ESTILOS DE FORMULARIO DE CARGA - ADAPTADO A LA PALETA NARANJA/CORAL */
+/* ------------------------------------ */
+
+/* Tarjeta más ancha para formularios más grandes */
+.topbar {
+    background-color: var(--color-background-light);
+}
+
+body {
+    font-family: "Inter", sans-serif;
+    margin: 0;
+    color: var(--color-text-dark);
+    background-color: var(--color-secondary);
+}
+
+.card-large {
+    max-width: 720px;
+    margin: 40px auto;
+    padding: 30px;
+    border-radius: 12px;
+    /* Fondo claro con borde sutil, siguiendo el estilo de la home */
+    background: var(--color-background);
+    /* Antes #ffffff */
+    border: 1px solid #ddd;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+}
+
+.card-large h1 {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--color-text-dark);
+    /* Antes #333 */
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+/* ------------------------------------ */
+/* ESTILOS DE INPUTS Y SELECTS */
+/* ------------------------------------ */
+
+#form-material input[type="text"],
+#form-material input[type="number"],
+#form-material input[type="file"],
+#form-material textarea,
+#form-material select {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 16px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    resize: vertical;
+}
+
+/* Estilo para el label (Categoría, Imagen) */
+#form-material label {
+    display: block;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    /* Antes #666 - Usamos Dim Gray */
+    margin: 10px 0 5px;
+}
+
+
+#form-material input:focus,
+#form-material textarea:focus,
+#form-material select:focus {
+    /* Borde de enfoque: NARANJA PRIMARIO */
+    border-color: var(--color-primary);
+    /* Antes #6c5ce7 */
+    outline: none;
+    /* Sombra de enfoque: Usando el RGB del color primario */
+    box-shadow: 0 0 0 3px rgba(255, 87, 10, 0.2);
+    /* Antes rgba(108, 92, 231, 0.2) */
+}
+
+/* Estilo para agrupar Precio y Cantidad en una fila */
+.input-group {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.input-group input {
+    margin-bottom: 0;
+}
+
+
+/* Estilo específico para el input de tipo file (subir imagen) */
+#form-material input[type="file"] {
+    padding: 8px 15px;
+    display: block;
+}
+
+/* ------------------------------------ */
+/* BOTONES Y MENSAJES */
+/* ------------------------------------ */
+
+.form-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: flex-end;
+    margin-top: 30px;
+}
+
+.form-buttons .btn {
+    min-width: 120px;
+    padding: 12px 20px;
+    font-weight: 700;
+}
+
+.form-buttons .cancelar {
+    /* Botón Cancelar (Secundario/Outline): Adaptado a la paleta */
+    background-color: var(--color-background-light);
+    /* Antes #e0e0e0 */
+    color: var(--color-text-dark);
+    /* Antes #333 */
+    border: 1px solid #ccc;
+    /* Mantenemos un gris sutil */
+}
+
+.form-buttons .cancelar:hover {
+    /* Damos un toque de color secundario al hover de cancelar */
+    border-color: var(--color-secondary);
+    color: var(--color-secondary);
+}
+
+/* Estilo para la lista de materiales cargados */
+#lista-materiales.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+    color: #FFFF;
+}
+#lista-materiales.grid P {
+    color: #FFFF;
+}
+
+/* Estilos de respuesta (muted) */
+.muted {
+    color: var(--color-text-muted);
+    /* Antes #999 */
+    font-style: italic;
+    text-align: center;
+    width: 100%;
+    display: block;
+    margin-top: 10px;
+}
+
+/* Media query para móviles (apilamos en columna el input-group) */
+@media (max-width: 600px) {
+    .input-group {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .card-large {
+        margin: 20px 10px;
+        padding: 20px;
+    }
+
+    .form-buttons {
+        flex-direction: column-reverse;
+    }
+
+    .form-buttons .btn {
+        min-width: 100%;
+    }
+}

@@ -1,0 +1,142 @@
+/* ------------------------------------ */
+/* ESTILOS DE LOGIN (ESPECÍFICOS)       */
+/* Estos estilos usan la paleta de colores de la Home (Naranja/Coral/Gris) */
+/* ------------------------------------ */
+
+/* Estilo principal de la página de Login/Auth */
+.auth-wrap {
+    min-height: 100dvh;
+    display: grid;
+    place-items: center;
+    /* Fondo: Usamos el gris claro de la paleta */
+    background-color: var(--color-secondary); /* Antes #f9f9f9 */
+    padding: 20px;
+
+}
+
+/* Tarjeta del formulario */
+.auth-card {
+    /* Fondo BLANCO */
+    background: var(--color-background); /* Antes #ffffff */
+    border: 1px solid #ddd;
+    border-radius: 14px;
+    padding: 30px;
+    width: min(420px, 92vw);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Sombra sutil */
+}
+
+.auth-card h1 {
+    font-size: 28px;
+    margin: 0 0 25px; 
+    font-weight: 700;
+    text-align: center;
+    /* Texto principal: Usa el negro oscuro */
+    color: var(--color-text-dark); /* Antes #333 */
+}
+
+/* Estilos para Inputs y Elementos de Formulario */
+#form-login input {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    font-size: 16px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    outline: none;
+    transition: border-color 0.3s ease;
+    background: var(--color-background); /* Antes #fff */
+    color: var(--color-text-dark); /* Antes #333 */
+}
+
+#form-login input:focus {
+    /* Borde de enfoque: Usa el NARANJA PRIMARIO */
+    border-color: var(--color-primary); /* Antes #6c5ce7 */
+    /* Sombra de enfoque: Usando el RGB del color primario */
+    box-shadow: 0 0 0 3px rgba(255, 87, 10, 0.2); /* Antes rgba(108, 92, 231, 0.2) */
+}
+
+/* Contenedor de botones */
+.form-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+/* Botón principal (Entrar) */
+#btn-login {
+    flex: 1;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    font-size: 16px;
+    /* Fondo: Usa NARANJA PRIMARIO */
+    background-color: var(--color-primary); /* Antes #6c5ce7 */
+    color: var(--color-background); /* Antes white */
+    border: none;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+#btn-login:hover {
+    /* Hover: Usa NARANJA SECUNDARIO (Coral) */
+    background-color: var(--color-secondary); /* Antes #5b47d1 */
+}
+
+/* Botón secundario (Cancelar) */
+#btn-cancelar {
+    flex: 1;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: transparent;
+    /* Color del texto y borde: Usa NARANJA PRIMARIO */
+    color: var(--color-primary); /* Antes #6c5ce7 */
+    border: 2px solid var(--color-primary); /* Antes #6c5ce7 */
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+#btn-cancelar:hover {
+    /* Hover: Invertir colores con la paleta */
+    background-color: var(--color-primary); /* Antes #6c5ce7 */
+    color: var(--color-background); /* Antes white */
+    border-color: var(--color-primary);
+}
+
+/* Enlaces extra (Registrate / Olvidaste) */
+.auth-extras {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 0.9rem;
+    align-items: center;
+}
+
+.auth-extras a {
+    /* Enlaces: Usa NARANJA PRIMARIO */
+    color: var(--color-primary); /* Antes #6c5ce7 */
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.auth-extras a:hover {
+    text-decoration: underline;
+}
+
+/* Bloque de error */
+#form-error {
+    display: none;
+    margin: 10px 0 6px;
+    padding: 10px 12px;
+    /* Usando colores estándar de error, pero puedes cambiarlos si tienes variables de error */
+    border: 1px solid #e53935; /* Rojo */
+    background: #ffe0e0; 
+    color: #e53935; 
+    font-weight: 700;
+    border-radius: 8px;
+}
