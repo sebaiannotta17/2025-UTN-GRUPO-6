@@ -71,17 +71,6 @@ h1 {
 
 /* botones */
 
-
-.float-actions {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    z-index: 100;
-}
-
 .fab {
     display: inline-flex;
     align-items: center;
@@ -300,13 +289,7 @@ h1 {
         height: 180px; 
     }
     
-   
-    .float-actions {
-        bottom: 15px;
-        right: 15px;
-        gap: 8px;
-    }
-    
+
     .fab {
         min-width: 45px;
         height: 45px;

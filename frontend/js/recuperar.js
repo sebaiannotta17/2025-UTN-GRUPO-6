@@ -1,9 +1,9 @@
-// Lógica de recuperación de contraseña (Mockup)
+// Lógica de recuperación de contraseña
 
 const form = document.getElementById("form-rec");
 const toasts = document.getElementById("toast-container");
 
-// Función simple de notificación (Toast)
+// Función simple de notificación
 function toast(m, e = false) {
     const d = document.createElement("div");
     d.className = "toast" + (e ? " error" : "");
@@ -44,7 +44,7 @@ form.addEventListener("submit", (e) => {
     // form.reset();
 });
 
-// Estilos adicionales necesarios para el toast
+
 const style = document.createElement('style');
 style.textContent = `
     #toast-container {

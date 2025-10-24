@@ -1,8 +1,7 @@
-// --- Config ---
+
 const USE_MOCK = true;
 const API_URL = "http://localhost:3000/api/materials";
 
-// --- MOCK local (para desarrollo) ---
 const MOCK_LOCAL = [
   {
     id: 1,
@@ -72,16 +71,14 @@ const MOCK_LOCAL = [
   },
 ];
 
-// --- DOM ---
+
 const $form = document.getElementById("searchForm");
 const $q = document.getElementById("q");
 const $feedback = document.getElementById("feedback");
 const $results = document.getElementById("results");
 
-// --- Estado ---
 let LAST_ITEMS = [];
 
-// --- Utils ---
 function escapeHtml(s = "") {
   return s.replace(
     /[&<>"']/g,
@@ -98,7 +95,7 @@ function initials(name = "") {
   return parts.map((p) => p[0]?.toUpperCase() ?? "").join("");
 }
 
-// --- Render (cards de resultados) ---
+// Cards de resultados
 function render(items, text = "") {
   LAST_ITEMS = items;
 
@@ -138,7 +135,7 @@ function render(items, text = "") {
     .join("");
 }
 
-// --- Buscar (API -> enrich -> fallback MOCK) ---
+// Buscar Materiales
 async function search(text) {
   const q = (text || "").trim();
 
@@ -147,15 +144,15 @@ async function search(text) {
       const res = await fetch(`${API_URL}?text=${encodeURIComponent(q)}`);
       const data = await res.json();
       const arr = Array.isArray(data) ? data : (data.items ?? []);
-      if (arr.length) return enrichWithImages(arr); // enriquece con image_url del mock si falta
-      // si viene vacío, caemos a MOCK para mostrar algo
+      if (arr.length) return enrichWithImages(arr);
+      
     } catch (e) {
       console.error("API error:", e);
-      // caemos al fallback
+      
     }
   }
 
-  // Fallback MOCK local (con filtro en front)
+  
   if (!q) return MOCK_LOCAL;
   const qlow = q.toLowerCase();
   return MOCK_LOCAL.filter((m) =>
@@ -163,12 +160,10 @@ async function search(text) {
   );
 }
 
-// --- Submit de búsqueda ---
 $form.addEventListener("submit", async (e) => {
   e.preventDefault();
   const text = $q.value.trim();
 
-  // ✅ Actualizar la URL con ?q=... sin recargar
   const newUrl = text ? `?q=${encodeURIComponent(text)}` : location.pathname;
   history.replaceState(null, "", newUrl);
 
@@ -178,14 +173,14 @@ $form.addEventListener("submit", async (e) => {
   render(items, text);
 });
 
-// --- Cargar búsqueda desde la URL (auto-relleno + auto-búsqueda) ---
+
 const params = new URLSearchParams(location.search);
 const Q_FROM_URL = (params.get("q") || "").trim();
 if ($q) $q.value = Q_FROM_URL;
 
-// --- Estado inicial ---
+
 (async () => {
-  const initialText = Q_FROM_URL; // si venís de main con ?q=...
+  const initialText = Q_FROM_URL; 
   $feedback.textContent = initialText
     ? `Buscando “${initialText}”…`
     : "Cargando materiales…";
@@ -193,7 +188,7 @@ if ($q) $q.value = Q_FROM_URL;
   render(items, initialText);
 })();
 
-// --- Click en card: abrir modal ---
+
 $results.addEventListener("click", (e) => {
   const li = e.target.closest("li.card");
   if (!li) return;
@@ -203,7 +198,6 @@ $results.addEventListener("click", (e) => {
   openModal(m);
 });
 
-// --- Helpers de texto para modal ---
 function setText(id, value) {
   const el = document.getElementById(id);
   if (!el) return;
@@ -221,7 +215,7 @@ function setTextOrHide(id, value) {
   }
 }
 
-// --- Modal de detalle ---
+
 function openModal(m) {
   const modal = document.getElementById("materialModal");
   if (!modal) return;
@@ -234,7 +228,7 @@ function openModal(m) {
   setText("mCategory", m.category ?? m.categoria ?? "—");
   setText("mQty", m.qty ?? m.cantidad ?? "—");
 
-  // imagen real o iniciales
+
   const thumb = document.getElementById("mThumb");
   if (thumb) {
     const url = (m.image_url ?? m.imageUrl ?? "").toString().trim();
@@ -254,7 +248,6 @@ function openModal(m) {
     }
   }
 
-  // detalles extra (obj clave/valor)
   const details = m.details ?? m.detalles ?? {};
   const $ul = document.getElementById("mDetails");
   if ($ul) {
@@ -277,7 +270,6 @@ function closeModal() {
   modal.setAttribute("aria-hidden", "true");
 }
 
-// Cerrar modal por backdrop, botón o ESC
 document.getElementById("materialModal")?.addEventListener("click", (e) => {
   if (e.target.dataset.close === "1") closeModal();
 });
@@ -288,7 +280,6 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") closeModal();
 });
 
-// --- Fallback si la imagen de la card falla ---
 $results.addEventListener(
   "error",
   (e) => {
@@ -304,7 +295,6 @@ $results.addEventListener(
   true,
 );
 
-// --- Enriquecer items de la API con imágenes del mock (por nombre) ---
 function enrichWithImages(arr) {
   const byName = new Map(
     MOCK_LOCAL.map((x) => [String(x.name || "").toLowerCase(), x.image_url]),
@@ -316,7 +306,7 @@ function enrichWithImages(arr) {
     return fromMock ? { ...m, image_url: fromMock } : m;
   });
 }
-// ================= Header dinámico (igual que main) =================
+
 (() => {
   const user = JSON.parse(localStorage.getItem("user") || "null");
   const $actions = document.querySelector(".header-actions");
@@ -325,7 +315,7 @@ function enrichWithImages(arr) {
   const $loginBtn = document.getElementById("btn-login");
   const $publicarBtn = document.getElementById("btn-publicar");
 
-  // Control de acceso a "Publicar"
+  
   if ($publicarBtn) {
     $publicarBtn.addEventListener("click", (e) => {
       e.preventDefault();
@@ -338,7 +328,7 @@ function enrichWithImages(arr) {
     });
   }
 
-  // Cambiar "Login" -> "Mi cuenta" y agregar "Salir"
+  
   if (user && $loginBtn) {
     $loginBtn.textContent = "Mi cuenta";
     $loginBtn.setAttribute("href", "./perfil.html");
@@ -357,7 +347,7 @@ function enrichWithImages(arr) {
     $actions.appendChild(logout);
   }
 })();
-// ================= Header dinámico (igual que en main) =================
+
 (() => {
   const user = JSON.parse(localStorage.getItem("user") || "null");
   const $actions = document.querySelector(".header-actions");
@@ -366,7 +356,7 @@ function enrichWithImages(arr) {
   const $loginBtn = document.getElementById("btn-login");
   const $publicarBtn = document.getElementById("btn-publicar");
 
-  // Control de acceso a "Publicar"
+  
   if ($publicarBtn) {
     $publicarBtn.addEventListener("click", (e) => {
       e.preventDefault();
@@ -379,7 +369,6 @@ function enrichWithImages(arr) {
     });
   }
 
-  // Cambiar "Login" -> "Mi cuenta" y agregar "Salir"
   if (user && $loginBtn) {
     $loginBtn.textContent = "Mi cuenta";
     $loginBtn.setAttribute("href", "./perfil.html");

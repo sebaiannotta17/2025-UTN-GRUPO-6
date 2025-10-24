@@ -1,9 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // --- Config ---
   const USE_MOCK = true;
   const API_URL = "http://localhost:3000/api/materials";
 
-  // --- MOCK local ---
   const MOCK_LOCAL = [
     {
       id: 1,
@@ -73,7 +71,6 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   ];
 
-  // --- Utils ---
   const $ = (sel) => document.querySelector(sel);
   function escapeHtml(s = "") {
     return s.replace(
@@ -95,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return a;
   }
 
-  // --- Search (redirige a Busqueda.html?q=...) ---
+ 
   const $searchForm = $("#search-form");
   const $searchInput = $("#search-input");
   if ($searchForm) {
@@ -107,11 +104,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // --- Header dinámico ---
+ 
   const user = JSON.parse(localStorage.getItem("user") || "null");
   const $actions = document.querySelector(".header-actions");
   if ($actions) {
-    // ⬇️ ahora seleccionamos el botón que apunta a Login.html
+   
     const $loginBtn = $actions.querySelector('a[href="./Login.html"]');
     const $publicarBtn = $actions.querySelector('a[href="./Carga.html"]');
 

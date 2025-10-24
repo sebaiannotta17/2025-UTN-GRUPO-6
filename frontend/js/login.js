@@ -1,11 +1,11 @@
-// frontend/js/login.js
+
 const $form = document.getElementById("form-login");
 const $btnCancelar = document.getElementById("btn-cancelar");
 const $error = document.getElementById("form-error");
 
-// Config: permitir login local solo en desarrollo
-const ALLOW_LOCAL_LOGIN = false; // Cambiá a true solo para test offline
-const API_URL = "http://localhost:3000/api/auth"; // centralizo base URL
+
+const ALLOW_LOCAL_LOGIN = false; 
+const API_URL = "http://localhost:3000/api/auth"; 
 
 // --- Mostrar / limpiar error ---
 function showError(msg) {
@@ -24,7 +24,7 @@ $btnCancelar.addEventListener("click", () => {
   clearError();
 });
 
-// --- Envío del formulario ---
+//Envío del formulario
 $form.addEventListener("submit", async (e) => {
   e.preventDefault();
   clearError();
@@ -54,7 +54,7 @@ $form.addEventListener("submit", async (e) => {
         apiMsg = body?.message || body?.error || "";
       } catch {}
       showError(apiMsg || "Usuario o contraseña incorrectos.");
-      return; // No iniciar sesión (CA1)
+      return;
     }
 
     // Si responde OK
@@ -68,7 +68,7 @@ $form.addEventListener("submit", async (e) => {
       localStorage.setItem("token", payload.token);
       localStorage.setItem("user", JSON.stringify(payload.user));
 
-      // ✅ Redirige a main.html
+      // Redirige a main.html
       location.href = "./main.html";
       return;
     }
@@ -93,7 +93,7 @@ $form.addEventListener("submit", async (e) => {
         localStorage.setItem("token", token);
         localStorage.setItem("user", JSON.stringify(user));
 
-        // ✅ Redirige a main también en modo dev
+       
         location.href = "./main.html";
         return;
       }
