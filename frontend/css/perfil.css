@@ -18,7 +18,6 @@
 
 /* --- BOTONES --- */
 
-/* Contenedor de botones: igual al del login */
 .form-buttons {
     display: flex;
     justify-content: space-between;
@@ -26,7 +25,6 @@
     margin-top: 20px;
 }
 
-/* Cada botón ocupa el mismo ancho */
 .form-buttons button {
     flex: 1;
     padding: 12px 0;
@@ -42,7 +40,6 @@
 
 /* --- Estilos individuales --- */
 
-/* Editar perfil (como el botón “Cancelar” del login) */
 #btn-edit {
     background-color: transparent;
     border: 1.5px solid #f35c14;
@@ -53,7 +50,6 @@
     color: #fff;
 }
 
-/* Eliminar cuenta (rojo) */
 #btn-delete {
     background-color: #e53935;
     color: #fff;
@@ -63,7 +59,6 @@
     background-color: #ff4444;
 }
 
-/* Cerrar sesión (como el botón “Entrar” del login) */
 #btn-logout {
     background-color: #f35c14;
     color: #fff;

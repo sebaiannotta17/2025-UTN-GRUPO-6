@@ -4,19 +4,28 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <title>Marketplace — Búsqueda</title>
-        <link rel="stylesheet" href="../css/estiloMain.css" /> 
-        <link rel="stylesheet" href="../css/busqueda.css" /> 
+        <link rel="stylesheet" href="../css/estiloMain.css" />
+        <link rel="stylesheet" href="../css/busqueda.css" />
     </head>
     <body>
         <header class="topbar">
             <div class="container">
-                <!-- Logo de Inicio -->
                 <a href="./main.html" class="logo">MaterialesYA</a>
 
                 <nav class="header-actions">
                     <a href="./main.html" class="btn btn-secondary">Inicio</a>
-                    <a href="./carga.html" class="btn btn-secondary" id="btn-publicar">Publicar</a>
-                    <a href="./registro.html" class="btn btn-primary" id="btn-login">Login</a>
+                    <a
+                        href="./carga.html"
+                        class="btn btn-secondary"
+                        id="btn-publicar"
+                        >Publicar</a
+                    >
+                    <a
+                        href="./registro.html"
+                        class="btn btn-primary"
+                        id="btn-login"
+                        >Login</a
+                    >
                 </nav>
             </div>
         </header>
@@ -37,41 +46,56 @@
             <section id="feedback" class="muted">
                 Aún no mostramos resultados.
             </section>
-            
+
             <ul id="results" class="grid" aria-live="polite">
                 <li class="material-card">
                     <div class="card-thumb">
-                        <img src="https://placehold.co/300x200/6c5ce7/ffffff?text=Cemento" alt="Cemento" />
+                        <img
+                            src="https://placehold.co/300x200/6c5ce7/ffffff?text=Cemento"
+                            alt="Cemento"
+                        />
                     </div>
                     <div class="card-info">
                         <h3>Cemento Portland x50kg</h3>
                         <p class="muted">El mejor para estructuras.</p>
                         <div class="card-price">$8.500</div>
-                        <button class="btn btn-small btn-primary">Ver detalle</button>
+                        <button class="btn btn-small btn-primary">
+                            Ver detalle
+                        </button>
                     </div>
                 </li>
-                
+
                 <li class="material-card">
                     <div class="card-thumb">
-                        <img src="https://placehold.co/300x200/2ecc71/ffffff?text=Arena" alt="Arena" />
+                        <img
+                            src="https://placehold.co/300x200/2ecc71/ffffff?text=Arena"
+                            alt="Arena"
+                        />
                     </div>
                     <div class="card-info">
                         <h3>Arena Fina embolsada</h3>
                         <p class="muted">Ideal para revoques.</p>
                         <div class="card-price">$1.200</div>
-                        <button class="btn btn-small btn-primary">Ver detalle</button>
+                        <button class="btn btn-small btn-primary">
+                            Ver detalle
+                        </button>
                     </div>
                 </li>
-        
+
                 <li class="material-card">
                     <div class="card-thumb">
-                        <img src="https://placehold.co/300x200/e67e22/ffffff?text=Ladrillo" alt="Ladrillo" />
+                        <img
+                            src="https://placehold.co/300x200/e67e22/ffffff?text=Ladrillo"
+                            alt="Ladrillo"
+                        />
                     </div>
                     <div class="card-info">
                         <h3>Ladrillo Hueco 12x18x33</h3>
                         <p class="muted">Cerámico de alta calidad.</p>
                         <div class="card-price">$350</div>
-                        <button class="btn btn-small btn-primary">Ver detalle</button>
+                        <button class="btn btn-small btn-primary">
+                            Ver detalle
+                        </button>
                     </div>
                 </li>
             </ul>
@@ -86,16 +110,26 @@
         >
             <div class="modal-backdrop" data-close="1"></div>
             <div class="modal-card">
-                <button class="modal-close" aria-label="Cerrar" data-close="1">
-                    
-                </button>
+                <button
+                    class="modal-close"
+                    aria-label="Cerrar"
+                    data-close="1"
+                ></button>
                 <div class="modal-content">
                     <div id="mThumb" class="modal-thumb">
-                         <img src="https://placehold.co/300x300/6c5ce7/ffffff?text=Material" alt="Vista detallada" />
+                        <img
+                            src="https://placehold.co/300x300/6c5ce7/ffffff?text=Material"
+                            alt="Vista detallada"
+                        />
                     </div>
                     <h2 id="mName">Nombre del Material Detallado</h2>
-                    <p id="mDesc" class="muted">Breve descripción del material.</p>
-                    <p id="mLongDesc" class="longdesc">Descripción larga y detallada del producto, incluyendo especificaciones técnicas y uso recomendado.</p>
+                    <p id="mDesc" class="muted">
+                        Breve descripción del material.
+                    </p>
+                    <p id="mLongDesc" class="longdesc">
+                        Descripción larga y detallada del producto, incluyendo
+                        especificaciones técnicas y uso recomendado.
+                    </p>
 
                     <div id="mPrice" class="price">$15.000 ARS</div>
 
@@ -105,7 +139,8 @@
                             <span id="mCategory">Cementos</span>
                         </div>
                         <div>
-                            <strong>Cantidad en Stock:</strong> <span id="mQty">50 unidades</span>
+                            <strong>Cantidad en Stock:</strong>
+                            <span id="mQty">50 unidades</span>
                         </div>
                     </div>
 
@@ -113,7 +148,12 @@
                         <li>Ficha técnica</li>
                         <li>Origen</li>
                     </ul>
-                    <button class="btn btn-primary" style="margin-top: 20px; width: 100%;">Añadir al Carrito</button>
+                    <button
+                        class="btn btn-primary"
+                        style="margin-top: 20px; width: 100%"
+                    >
+                        Añadir al Carrito
+                    </button>
                 </div>
             </div>
         </div>
