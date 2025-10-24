@@ -1,40 +1,31 @@
-/* ------------------------------------ */
-/* ESTILOS DE REGISTRO (ADAPTADO A LA PALETA NARANJA/CORAL) */
-/* ------------------------------------ */
+/* Estilos para el registro de usuarios, ESCRITORIO */
 
-/* Estilo principal de la página de Auth */
 .auth-wrap {
     min-height: 100dvh;
     display: grid;
     place-items: center;
-    /* Fondo: Usamos el coral secundario */
     background-color: var(--color-secondary);
     padding: 20px;
 }
 
-/* Tarjeta del formulario */
 .auth-card {
-    background: var(--color-background); 
+    background: var(--color-background);
     border: 1px solid #ddd;
     border-radius: 14px;
     padding: 30px;
-    /* Más ancho para más campos */
-    width: min(520px, 92vw); 
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); 
+    width: min(520px, 92vw);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .auth-card h2 {
     font-size: 28px;
-    margin: 0 0 25px; 
+    margin: 0 0 25px;
     font-weight: 700;
     text-align: center;
     color: var(--color-text-dark);
 }
 
-/* ------------------------------------ */
 /* ESTILOS DE FORMULARIO */
-/* ------------------------------------ */
-
 #form-reg input {
     width: 100%;
     padding: 12px 15px;
@@ -50,9 +41,7 @@
 }
 
 #form-reg input:focus {
-    /* Borde de enfoque: NARANJA PRIMARIO */
     border-color: var(--color-primary);
-    /* Sombra de enfoque: Usando el RGB del color primario */
     box-shadow: 0 0 0 3px rgba(255, 87, 10, 0.2);
 }
 
@@ -70,8 +59,7 @@
     margin-bottom: 15px;
     border-radius: 8px;
     font-size: 16px;
-    /* Fondo: NARANJA PRIMARIO */
-    background-color: var(--color-primary); 
+    background-color: var(--color-primary);
     color: var(--color-background);
     border: none;
     font-weight: 700;
@@ -80,25 +68,21 @@
 }
 
 #btn-registrar:hover {
-    /* Hover: NARANJA SECUNDARIO (Coral) */
     background-color: var(--color-secondary);
 }
 
-/* Enlace de Volver (#btn-cancelar-link) */
 #btn-cancelar-link {
     flex: 1;
     text-decoration: none;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    /* Aseguramos que la altura sea la misma que el botón principal */
-    height: 47px; 
-    padding: 0 15px; 
+    height: 47px;
+    padding: 0 15px;
     margin-bottom: 15px;
     border-radius: 8px;
     font-size: 16px;
     background-color: transparent;
-    /* Texto y Borde: NARANJA PRIMARIO */
     color: var(--color-primary);
     border: 2px solid var(--color-primary);
     font-weight: 700;
@@ -107,67 +91,55 @@
 }
 
 #btn-cancelar-link:hover {
-    /* Hover: Invertir colores con la paleta */
     background-color: var(--color-primary);
     color: var(--color-background);
     border-color: var(--color-primary);
 }
 
-
-/* Bloque de error */
 #form-error {
     display: none;
     margin: 10px 0 6px;
     padding: 10px 12px;
-    border: 1px solid #e53935; 
+    border: 1px solid #e53935;
     border-radius: 8px;
-    background: #ffe0e0; 
-    color: #e53935; 
+    background: #ffe0e0;
+    color: #e53935;
     font-weight: 700;
 }
 
-/* Estilo para marcar campos con error */
 .field-error {
     border-color: #e53935 !important;
     outline: 0;
 }
 
-/* ------------------------------------ */
-/* ADAPTACIÓN RESPONSIVE (Móvil/Tablet pequeña) */
-/* ------------------------------------ */
+/* Estilos para Mobile (Responsive) */
+
 
 @media (max-width: 800px) {
-    /* 1. Ajuste del contenedor principal */
     .auth-wrap {
-        /* Reducimos el padding general para que la tarjeta use más espacio */
         padding: 10px;
     }
-    
-    /* 2. Ajuste de la tarjeta */
+
     .auth-card {
-        /* Reducimos el padding interno para ahorrar espacio */
         padding: 20px;
-        /* Aseguramos que ocupe casi todo el ancho disponible */
-        width: 100%; 
-        max-width: 520px; /* Mantiene un límite superior */
+        width: 100%;
+        max-width: 520px;
         margin: 10px;
     }
-    
+
     .auth-card h2 {
-        /* Reducimos el margen superior e inferior */
         margin: 0 0 15px;
         font-size: 24px;
     }
-    
-    /* 3. Ajuste de los botones */
+
     .form-buttons {
-        flex-direction: column; /* Apilamos los botones verticalmente para fácil uso táctil */
-        gap: 5px; /* Reducimos el gap */
+        flex-direction: column;
+        gap: 5px;
     }
-    
-    /* Aseguramos que ambos botones ocupen todo el ancho y ajustamos el margen */
-    #btn-registrar, #btn-cancelar-link {
-        flex: none; /* Quitamos el flex-grow */
+
+    #btn-registrar,
+    #btn-cancelar-link {
+        flex: none;
         width: 100%;
         margin-bottom: 10px;
         box-sizing: border-box;

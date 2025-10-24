@@ -1,21 +1,13 @@
-/* ------------------------------------ */
-/* ESTILOS DE LOGIN (ESPECÍFICOS)       */
-/* Estos estilos usan la paleta de colores de la Home (Naranja/Coral/Gris) */
-/* ------------------------------------ */
-
-/* Estilo principal de la página de Login/Auth */
+/* Estilos para el Login, Escritorio */
 .auth-wrap {
     min-height: 100dvh;
     display: grid;
     place-items: center;
-    /* Fondo: Usamos el coral secundario */
     background-color: var(--color-secondary);
     padding: 20px;
 }
 
-/* Tarjeta del formulario */
 .auth-card {
-    /* Fondo BLANCO */
     background: var(--color-background);
     border: 1px solid #ddd;
     border-radius: 14px;
@@ -26,13 +18,12 @@
 
 .auth-card h1 {
     font-size: 28px;
-    margin: 0 0 25px; 
+    margin: 0 0 25px;
     font-weight: 700;
     text-align: center;
     color: var(--color-text-dark);
 }
 
-/* Estilos para Inputs y Elementos de Formulario */
 #form-login input {
     width: 100%;
     padding: 12px 15px;
@@ -48,27 +39,22 @@
 }
 
 #form-login input:focus {
-    /* Borde de enfoque: Usa el NARANJA PRIMARIO */
     border-color: var(--color-primary);
-    /* Sombra de enfoque: Usando el RGB del color primario */
     box-shadow: 0 0 0 3px rgba(255, 87, 10, 0.2);
 }
 
-/* Contenedor de botones */
 .form-buttons {
     display: flex;
     gap: 10px;
     margin-top: 10px;
 }
 
-/* Botón principal (Entrar) */
 #btn-login {
     flex: 1;
     padding: 12px 15px;
     margin-bottom: 15px;
     border-radius: 8px;
     font-size: 16px;
-    /* Fondo: Usa NARANJA PRIMARIO */
     background-color: var(--color-primary);
     color: var(--color-background);
     border: none;
@@ -78,11 +64,9 @@
 }
 
 #btn-login:hover {
-    /* Hover: Usa NARANJA SECUNDARIO (Coral) */
     background-color: var(--color-secondary);
 }
 
-/* Botón secundario (Cancelar) */
 #btn-cancelar {
     flex: 1;
     padding: 12px 15px;
@@ -90,7 +74,6 @@
     border-radius: 8px;
     font-size: 16px;
     background-color: transparent;
-    /* Color del texto y borde: Usa NARANJA PRIMARIO */
     color: var(--color-primary);
     border: 2px solid var(--color-primary);
     font-weight: 700;
@@ -99,13 +82,11 @@
 }
 
 #btn-cancelar:hover {
-    /* Hover: Invertir colores con la paleta */
     background-color: var(--color-primary);
     color: var(--color-background);
     border-color: var(--color-primary);
 }
 
-/* Enlaces extra (Registrate / Olvidaste) */
 .auth-extras {
     margin-top: 15px;
     display: flex;
@@ -116,7 +97,6 @@
 }
 
 .auth-extras a {
-    /* Enlaces: Usa NARANJA PRIMARIO */
     color: var(--color-primary);
     text-decoration: none;
     font-weight: 500;
@@ -131,48 +111,41 @@
     display: none;
     margin: 10px 0 6px;
     padding: 10px 12px;
-    border: 1px solid #e53935; /* Rojo */
-    background: #ffe0e0; 
-    color: #e53935; 
+    border: 1px solid #e53935;
+    background: #ffe0e0;
+    color: #e53935;
     font-weight: 700;
     border-radius: 8px;
 }
 
-/* ------------------------------------ */
-/* ADAPTACIÓN RESPONSIVE (Móvil/Tablet pequeña) */
-/* ------------------------------------ */
+/* Estilos para Mobile (Rsponsive) */
+
 
 @media (max-width: 800px) {
-    /* 1. Ajuste del contenedor principal */
+
     .auth-wrap {
-        /* Reducimos el padding general para que la tarjeta use más espacio */
         padding: 10px;
     }
 
-    /* 2. Ajuste de la tarjeta */
     .auth-card {
-        /* Reducimos el padding interno para ahorrar espacio */
         padding: 20px;
-        /* Aseguramos que ocupe casi todo el ancho disponible */
         width: 100%;
-        max-width: 420px; /* Mantiene un límite superior */
+        max-width: 420px;
         margin: 10px;
     }
-    
+
     .auth-card h1 {
-        /* Reducimos el margen superior e inferior */
         margin: 0 0 15px;
         font-size: 24px;
     }
-    
-    /* 3. Ajuste de los botones */
+
     .form-buttons {
-        flex-direction: column; /* Apilamos los botones verticalmente para fácil uso táctil */
-        gap: 0; /* Eliminamos el gap ya que están apilados */
+        flex-direction: column;
+        gap: 0;
     }
-    
-    /* Restauramos el margen inferior para los botones apilados */
-    #btn-login, #btn-cancelar {
+
+    #btn-login,
+    #btn-cancelar {
         margin-bottom: 10px;
     }
 }
