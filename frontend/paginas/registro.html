@@ -1,49 +1,36 @@
+
 <!doctype html>
 <html lang="es">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <title>Registro | MaterialesYA</title>
-        <link rel="stylesheet" href="../css/styles.css" />
-        <style>
-            .card {
-                max-width: 520px;
-                margin: 40px auto;
-                padding: 20px;
-                border-radius: 12px;
-                background: #252532;
-                border: 1px solid #2a2d3d;
-            }
-            #form-error {
-                display: none;
-                margin: 10px 0 6px;
-                padding: 10px 12px;
-                border: 1px solid #e53935;
-                border-radius: 8px;
-                background: #3a1b1b;
-                color: #ffd7d7;
-                font-weight: 700;
-            }
-            .field-error {
-                border-color: #e53935 !important;
-                outline: 0;
-            }
-        </style>
+        <!-- 1. Estilos globales (Header, Container, Tipografía) -->
+        <link rel="stylesheet" href="../css/estiloMain.css" />
+        <!-- 2. Estilos específicos para la página de Registro -->
+        <link rel="stylesheet" href="../css/registro.css" /> 
     </head>
     <body>
         <header class="topbar">
-            <div class="brand">Marketplace Materiales</div>
-            <nav class="cats"><a href="./main.html">Inicio</a></nav>
-            <div class="actions">
-                <a class="btn outline" href="./Login.html">Iniciar sesión</a>
+            <div class="container">
+                <!-- Logo -->
+                <a href="./main.html" class="logo">MaterialesYA</a>
+
+                <!-- Acciones -->
+                <div class="header-actions">
+                    <a href="./main.html" class="btn btn-secondary">Inicio</a>
+                    <a href="./carga.html" class="btn btn-secondary">Publicar</a>
+                    <!-- Cambiamos el botón "Iniciar Sesión" por el estilo primario -->
+                    <a href="./login.html" class="btn btn-primary">Iniciar Sesión</a>
+                </div>
             </div>
         </header>
 
-        <main>
-            <section class="card">
+        <main class="auth-wrap">
+            <section class="auth-card">
                 <h2>Crear cuenta</h2>
 
-                <!-- acá aparece el error -->
+                <!-- Bloque de error persistente -->
                 <div id="form-error" role="alert" aria-live="assertive"></div>
 
                 <form id="form-reg" autocomplete="on" novalidate>
@@ -75,21 +62,12 @@
                     />
 
                     <div class="form-buttons">
-                        <button type="submit" class="btn" id="btn-registrar">
+                        <!-- El botón de registrar usa el estilo primario del Login (#btn-login) para consistencia -->
+                        <button type="submit" id="btn-registrar">
                             Registrarme
                         </button>
-                        <a
-                            href="./Login.html"
-                            class="btn ghost"
-                            style="
-                                text-decoration: none;
-                                display: inline-flex;
-                                align-items: center;
-                                justify-content: center;
-                                padding: 10px 12px;
-                            "
-                            >Volver</a
-                        >
+                        <!-- El botón de volver ahora usa la clase secundaria/outline del Login (#btn-cancelar) para consistencia -->
+                        <a href="./login.html" id="btn-cancelar-link">Volver</a>
                     </div>
                 </form>
 
@@ -97,7 +75,7 @@
             </section>
         </main>
 
-        <!-- Importante: el script va al final -->
+        <!-- Script externo -->
         <script src="../js/registro.js"></script>
     </body>
 </html>

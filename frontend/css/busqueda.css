@@ -1,0 +1,348 @@
+/* ------------------------------------ */
+/* ESTILOS DE BÚSQUEDA (ADAPTADO A LA PALETA NARANJA/CORAL) */
+/* ------------------------------------ */
+
+.topbar {
+    background-color: var(--color-background-light);
+}
+
+body {
+    font-family: "Inter", sans-serif;
+    margin: 0;
+    color: var(--color-text-dark);
+    background-color: var(--color-secondary);
+}
+
+/* Ajuste principal del Main para centrar el contenido y dar padding */
+main.container {
+    padding-top: 30px;
+    padding-bottom: 50px;
+    background-color: var(--color-background-light);
+    margin-top: 70px;
+}
+
+h1 {
+    font-size: 32px;
+    margin-bottom: 25px;
+    font-weight: 700;
+    color: var(--color-text-dark); /* Usamos variable */
+}
+
+/* ------------------------------------ */
+/* FORMULARIO DE BÚSQUEDA */
+/* ------------------------------------ */
+
+#searchForm {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+#searchForm input[type="search"] {
+    flex-grow: 1;
+    padding: 12px 15px;
+    border-radius: 8px;
+    font-size: 16px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+#searchForm input[type="search"]:focus {
+    border-color: var(--color-primary); /* Usamos variable */
+    box-shadow: 0 0 0 3px rgba(255, 87, 10, 0.2); /* Usamos RGB de la variable */
+}
+
+#searchForm #btnSearch {
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+#searchForm #btnSearch:hover {
+    background-color: var(--color-secondary);
+}
+
+/* ------------------------------------ */
+/* BOTONES FLOTANTES (FABs) */
+/* ------------------------------------ */
+
+.float-actions {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 100;
+}
+
+.fab {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    background-color: var(--color-primary);
+    color: var(--color-background-light);
+    border: none;
+}
+
+.fab:hover {
+    background-color: var(--color-secondary);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.fab-cart {
+    min-width: 50px;
+    width: 50px;
+    padding: 0;
+    font-size: 20px;
+    display: none;
+}
+
+/* ------------------------------------ */
+/* GRILLA DE RESULTADOS - ESTILO MARKETPLACE (Amazon/ML) */
+/* ------------------------------------ */
+
+#results.grid {
+    display: grid;
+    /* Mantenemos el minmax para que fluya, pero se ajustará por el media query */
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    list-style: none;
+    justify-content: start;
+    border: 1px solid #ccc;
+    margin: 1%;
+    padding-bottom: 20px;
+    padding-left: 20px;
+}
+
+.material-card {
+    background: var(--color-background); /* Usamos variable */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+    cursor: pointer;
+}
+
+.material-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+
+.card-thumb {
+    width: 100%;
+    height: 200px;
+    border-radius: 8px 8px 0 0;
+    overflow: hidden;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-background-light); /* Usamos variable */
+}
+
+.card-thumb img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.card-info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 0 15px 15px;
+}
+
+.material-card h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 5px;
+    color: var(--color-text-dark); /* Usamos variable */
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    min-height: 2.2rem;
+}
+
+.card-info p.muted {
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+    color: var(--color-text-muted); /* Usamos variable */
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.card-price {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--color-text-dark); /* Usamos variable */
+    margin: auto 0 10px 0;
+}
+
+.material-card button {
+    width: 100%;
+    padding: 8px 10px;
+    font-size: 1rem;
+}
+
+
+/* ------------------------------------ */
+/* MODAL DE DETALLE (se mantiene el estilo limpio) */
+/* ------------------------------------ */
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 200;
+}
+
+.modal[aria-hidden="false"] {
+    display: flex;
+}
+
+.modal-backdrop {
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.modal-card {
+    position: relative;
+    max-width: 600px;
+    width: 90%;
+    max-height: 90vh;
+    background: var(--color-background); /* Usamos variable */
+    border-radius: 12px;
+    overflow-y: auto;
+    padding: 25px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.modal-close {
+    color: var(--color-text-muted); /* Usamos variable */
+}
+
+.modal-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-thumb {
+    background-color: var(--color-background); /* Usamos variable */
+}
+
+#mName {
+    color: var(--color-primary); /* Usamos variable */
+}
+
+#mPrice {
+    color: var(--color-text-dark); /* Usamos variable */
+}
+
+.m-extra strong {
+    color: var(--color-text-dark); /* Usamos variable */
+}
+
+/* ------------------------------------ */
+/* ADAPTACIÓN RESPONSIVE (Móvil/Tablet pequeña) */
+/* ------------------------------------ */
+
+@media (max-width: 800px) {
+    /* 1. Contenedor principal */
+    main.container {
+        /* Reducimos el margen y el padding general */
+        padding-top: 20px;
+        padding-bottom: 30px;
+        margin-top: 60px; /* Ajustamos si el header se hace más pequeño */
+    }
+    
+    h1 {
+        font-size: 28px;
+        margin-bottom: 20px;
+    }
+
+    /* 2. Formulario de Búsqueda */
+    #searchForm {
+        flex-direction: column; /* Apilamos el campo de búsqueda y el botón */
+        gap: 15px;
+        margin-bottom: 25px;
+    }
+    
+    #searchForm #btnSearch {
+        width: 100%; /* El botón ocupa todo el ancho al apilarse */
+    }
+
+    /* 3. Grilla de Resultados */
+    #results.grid {
+        /* Pasamos a 2 columnas para un mejor flujo en tabletas pequeñas */
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 15px; /* Reducimos el espacio */
+        margin: 0;
+        padding: 10px;
+        border: none; /* Quitamos el borde general si es solo estético en desktop */
+    }
+    
+    .card-thumb {
+        height: 180px; /* Reducimos la altura de la imagen */
+    }
+    
+    /* 4. Botones flotantes (FABs) */
+    .float-actions {
+        bottom: 15px;
+        right: 15px;
+        gap: 8px;
+    }
+    
+    .fab {
+        min-width: 45px;
+        height: 45px;
+        font-size: 14px;
+        padding: 10px 15px;
+    }
+
+    /* 5. Modal de Detalle */
+    .modal-card {
+        width: 95%;
+        padding: 15px;
+    }
+    
+    #mName {
+        font-size: 24px;
+    }
+
+    #mPrice {
+        font-size: 1.8rem;
+    }
+    
+    .m-extra {
+        grid-template-columns: 1fr; /* Apilamos la información extra */
+        gap: 10px;
+    }
+}

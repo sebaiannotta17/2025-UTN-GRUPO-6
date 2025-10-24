@@ -1,5 +1,86 @@
 <!doctype html>
 <html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <title>Login | MaterialesYA</title>
+        <link rel="stylesheet" href="../css/estiloMain.css" />
+        <link rel="stylesheet" href="../css/Login.css" />
+    </head>
+
+    <body>
+        <header class="topbar">
+            <div class="container">
+                <a href="./main.html" class="logo">MaterialesYA</a>
+
+                <div class="header-actions">
+                    <a href="./main.html" class="btn btn-secondary">Inicio</a>
+                    <a href="./Carga.html" class="btn btn-secondary"
+                        >Publicar</a
+                    >
+                    <a href="./registro.html" class="btn btn-primary"
+                        >Registrarse</a
+                    >
+                </div>
+            </div>
+        </header>
+
+        <main class="auth-wrap">
+            <section class="auth-card">
+                <h1>Iniciar sesión</h1>
+                <form id="form-login" autocomplete="on">
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Email"
+                        required
+                    />
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="Contraseña"
+                        required
+                    />
+
+                    <div
+                        id="form-error"
+                        role="alert"
+                        aria-live="assertive"
+                    ></div>
+
+                    <div class="form-buttons">
+                        <button id="btn-login" type="submit">Entrar</button>
+                        <button id="btn-cancelar" type="button">
+                            Cancelar
+                        </button>
+                    </div>
+
+                    <div class="auth-extras">
+                        <a id="link-registrate" href="./registro.html"
+                            >Regístrate</a
+                        >
+                        <a id="link-olv" href="./recuperar.html"
+                            >¿Olvidaste tu contraseña?</a
+                        >
+                    </div>
+                </form>
+            </section>
+        </main>
+
+        <div id="toast-container"></div>
+
+        <script>
+            // 🚀 Si ya hay sesión iniciada, redirige directamente a main
+            const token = localStorage.getItem("token");
+            if (token) {
+                location.href = "./main.html";
+            }
+        </script>
+        <script src="../js/login.js"></script>
+    </body>
+</html>
+<!-- <!doctype html>
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -76,7 +157,7 @@
             required
           />
 
-          <!-- 🔴 Bloque de error persistente -->
+
           <div id="form-error" role="alert" aria-live="assertive"></div>
 
           <div class="form-buttons">
@@ -94,7 +175,7 @@
 
     <div id="toast-container"></div>
 
-    <!-- JS -->
+
     <script>
       // 🚀 Si ya hay sesión iniciada, redirige directamente a main
       const token = localStorage.getItem("token");
@@ -105,4 +186,4 @@
 
     <script src="../js/login.js"></script>
   </body>
-</html>
+</html> -->

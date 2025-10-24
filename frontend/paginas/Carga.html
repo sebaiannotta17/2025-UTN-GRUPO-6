@@ -3,6 +3,112 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Publicar Material | MaterialesYA</title>
+        
+        <!-- 1. Estilos base/globales (Header, containers, tipografía) -->
+        <link rel="stylesheet" href="../css/estiloMain.css" /> 
+        
+        <!-- 2. Estilos específicos de la página de Carga (Formulario Card) -->
+        <link rel="stylesheet" href="../css/carga.css" /> 
+    </head>
+    <body>
+        <header class="topbar">
+            <div class="container">
+                <a href="./main.html" class="logo">MaterialesYA</a>
+                <nav class="header-actions">
+                    <a href="./main.html" class="btn btn-secondary">Inicio</a>
+                    <a href="./busqueda.html" class="btn btn-primary">Ver Productos</a>
+                </nav>
+            </div>
+        </header>
+
+        <main>
+            <section class="card-large">
+                <h1>Publicar material</h1>
+                
+                <form id="form-material" autocomplete="off" novalidate>
+                    <input
+                        id="nombre"
+                        name="nombre"
+                        type="text"
+                        placeholder="Nombre del material (Ej: Cemento Portland, Ladrillo Hueco)"
+                        required
+                    />
+                    <textarea
+                        id="descripcion"
+                        name="descripcion"
+                        placeholder="Descripción detallada del material y su estado (Ej: Vendo 10 bolsas de cemento a medio uso, sin humedad)"
+                        rows="4"
+                        required
+                    ></textarea>
+                    
+                    <label for="categoria">Categoría</label>
+                    <select name="categoria" id="categoria" required>
+                        <option value="">Seleccionar categoría</option>
+                        <option value="1">Pintura</option>
+                        <option value="2">Ladrillos</option>
+                        <option value="3">Baldosas y azulejos</option>
+                        <option value="4">Madera</option>
+                        <option value="5">Plomería</option>
+                    </select>
+
+                    <!-- Contenedor para subcategorías dinámicas -->
+                    <div id="subcategoria-container"></div>
+                    
+                    <div class="input-group">
+                        <input
+                            id="precio"
+                            name="precio"
+                            type="number"
+                            placeholder="Precio por unidad (Ej: 8500)"
+                            min="1"
+                            required
+                        />
+                        <input
+                            id="cantidad"
+                            name="cantidad"
+                            type="number"
+                            placeholder="Cantidad disponible (Ej: 100)"
+                            min="1"
+                            required
+                        />
+                    </div>
+                    
+                    <!-- Campo de imagen -->
+                    <label for="imagen">Foto del Producto (Opcional)</label>
+                    <input id="imagen" name="imagen" type="file" accept="image/*" />
+
+
+                    <div class="form-buttons">
+                        <button type="submit" id="btn-publicar" class="btn btn-primary">
+                            Publicar
+                        </button>
+                        <button type="button" id="btn-cancelar" class="btn btn-secondary cancelar">
+                            Cancelar
+                        </button>
+                    </div>
+                </form>
+            </section>
+            
+            <div id="toast-container"></div>
+
+            <section class="container" style="margin-top: 50px;">
+                <h2>Materiales cargados recientemente</h2>
+                <ul id="lista-materiales" class="grid">
+                    <p class="muted">Aquí se mostrarán tus publicaciones.</p>
+                </ul>
+            </section>
+        </main>
+        
+        <!-- Script de lógica de carga -->
+        <script src="../js/carga.js"></script>
+    </body>
+</html>
+<!-- <!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Marketplace de Materiales</title>
         <link rel="stylesheet" href="../css/styles.css" />
     </head>
@@ -67,3 +173,4 @@
         <script src="../js/Carga.js"></script>
     </body>
 </html>
+ -->

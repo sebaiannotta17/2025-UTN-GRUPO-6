@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+/* document.addEventListener("DOMContentLoaded", () => {
   console.log("[registro] JS cargado");
 
   const $error  = document.getElementById("form-error");
@@ -56,4 +56,55 @@ document.addEventListener("DOMContentLoaded", () => {
     toast("✅ Cuenta creada. Iniciando sesión...");
 setTimeout(() => (location.href = "./main.html"), 300);
   });
+}); */
+
+
+
+// La lógica JS que maneja el formulario de registro va aquí
+document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("form-reg");
+    const errorDiv = document.getElementById("form-error");
+
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        
+        // Limpiar errores previos
+        errorDiv.style.display = 'none';
+        errorDiv.textContent = '';
+        document.querySelectorAll('.field-error').forEach(el => el.classList.remove('field-error'));
+
+        const name = form.elements['name'].value;
+        const email = form.elements['email'].value;
+        const password = form.elements['password'].value;
+        const password2 = form.elements['password2'].value;
+
+        let hasError = false;
+
+        if (password !== password2) {
+            errorDiv.textContent = 'Las contraseñas no coinciden.';
+            errorDiv.style.display = 'block';
+            document.getElementById('pw1').classList.add('field-error');
+            document.getElementById('pw2').classList.add('field-error');
+            hasError = true;
+        }
+
+        if (password.length < 6) {
+             errorDiv.textContent = 'La contraseña debe tener al menos 6 caracteres.';
+             errorDiv.style.display = 'block';
+             document.getElementById('pw1').classList.add('field-error');
+             hasError = true;
+        }
+
+        // Aquí iría la lógica de registro (ej. llamada a una API de Firebase o backend)
+        if (!hasError) {
+            console.log('Usuario registrado con éxito:', { name, email, password });
+            // Simulación de registro exitoso y redirección
+            setTimeout(() => {
+                // En un entorno real, aquí se llamaría a una API de registro
+                // alert('Registro exitoso. Redirigiendo a Login...'); // Usamos console.log en lugar de alert
+                console.log('Registro exitoso. Redirigiendo a Login...');
+                location.href = './Login.html'; 
+            }, 1000);
+        }
+    });
 });
