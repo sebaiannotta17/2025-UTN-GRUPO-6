@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <title>Mi perfil | MaterialesYA</title>
+        <link rel="stylesheet" href="../css/estiloMain.css" />
+        <link rel="stylesheet" href="../css/Login.css" />
+        <link rel="stylesheet" href="../css/perfil.css" />
+    </head>
+
+    <body>
+        <!-- 🔹 Barra superior igual al login -->
+        <header class="topbar">
+            <div class="container">
+                <a href="./main.html" class="logo">MaterialesYA</a>
+
+                <div class="header-actions">
+                    <a href="./main.html" class="btn btn-secondary">Inicio</a>
+                    <a href="./Carga.html" class="btn btn-secondary"
+                        >Publicar</a
+                    >
+                    <a href="./perfil.html" class="btn btn-primary"
+                        >Mi perfil</a
+                    >
+                </div>
+            </div>
+        </header>
+
+        <!-- 🔸 Contenido principal -->
+        <main class="auth-wrap">
+            <section class="auth-card">
+                <h1>Mi perfil</h1>
+
+                <div class="user-info">
+                    <p><strong>Nombre:</strong> <span id="nombre"></span></p>
+                    <p><strong>Email:</strong> <span id="email"></span></p>
+                    <p>
+                        <strong>Fecha de registro:</strong>
+                        <span id="fecha"></span>
+                    </p>
+                </div>
+
+                <div class="form-buttons">
+                    <button id="btn-edit" type="button" class="btn-outline">
+                        Editar perfil
+                    </button>
+                    <button id="btn-delete" type="button" class="btn-danger">
+                        Eliminar cuenta
+                    </button>
+                    <button id="btn-logout" type="button">Cerrar sesión</button>
+                </div>
+
+                <p id="status"></p>
+            </section>
+        </main>
+
+        <script src="../js/perfil.js"></script>
+    </body>
+</html>

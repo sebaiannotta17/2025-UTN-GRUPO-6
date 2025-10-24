@@ -1,0 +1,74 @@
+@import url("../css/Login.css");
+
+/* Ajustes específicos del perfil */
+
+.user-info {
+    background-color: #fafafa;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 15px 20px;
+    text-align: left;
+    margin-bottom: 20px;
+    font-size: 15px;
+}
+
+.user-info strong {
+    color: black;
+}
+
+/* --- BOTONES --- */
+
+/* Contenedor de botones: igual al del login */
+.form-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+/* Cada botón ocupa el mismo ancho */
+.form-buttons button {
+    flex: 1;
+    padding: 12px 0;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+    height: 45px;
+}
+
+/* --- Estilos individuales --- */
+
+/* Editar perfil (como el botón “Cancelar” del login) */
+#btn-edit {
+    background-color: transparent;
+    border: 1.5px solid #f35c14;
+    color: #f35c14;
+}
+#btn-edit:hover {
+    background-color: #f35c14;
+    color: #fff;
+}
+
+/* Eliminar cuenta (rojo) */
+#btn-delete {
+    background-color: #e53935;
+    color: #fff;
+    border: none;
+}
+#btn-delete:hover {
+    background-color: #ff4444;
+}
+
+/* Cerrar sesión (como el botón “Entrar” del login) */
+#btn-logout {
+    background-color: #f35c14;
+    color: #fff;
+    border: none;
+}
+#btn-logout:hover {
+    background-color: #ff6a1f;
+}
