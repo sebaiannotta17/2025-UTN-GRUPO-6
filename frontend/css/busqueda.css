@@ -1,17 +1,19 @@
 /* ------------------------------------ */
-/* ESTILOS DE BÚSQUEDA (COHERENCIA CON HOME/LOGIN) */
+/* ESTILOS DE BÚSQUEDA (ADAPTADO A LA PALETA NARANJA/CORAL) */
 /* ------------------------------------ */
 
-/* Ajuste principal del Main para centrar el contenido y dar padding */
 .topbar {
     background-color: var(--color-background-light);
 }
+
 body {
     font-family: "Inter", sans-serif;
     margin: 0;
     color: var(--color-text-dark);
     background-color: var(--color-secondary);
 }
+
+/* Ajuste principal del Main para centrar el contenido y dar padding */
 main.container {
     padding-top: 30px;
     padding-bottom: 50px;
@@ -23,7 +25,7 @@ h1 {
     font-size: 32px;
     margin-bottom: 25px;
     font-weight: 700;
-    color: #333;
+    color: var(--color-text-dark); /* Usamos variable */
 }
 
 /* ------------------------------------ */
@@ -48,16 +50,15 @@ h1 {
 }
 
 #searchForm input[type="search"]:focus {
-    border-color: #6c5ce7;
-    box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.2);
+    border-color: var(--color-primary); /* Usamos variable */
+    box-shadow: 0 0 0 3px rgba(255, 87, 10, 0.2); /* Usamos RGB de la variable */
 }
 
 #searchForm #btnSearch {
     padding: 12px 25px;
     border-radius: 8px;
     font-size: 16px;
-    /* Usamos el color primario púrpura */
-    background-color: #ff570aff;
+    background-color: var(--color-primary);
     color: white;
     border: none;
     font-weight: 700;
@@ -66,7 +67,7 @@ h1 {
 }
 
 #searchForm #btnSearch:hover {
-    background-color: #fa824cff;
+    background-color: var(--color-secondary);
 }
 
 /* ------------------------------------ */
@@ -90,7 +91,6 @@ h1 {
     min-width: 50px;
     height: 50px;
     border-radius: 50px;
-    /* Fully rounded */
     padding: 12px 20px;
     font-size: 16px;
     font-weight: 700;
@@ -98,19 +98,17 @@ h1 {
     cursor: pointer;
     transition: all 0.2s ease;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-    /* Estilo Primario */
-    background-color: #ff570aff;
+    background-color: var(--color-primary);
     color: var(--color-background-light);
     border: none;
 }
 
 .fab:hover {
-    background-color: #fa824cff;
+    background-color: var(--color-secondary);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
 .fab-cart {
-    /* El carrito usa el estilo FAB pero solo el icono, es más pequeño */
     min-width: 50px;
     width: 50px;
     padding: 0;
@@ -123,8 +121,8 @@ h1 {
 /* ------------------------------------ */
 
 #results.grid {
-       display: grid
-;
+    display: grid;
+    /* Mantenemos el minmax para que fluya, pero se ajustará por el media query */
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 20px;
     list-style: none;
@@ -136,48 +134,38 @@ h1 {
 }
 
 .material-card {
-    background: #ffffff;
-    /* Usamos una sombra sutil para el efecto flotante */
+    background: var(--color-background); /* Usamos variable */
     border: 1px solid #ddd;
     border-radius: 8px;
-    /* Un poco menos redondeado que el login/registro */
     padding: 0;
-    /* Quitamos el padding del contenedor principal */
     display: flex;
     flex-direction: column;
-    /* Apilamos imagen, info y precio */
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-    /* Sombra muy sutil */
     transition: box-shadow 0.2s ease, transform 0.2s ease;
     cursor: pointer;
 }
 
 .material-card:hover {
-    /* Efecto hover tipo Marketplace: Sombra más marcada y un ligero levantamiento */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     transform: translateY(-2px);
 }
 
 .card-thumb {
     width: 100%;
-    /* Altura fija o aspect-ratio para las imágenes, típico de marketplaces */
     height: 200px;
     border-radius: 8px 8px 0 0;
-    /* Solo arriba */
     overflow: hidden;
     margin-bottom: 10px;
-    /* Centrar imagen */
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #f7f7f7;
+    background-color: var(--color-background-light); /* Usamos variable */
 }
 
 .card-thumb img {
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
-    /* Asegura que la imagen completa se vea */
 }
 
 .card-info {
@@ -185,28 +173,23 @@ h1 {
     display: flex;
     flex-direction: column;
     padding: 0 15px 15px;
-    /* Padding solo en los laterales y abajo */
 }
 
 .material-card h3 {
     font-size: 1.1rem;
     font-weight: 600;
     margin: 0 0 5px;
-    color: #333;
-    /* Truncar títulos largos con puntos suspensivos */
+    color: var(--color-text-dark); /* Usamos variable */
     overflow: hidden;
     display: -webkit-box;
-    /* Limita a 2 líneas */
     -webkit-box-orient: vertical;
     min-height: 2.2rem;
-    /* Reserva espacio para 2 líneas */
 }
 
 .card-info p.muted {
     font-size: 0.9rem;
     margin-bottom: 10px;
-    color: #777;
-    /* Truncar descripción corta */
+    color: var(--color-text-muted); /* Usamos variable */
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -214,15 +197,11 @@ h1 {
 
 .card-price {
     font-size: 1.5rem;
-    /* Hacemos el precio más grande */
     font-weight: 800;
-    color: #000000;
-    /* Precio en negro o color muy oscuro */
+    color: var(--color-text-dark); /* Usamos variable */
     margin: auto 0 10px 0;
-    /* Empuja el precio hacia abajo y lo separa del botón */
 }
 
-/* El botón lo movemos al final, ocupando todo el ancho */
 .material-card button {
     width: 100%;
     padding: 8px 10px;
@@ -241,7 +220,6 @@ h1 {
     width: 100%;
     height: 100%;
     display: none;
-    /* Controlado por JS para mostrar/ocultar */
     justify-content: center;
     align-items: center;
     z-index: 200;
@@ -252,11 +230,6 @@ h1 {
 }
 
 .modal-backdrop {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
     background: rgba(0, 0, 0, 0.6);
 }
 
@@ -265,7 +238,7 @@ h1 {
     max-width: 600px;
     width: 90%;
     max-height: 90vh;
-    background: #ffffff;
+    background: var(--color-background); /* Usamos variable */
     border-radius: 12px;
     overflow-y: auto;
     padding: 25px;
@@ -273,15 +246,7 @@ h1 {
 }
 
 .modal-close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: transparent;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    color: #aaa;
-    line-height: 1;
+    color: var(--color-text-muted); /* Usamos variable */
 }
 
 .modal-content {
@@ -290,46 +255,94 @@ h1 {
 }
 
 .modal-thumb {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 1 / 1;
-    margin-bottom: 20px;
-    overflow: hidden;
-    border-radius: 8px;
-    /* Asegurar el fondo blanco para que la imagen contenida resalte */
-    background-color: #fff;
-}
-
-.modal-thumb img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    /* Cambiado a 'contain' para mostrar la imagen completa */
+    background-color: var(--color-background); /* Usamos variable */
 }
 
 #mName {
-    font-size: 28px;
-    margin-bottom: 5px;
-    color: #ff570aff;
+    color: var(--color-primary); /* Usamos variable */
 }
 
 #mPrice {
-    font-size: 2rem;
-    font-weight: 800;
-    color: #333;
-    margin: 15px 0;
-}
-
-.m-extra {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-    margin-top: 10px;
-    padding-top: 15px;
-    border-top: 1px solid #eee;
+    color: var(--color-text-dark); /* Usamos variable */
 }
 
 .m-extra strong {
-    font-weight: 700;
-    color: #333;
+    color: var(--color-text-dark); /* Usamos variable */
+}
+
+/* ------------------------------------ */
+/* ADAPTACIÓN RESPONSIVE (Móvil/Tablet pequeña) */
+/* ------------------------------------ */
+
+@media (max-width: 800px) {
+    /* 1. Contenedor principal */
+    main.container {
+        /* Reducimos el margen y el padding general */
+        padding-top: 20px;
+        padding-bottom: 30px;
+        margin-top: 60px; /* Ajustamos si el header se hace más pequeño */
+    }
+    
+    h1 {
+        font-size: 28px;
+        margin-bottom: 20px;
+    }
+
+    /* 2. Formulario de Búsqueda */
+    #searchForm {
+        flex-direction: column; /* Apilamos el campo de búsqueda y el botón */
+        gap: 15px;
+        margin-bottom: 25px;
+    }
+    
+    #searchForm #btnSearch {
+        width: 100%; /* El botón ocupa todo el ancho al apilarse */
+    }
+
+    /* 3. Grilla de Resultados */
+    #results.grid {
+        /* Pasamos a 2 columnas para un mejor flujo en tabletas pequeñas */
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 15px; /* Reducimos el espacio */
+        margin: 0;
+        padding: 10px;
+        border: none; /* Quitamos el borde general si es solo estético en desktop */
+    }
+    
+    .card-thumb {
+        height: 180px; /* Reducimos la altura de la imagen */
+    }
+    
+    /* 4. Botones flotantes (FABs) */
+    .float-actions {
+        bottom: 15px;
+        right: 15px;
+        gap: 8px;
+    }
+    
+    .fab {
+        min-width: 45px;
+        height: 45px;
+        font-size: 14px;
+        padding: 10px 15px;
+    }
+
+    /* 5. Modal de Detalle */
+    .modal-card {
+        width: 95%;
+        padding: 15px;
+    }
+    
+    #mName {
+        font-size: 24px;
+    }
+
+    #mPrice {
+        font-size: 1.8rem;
+    }
+    
+    .m-extra {
+        grid-template-columns: 1fr; /* Apilamos la información extra */
+        gap: 10px;
+    }
 }

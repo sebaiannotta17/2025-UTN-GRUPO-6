@@ -7,18 +7,19 @@
     min-height: 100dvh;
     display: grid;
     place-items: center;
-    /* Fondo: Usamos el gris claro de la paleta */
-    background-color: var(--color-secondary); /* Antes #f9f9f9 */
+    /* Fondo: Usamos el coral secundario */
+    background-color: var(--color-secondary);
     padding: 20px;
 }
 
 /* Tarjeta del formulario */
 .auth-card {
-    background: var(--color-background); /* Antes #ffffff */
+    background: var(--color-background); 
     border: 1px solid #ddd;
     border-radius: 14px;
     padding: 30px;
-    width: min(520px, 92vw); /* Más ancho para más campos */
+    /* Más ancho para más campos */
+    width: min(520px, 92vw); 
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); 
 }
 
@@ -27,12 +28,11 @@
     margin: 0 0 25px; 
     font-weight: 700;
     text-align: center;
-    /* Título: Usa el negro oscuro */
-    color: var(--color-text-dark); /* Antes #333 */
+    color: var(--color-text-dark);
 }
 
 /* ------------------------------------ */
-/* ESTILOS DE FORMULARIO (Mismos que Login con nueva paleta) */
+/* ESTILOS DE FORMULARIO */
 /* ------------------------------------ */
 
 #form-reg input {
@@ -45,15 +45,15 @@
     border: 1px solid #ccc;
     outline: none;
     transition: border-color 0.3s ease;
-    background: var(--color-background); /* Antes #fff */
-    color: var(--color-text-dark); /* Antes #333 */
+    background: var(--color-background);
+    color: var(--color-text-dark);
 }
 
 #form-reg input:focus {
     /* Borde de enfoque: NARANJA PRIMARIO */
-    border-color: var(--color-primary); /* Antes #6c5ce7 */
+    border-color: var(--color-primary);
     /* Sombra de enfoque: Usando el RGB del color primario */
-    box-shadow: 0 0 0 3px rgba(255, 87, 10, 0.2); /* Antes rgba(108, 92, 231, 0.2) */
+    box-shadow: 0 0 0 3px rgba(255, 87, 10, 0.2);
 }
 
 /* Contenedor de botones */
@@ -71,8 +71,8 @@
     border-radius: 8px;
     font-size: 16px;
     /* Fondo: NARANJA PRIMARIO */
-    background-color: var(--color-primary); /* Antes #6c5ce7 */ 
-    color: var(--color-background); /* Antes white */
+    background-color: var(--color-primary); 
+    color: var(--color-background);
     border: none;
     font-weight: 700;
     cursor: pointer;
@@ -81,7 +81,7 @@
 
 #btn-registrar:hover {
     /* Hover: NARANJA SECUNDARIO (Coral) */
-    background-color: var(--color-secondary); /* Antes #5b47d1 */
+    background-color: var(--color-secondary);
 }
 
 /* Enlace de Volver (#btn-cancelar-link) */
@@ -91,6 +91,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    /* Aseguramos que la altura sea la misma que el botón principal */
     height: 47px; 
     padding: 0 15px; 
     margin-bottom: 15px;
@@ -98,8 +99,8 @@
     font-size: 16px;
     background-color: transparent;
     /* Texto y Borde: NARANJA PRIMARIO */
-    color: var(--color-primary); /* Antes #6c5ce7 */
-    border: 2px solid var(--color-primary); /* Antes #6c5ce7 */
+    color: var(--color-primary);
+    border: 2px solid var(--color-primary);
     font-weight: 700;
     cursor: pointer;
     transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
@@ -107,8 +108,8 @@
 
 #btn-cancelar-link:hover {
     /* Hover: Invertir colores con la paleta */
-    background-color: var(--color-primary); /* Antes #6c5ce7 */
-    color: var(--color-background); /* Antes white */
+    background-color: var(--color-primary);
+    color: var(--color-background);
     border-color: var(--color-primary);
 }
 
@@ -118,7 +119,6 @@
     display: none;
     margin: 10px 0 6px;
     padding: 10px 12px;
-    /* Manteniendo los colores de error estándar, ya que no definiste variables específicas para errores */
     border: 1px solid #e53935; 
     border-radius: 8px;
     background: #ffe0e0; 
@@ -130,4 +130,46 @@
 .field-error {
     border-color: #e53935 !important;
     outline: 0;
+}
+
+/* ------------------------------------ */
+/* ADAPTACIÓN RESPONSIVE (Móvil/Tablet pequeña) */
+/* ------------------------------------ */
+
+@media (max-width: 800px) {
+    /* 1. Ajuste del contenedor principal */
+    .auth-wrap {
+        /* Reducimos el padding general para que la tarjeta use más espacio */
+        padding: 10px;
+    }
+    
+    /* 2. Ajuste de la tarjeta */
+    .auth-card {
+        /* Reducimos el padding interno para ahorrar espacio */
+        padding: 20px;
+        /* Aseguramos que ocupe casi todo el ancho disponible */
+        width: 100%; 
+        max-width: 520px; /* Mantiene un límite superior */
+        margin: 10px;
+    }
+    
+    .auth-card h2 {
+        /* Reducimos el margen superior e inferior */
+        margin: 0 0 15px;
+        font-size: 24px;
+    }
+    
+    /* 3. Ajuste de los botones */
+    .form-buttons {
+        flex-direction: column; /* Apilamos los botones verticalmente para fácil uso táctil */
+        gap: 5px; /* Reducimos el gap */
+    }
+    
+    /* Aseguramos que ambos botones ocupen todo el ancho y ajustamos el margen */
+    #btn-registrar, #btn-cancelar-link {
+        flex: none; /* Quitamos el flex-grow */
+        width: 100%;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+    }
 }

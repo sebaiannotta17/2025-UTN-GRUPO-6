@@ -2,16 +2,19 @@
 /* ESTILOS DE FORMULARIO (Recuperar) - ADAPTADO A LA PALETA NARANJA/CORAL */
 /* ------------------------------------ */
 
-/* La tarjeta que contiene el formulario */
 .topbar {
     background-color: var(--color-background-light);
 }
+
 body {
     font-family: "Inter", sans-serif;
     margin: 0;
     color: var(--color-text-dark);
+    /* Fondo principal: CORAL SECUNDARIO */
     background-color: var(--color-secondary);
 }
+
+/* La tarjeta que contiene el formulario */
 .card {
     /* Max-width ajustado para que sea más estrecho, típico de formularios sencillos */
     max-width: 480px; 
@@ -20,7 +23,7 @@ body {
     border-radius: 12px;
     
     /* Fondo claro con borde sutil, siguiendo el estilo de la home */
-    background: var(--color-background); /* Antes #ffffff */
+    background: var(--color-background); 
     border: 1px solid #ddd;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
 }
@@ -28,7 +31,7 @@ body {
 .card h2 {
     font-size: 28px;
     font-weight: 700;
-    color: var(--color-text-dark); /* Antes #333 */
+    color: var(--color-text-dark);
     margin-bottom: 10px;
 }
 
@@ -47,10 +50,10 @@ body {
 
 #form-rec input:focus {
     /* Borde de enfoque: NARANJA PRIMARIO */
-    border-color: var(--color-primary); /* Antes #6c5ce7 */
+    border-color: var(--color-primary);
     outline: none;
     /* Sombra de enfoque: Usando el RGB del color primario */
-    box-shadow: 0 0 0 3px rgba(255, 87, 10, 0.2); /* Antes rgba(108, 92, 231, 0.2) */
+    box-shadow: 0 0 0 3px rgba(255, 87, 10, 0.2);
 }
 
 /* Contenedor de botones */
@@ -85,4 +88,39 @@ body {
     background-color: var(--color-background-light); /* Fondo ligeramente gris */
     border-color: var(--color-primary); /* Borde NARANJA PRIMARIO */
     color: var(--color-primary); /* Texto NARANJA PRIMARIO */
+}
+
+/* ------------------------------------ */
+/* ADAPTACIÓN RESPONSIVE (Móvil/Tablet pequeña) */
+/* ------------------------------------ */
+
+@media (max-width: 800px) {
+    /* 1. Ajuste de la tarjeta principal */
+    .card {
+        /* Eliminamos el margen superior/inferior fijo y usamos un pequeño margen a los lados */
+        margin: 20px 15px; 
+        /* Reducimos el padding interno para ahorrar espacio */
+        padding: 25px;
+        /* Permitimos que la tarjeta ocupe más espacio horizontal */
+        width: auto;
+        max-width: 90%; 
+    }
+    
+    .card h2 {
+        font-size: 24px;
+    }
+
+    /* 2. Ajuste de los botones */
+    .form-buttons {
+        /* Apilamos los botones verticalmente para fácil uso táctil */
+        flex-direction: column; 
+        gap: 15px;
+    }
+    
+    /* Aseguramos que los botones ocupen todo el ancho */
+    .form-buttons .btn,
+    .form-buttons .ghost {
+        width: 100%;
+        box-sizing: border-box;
+    }
 }
