@@ -22,7 +22,7 @@ $btnCancelar.addEventListener("click", () => {
   clearError();
 });
 
-//Envío del formulario
+// --- Envío del formulario ---
 $form.addEventListener("submit", async (e) => {
   e.preventDefault();
   clearError();
@@ -37,65 +37,39 @@ $form.addEventListener("submit", async (e) => {
   }
 
   try {
-    // Intento backend real
     const res = await fetch(`${API_URL}/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
     });
 
-    // Si el backend responde con error (401/403/500)
     if (!res.ok) {
-      let apiMsg = "";
-      try {
-        const body = await res.json();
-        apiMsg = body?.message || body?.error || "";
-      } catch {}
-      showError(apiMsg || "Usuario o contraseña incorrectos.");
+      const body = await res.json().catch(() => ({}));
+      showError(body.error || body.message || "Credenciales incorrectas.");
       return;
     }
 
-    // Si responde OK
-    const payload = await res.json().catch(() => ({}));
-    if (payload.token && payload.user) {
-      // Limpio sesión previa (por las dudas)
-      localStorage.removeItem("token");
+    const payload = await res.json();
+
+    if (payload.usuario) {
       localStorage.removeItem("user");
-
-      // Guardo sesión nueva
-      localStorage.setItem("token", payload.token);
-      localStorage.setItem("user", JSON.stringify(payload.user));
-
-      // Redirige a main.html
+      localStorage.setItem("user", JSON.stringify(payload.usuario));
       location.href = "./main.html";
       return;
     }
 
-    // Si no llega payload válido, mostrar error
     showError("No se pudo iniciar sesión. Intentalo de nuevo.");
-    return;
   } catch (err) {
-    // Si el backend no responde
     if (ALLOW_LOCAL_LOGIN) {
-      // Modo dev: login local solo con credenciales especiales
       const DEV_EMAIL = "test@local";
       const DEV_PASS = "1234";
       if (email === DEV_EMAIL && password === DEV_PASS) {
-        const token = "local." + btoa(email) + ".token";
-        const user = { id: Date.now(), email, name: "dev" };
-
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
-
-        localStorage.setItem("token", token);
+        const user = { id: Date.now(), email, nombre: "dev" };
         localStorage.setItem("user", JSON.stringify(user));
-
         location.href = "./main.html";
         return;
       }
     }
-
-    // En producción: no iniciar sesión y mostrar error claro (CA1 y CA2)
     showError("No se pudo conectar con el servidor. Intentalo más tarde.");
   }
 });

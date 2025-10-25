@@ -2,6 +2,8 @@ import express from "express";
 import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
+import publicacionesRoutes from "./routes/publicaciones.js";
+import authRoutes from "./routes/auth.js";
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
@@ -15,6 +17,10 @@ app.use(express.static(path.join(__dirname, "../frontend/paginas")));
 app.use("/css", express.static(path.join(__dirname, "../frontend/css")));
 app.use("/js", express.static(path.join(__dirname, "../frontend/js")));
 app.use("/imgs", express.static(path.join(__dirname, "../frontend/imgs")));
+
+// Rutas de la API
+app.use("/api/publicaciones", publicacionesRoutes);
+app.use("/api/auth", authRoutes);
 
 // Iniciar servidor
 const PORT = 3000;
