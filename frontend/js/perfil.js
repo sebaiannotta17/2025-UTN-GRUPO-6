@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const API_URL = "http://localhost:3000/api/auth";
 
-  // --- Mostrar datos del usuario ---
+  // Mostrar datos del usuario
   if (!user) {
     alert("No hay sesión activa. Iniciá sesión nuevamente.");
     location.href = "./login.html";
@@ -22,13 +22,13 @@ document.addEventListener("DOMContentLoaded", () => {
   emailEl.textContent = user.email;
   fechaEl.textContent = user.fecha_registro;
 
-  // --- Cerrar sesión ---
+  // Cerrar sesión
   btnLogout.addEventListener("click", () => {
     localStorage.removeItem("user");
     location.href = "./login.html";
   });
 
-  // --- Editar perfil ---
+  // Editar perfil
   btnEdit.addEventListener("click", async () => {
     const nuevoNombre = prompt("Nuevo nombre:", user.nombre);
     const nuevoEmail = prompt("Nuevo email:", user.email);
@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || data.message);
 
-      // Actualizamos la info local
+      // Actualizar la info local
       user.nombre = nuevoNombre;
       user.email = nuevoEmail;
       localStorage.setItem("user", JSON.stringify(user));
@@ -64,10 +64,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // --- Eliminar cuenta (con contraseña) ---
+  // Eliminar cuenta verificando contraseña
   btnDelete.addEventListener("click", async () => {
     const confirmDelete = confirm(
-      "⚠️ Esta acción eliminará tu cuenta permanentemente.\n¿Seguro que querés continuar?",
+      "Esta acción eliminará tu cuenta permanentemente.\n¿Seguro que querés continuar?",
     );
     if (!confirmDelete) return;
 

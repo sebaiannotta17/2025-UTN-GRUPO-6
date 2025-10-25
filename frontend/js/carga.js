@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const listaMateriales = document.getElementById("lista-materiales");
   const subcatContainer = document.getElementById("subcategoria-container");
 
-  // CATEGORÍAS Y SUBCATEGORÍAS
+  // Categorias y subcategorias
   const categorias = {
     1: {
       nombre: "Pintura",
@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   };
 
-  // CARGAR CATEGORÍAS
+  // Cargar categorias
   function cargarCategorias() {
     const selectCat = document.getElementById("categoria");
     selectCat.innerHTML =
@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // MOSTRAR SUBCATEGORÍAS
+  // Mostrar subcategorias
   function mostrarSubcategorias(categoriaId) {
     subcatContainer.innerHTML = "";
     const categoria = categorias[categoriaId];
@@ -108,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // ENVÍO DEL FORMULARIO
+  // Envío formularioa
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -160,7 +160,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // MOSTRAR PUBLICACIONES
+  // Mostrar publicaciones
   async function cargarPublicaciones() {
     try {
       const res = await fetch("http://localhost:3000/api/publicaciones");
@@ -184,7 +184,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // MENSAJE TOAST
+  // Mensaje toast error
   function mostrarToast(texto, error = false) {
     const toast = document.createElement("div");
     toast.className = "toast" + (error ? " error" : "");
@@ -193,7 +193,7 @@ document.addEventListener("DOMContentLoaded", () => {
     setTimeout(() => toast.remove(), 3000);
   }
 
-  // BOTÓN CANCELAR
+  // Botón cancelar
   document.getElementById("btn-cancelar").addEventListener("click", () => {
     form.reset();
     subcatContainer.innerHTML = "";
