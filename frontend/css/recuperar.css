@@ -1,6 +1,3 @@
-/* Estilos para recuperar contraseña, ESCRITORIO */
-
-
 .topbar {
     background-color: var(--color-background-light);
 }
@@ -12,7 +9,6 @@ body {
     background-color: var(--color-secondary);
 }
 
-/* La tarjeta que contiene el formulario */
 .card {
     max-width: 480px;
     margin: 60px auto;
@@ -48,7 +44,6 @@ body {
     box-shadow: 0 0 0 3px rgba(255, 87, 10, 0.2);
 }
 
-/* Contenedor de botones */
 .form-buttons {
     display: flex;
     gap: 10px;
@@ -80,11 +75,8 @@ body {
     color: var(--color-primary);
 }
 
-/* Estilos para Mobile (Responsive) */
-
 @media (max-width: 800px) {
     .card {
-
         margin: 20px 15px;
         padding: 25px;
         width: auto;

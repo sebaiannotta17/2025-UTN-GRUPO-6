@@ -1,6 +1,3 @@
-/* Estilos para el formulario de carga de materiales publicados - Escritorio */
-
-
 .topbar {
     background-color: var(--color-background-light);
 }
@@ -11,7 +8,6 @@ body {
     color: var(--color-text-dark);
     background-color: var(--color-secondary);
 }
-
 
 .card-large {
     max-width: 720px;
@@ -43,7 +39,9 @@ body {
     border-radius: 8px;
     box-sizing: border-box;
     font-size: 16px;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
     resize: vertical;
 }
 
@@ -53,7 +51,6 @@ body {
     color: var(--color-text-muted);
     margin: 10px 0 5px;
 }
-
 
 #form-material input:focus,
 #form-material textarea:focus,
@@ -101,7 +98,6 @@ body {
     color: var(--color-secondary);
 }
 
-/* Estilo para la lista de materiales cargados */
 #lista-materiales.grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -109,11 +105,11 @@ body {
     list-style: none;
     padding: 0;
     margin: 20px 0;
-    color: #FFFF;
+    color: #ffff;
 }
 
 #lista-materiales.grid P {
-    color: #FFFF;
+    color: #ffff;
 }
 
 .muted {
@@ -124,8 +120,6 @@ body {
     display: block;
     margin-top: 10px;
 }
-
-/* Estilos para Mobile (Responsive) */
 
 @media (max-width: 800px) {
     .card-large {
@@ -138,8 +132,6 @@ body {
         margin-bottom: 20px;
     }
 }
-
-
 
 @media (max-width: 600px) {
     .input-group {
