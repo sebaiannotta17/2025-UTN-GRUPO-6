@@ -24,6 +24,7 @@ router.post("/login", (req, res) => {
 
 router.post("/register", (req, res) => {
   const { nombre, email, password } = req.body;
+
   if (!nombre || !email || !password)
     return res.status(400).json({ error: "Faltan datos" });
 
@@ -34,12 +35,20 @@ router.post("/register", (req, res) => {
     return res.status(400).json({ error: "El email ya está registrado" });
 
   const fecha = new Date().toISOString().slice(0, 19).replace("T", " ");
-  const insert = db.prepare(
-    "INSERT INTO usuarios (nombre, email, password, fecha_registro) VALUES (?, ?, ?, ?)",
-  );
-  insert.run(nombre, email, password, fecha);
+  const insert = db.prepare(`
+    INSERT INTO usuarios (nombre, email, password, fecha_registro)
+    VALUES (?, ?, ?, ?)
+  `);
+  const result = insert.run(nombre, email, password, fecha);
 
-  return res.status(201).json({ message: "Usuario registrado correctamente" });
+  const user = db
+    .prepare("SELECT * FROM usuarios WHERE id = ?")
+    .get(result.lastInsertRowid);
+
+  res.status(201).json({
+    message: "Usuario registrado correctamente",
+    usuario: user,
+  });
 });
 
 export default router;
