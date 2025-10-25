@@ -1,46 +1,69 @@
-// Lógica que maneja el formulario de registro
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("form-reg");
   const errorDiv = document.getElementById("form-error");
+  const API_URL = "http://localhost:3000/api/auth/register";
 
-  form.addEventListener("submit", (e) => {
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
+    // Limpieza de errores previos
     errorDiv.style.display = "none";
     errorDiv.textContent = "";
     document
       .querySelectorAll(".field-error")
       .forEach((el) => el.classList.remove("field-error"));
 
-    const name = form.elements["name"].value;
-    const email = form.elements["email"].value;
-    const password = form.elements["password"].value;
-    const password2 = form.elements["password2"].value;
+    // Captura de valores
+    const nombre = form.elements["nombre"]?.value?.trim() || "";
+    const email = form.elements["email"]?.value?.trim() || "";
+    const pw1 = form.elements["pw1"]?.value || "";
+    const pw2 = form.elements["pw2"]?.value || "";
 
     let hasError = false;
 
-    if (password !== password2) {
+    // Validaciones frontend
+    if (!nombre || !email || !pw1 || !pw2) {
+      errorDiv.textContent = "Completá todos los campos.";
+      errorDiv.style.display = "block";
+      hasError = true;
+    } else if (pw1 !== pw2) {
       errorDiv.textContent = "Las contraseñas no coinciden.";
       errorDiv.style.display = "block";
       document.getElementById("pw1").classList.add("field-error");
       document.getElementById("pw2").classList.add("field-error");
       hasError = true;
-    }
-
-    if (password.length < 6) {
+    } else if (pw1.length < 6) {
       errorDiv.textContent = "La contraseña debe tener al menos 6 caracteres.";
       errorDiv.style.display = "block";
       document.getElementById("pw1").classList.add("field-error");
       hasError = true;
     }
 
-    if (!hasError) {
-      console.log("Usuario registrado con éxito:", { name, email, password });
+    if (hasError) return;
 
-      setTimeout(() => {
-        console.log("Registro exitoso. Redirigiendo a Login...");
-        location.href = "./login.html";
-      }, 1000);
+    // --- Envío al backend ---
+    try {
+      const res = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ nombre, email, password: pw1 }),
+      });
+
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok) {
+        errorDiv.textContent =
+          data.error || data.message || "Error al registrar usuario.";
+        errorDiv.style.display = "block";
+        return;
+      }
+
+      alert("Registro exitoso 🎉");
+      location.href = "./login.html";
+    } catch (err) {
+      console.error("Error al conectar con el servidor:", err);
+      errorDiv.textContent = "No se pudo conectar con el servidor.";
+      errorDiv.style.display = "block";
     }
   });
 });
