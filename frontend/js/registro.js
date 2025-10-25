@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (hasError) return;
 
-    // --- Envío al backend ---
+    // Envío al backend
     try {
       const res = await fetch(API_URL, {
         method: "POST",
@@ -57,9 +57,16 @@ document.addEventListener("DOMContentLoaded", () => {
         errorDiv.style.display = "block";
         return;
       }
+      if (data.usuario) {
+        // Se guarda el usuario en localStorage
+        localStorage.setItem("user", JSON.stringify(data.usuario));
 
-      alert("Registro exitoso 🎉");
-      location.href = "./login.html";
+        // Redirigir directo al main
+        location.href = "./main.html";
+      } else {
+        alert("Registro exitoso");
+        location.href = "./login.html"; // fallback si no viene usuario
+      }
     } catch (err) {
       console.error("Error al conectar con el servidor:", err);
       errorDiv.textContent = "No se pudo conectar con el servidor.";
