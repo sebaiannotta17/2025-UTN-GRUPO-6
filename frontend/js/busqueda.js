@@ -1,22 +1,22 @@
 document.addEventListener("DOMContentLoaded", async () => {
-  const form = document.getElementById("searchForm"); // mantiene tus IDs originales
+  const form = document.getElementById("searchForm");
   const input = document.getElementById("q");
   const resultsContainer = document.getElementById("results");
   const API_URL = "http://localhost:3000/api/busqueda";
 
-  // --- Leer parámetro "q" de la URL ---
+  // Leer parámetro "q" de la URL
   const params = new URLSearchParams(window.location.search);
   const initialQuery = params.get("q") || "";
 
   if (initialQuery) {
     input.value = initialQuery;
-    input.focus(); // 🔹 enfoca el campo automáticamente
+    input.focus();
     await buscar(initialQuery);
   } else {
-    input.focus(); // 🔹 si no hay parámetro, igual enfoca el input
+    input.focus();
   }
 
-  // --- Evento al enviar el formulario ---
+  // Evento al enviar el formulario
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     const query = input.value.trim();
@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     await buscar(query);
   });
 
-  // --- Función de búsqueda ---
+  // Función de búsqueda
   async function buscar(query) {
     resultsContainer.innerHTML = "";
 
@@ -42,7 +42,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         return;
       }
 
-      // 🔹 Render con tu CSS existente
       data.results.forEach((pub) => {
         const li = document.createElement("li");
         li.classList.add("material-card");

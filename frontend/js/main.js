@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const query = input.value.trim();
     if (!query) return;
 
-    // 🔹 Redirige a busqueda.html con la palabra escrita
+    // Redirige a busqueda.html con la palabra escrita
     window.location.href = `./busqueda.html?q=${encodeURIComponent(query)}`;
   });
 });
