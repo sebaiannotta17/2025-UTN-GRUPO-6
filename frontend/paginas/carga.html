@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Publicar Material | MaterialesYA</title>
+        <title>Crear publicación | MaterialesYA</title>
         <link rel="stylesheet" href="../css/estiloMain.css" />
         <link rel="stylesheet" href="../css/carga.css" />
     </head>
@@ -13,8 +13,8 @@
                 <a href="./main.html" class="logo">MaterialesYA</a>
                 <nav class="header-actions">
                     <a href="./main.html" class="btn btn-secondary">Inicio</a>
-                    <a href="./busqueda.html" class="btn btn-primary"
-                        >Ver Productos</a
+                    <a href="./perfil.html" class="btn btn-primary"
+                        >Mi perfil</a
                     >
                 </nav>
             </div>
@@ -22,7 +22,7 @@
 
         <main>
             <section class="card-large">
-                <h1>Publicar material</h1>
+                <h1>Crear publicación</h1>
 
                 <form id="form-material" autocomplete="off" novalidate>
                     <input
@@ -101,10 +101,8 @@
             <div id="toast-container"></div>
 
             <section class="container" style="margin-top: 50px">
-                <h2>Materiales cargados recientemente</h2>
-                <ul id="lista-materiales" class="grid">
-                    <p class="muted">Acá se mostrarán tus publicaciones.</p>
-                </ul>
+                <h2>Tus publicaciones</h2>
+                <ul id="lista-materiales" class="grid"></ul>
             </section>
         </main>
 
