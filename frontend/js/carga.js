@@ -1,206 +1,209 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("form-material");
-  const toastContainer = document.getElementById("toast-container");
-  const listaMateriales = document.getElementById("lista-materiales");
-  const subcatContainer = document.getElementById("subcategoria-container");
+document.addEventListener("DOMContentLoaded", async () => {
+  const $categoriaSelect = document.getElementById("categoria");
+  const $subcategoriaContainer = document.getElementById(
+    "subcategoria-container",
+  );
+  const $form = document.getElementById("form-material");
+  const API_BASE = "http://localhost:3000/api";
 
-  // Categorias y subcategorias
-  const categorias = {
-    1: {
-      nombre: "Pintura",
-      sub1: {
-        label: "Tipo de pintura",
-        opciones: [
-          "Plástica (látex)",
-          "Esmalte",
-          "Sintética",
-          "Imprimación y selladora",
-          "Spray",
-        ],
-      },
-      sub2: {
-        label: "Acabado",
-        opciones: ["Mate", "Satinado", "Brillante"],
-      },
-    },
-    2: {
-      nombre: "Ladrillos",
-      sub1: {
-        label: "Tipo de ladrillo",
-        opciones: ["Cerámico (tradicional)", "Cara vista", "Refractario"],
-      },
-    },
-    3: {
-      nombre: "Baldosas y azulejos",
-      sub1: {
-        label: "Material",
-        opciones: ["Cerámica", "Gres porcelánico", "Terracota"],
-      },
-      sub2: {
-        label: "Uso",
-        opciones: ["Piso", "Pared", "Exterior"],
-      },
-    },
-    4: {
-      nombre: "Madera",
-      sub1: {
-        label: "Tipo",
-        opciones: ["Maciza", "Aglomerado", "Listones"],
-      },
-    },
-    5: {
-      nombre: "Plomería",
-      sub1: {
-        label: "Material",
-        opciones: ["PVC", "Cobre", "Polipropileno (PPR)"],
-      },
-      sub2: {
-        label: "Elemento",
-        opciones: ["Tubos y caños", "Grifería y accesorios", "Conexiones"],
-      },
-    },
-  };
+  // Verificar usuario logueado
+  const usuarioLocal = JSON.parse(localStorage.getItem("user"));
+  if (!usuarioLocal || !usuarioLocal.id) {
+    window.alert("Usuario no logueado. Redirigiendo a login.");
+    window.location.href = "login.html";
+    return;
+  }
 
   // Cargar categorias
-  function cargarCategorias() {
-    const selectCat = document.getElementById("categoria");
-    selectCat.innerHTML =
-      `<option value="">Seleccionar categoría</option>` +
-      Object.entries(categorias)
-        .map(([id, cat]) => `<option value="${id}">${cat.nombre}</option>`)
-        .join("");
+  let categorias = [];
+  try {
+    const resp = await fetch(`${API_BASE}/categorias`, { cache: "no-store" });
+    console.log("[carga] GET /api/categorias status:", resp.status);
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    categorias = await resp.json();
+    console.log("[carga] categorias:", categorias);
+  } catch (err) {
+    console.error("[carga] Error cargando categorias:", err);
+    categorias = []; // fallback vacío
+  }
 
-    selectCat.addEventListener("change", (e) => {
-      mostrarSubcategorias(e.target.value);
+  if ($categoriaSelect) {
+    $categoriaSelect.innerHTML =
+      '<option value="">Seleccionar categoría</option>';
+    categorias.forEach((cat) => {
+      const opt = document.createElement("option");
+      opt.value = cat.id;
+      opt.textContent = cat.nombre;
+      $categoriaSelect.appendChild(opt);
     });
+  } else {
+    console.error("[carga] No se encontró element #categoria en el DOM");
   }
 
   // Mostrar subcategorias
-  function mostrarSubcategorias(categoriaId) {
-    subcatContainer.innerHTML = "";
-    const categoria = categorias[categoriaId];
-    if (!categoria) return;
+  $categoriaSelect?.addEventListener("change", (e) => {
+    const catId = parseInt(e.target.value);
+    const categoria = categorias.find((c) => c.id === catId);
+    $subcategoriaContainer.innerHTML = "";
 
-    if (categoria.sub1) {
-      const label1 = document.createElement("label");
-      label1.textContent = categoria.sub1.label;
-      const select1 = document.createElement("select");
-      select1.name = "subcategoria1";
-      select1.innerHTML =
-        `<option value="">Seleccionar</option>` +
-        categoria.sub1.opciones
-          .map((opt, i) => `<option value="${i + 1}">${opt}</option>`)
-          .join("");
-      subcatContainer.append(label1, select1);
-    }
+    if (!categoria || !categoria.subcategorias) return;
 
-    if (categoria.sub2) {
-      const label2 = document.createElement("label");
-      label2.textContent = categoria.sub2.label;
-      const select2 = document.createElement("select");
-      select2.name = "subcategoria2";
-      select2.innerHTML =
-        `<option value="">Seleccionar</option>` +
-        categoria.sub2.opciones
-          .map((opt, i) => `<option value="${i + 1}">${opt}</option>`)
-          .join("");
-      subcatContainer.append(label2, select2);
+    mostrarSubcategoriasAgrupadas(categoria.subcategorias, categoria.nombre);
+  });
+
+  function labelFriendly(key) {
+    const map = {
+      tipo: "Tipo",
+      acabado: "Acabado",
+      uso: "Uso",
+      elemento: "Elemento",
+      material: "Material",
+      otros: "Otros",
+    };
+    return map[key] || key.charAt(0).toUpperCase() + key.slice(1);
+  }
+
+  function mostrarSubcategoriasAgrupadas(data, categoriaNombre) {
+    $subcategoriaContainer.innerHTML = "";
+
+    const subcategoriasGrouped = Array.isArray(data)
+      ? data.reduce((acc, item) => {
+          if (!acc[item.tipo]) acc[item.tipo] = [];
+          acc[item.tipo].push(item);
+          return acc;
+        }, {})
+      : data;
+
+    const labelMap = {
+      Pintura: ["Tipo de pintura", "Acabado"],
+      "Baldosas y azulejos": ["Tipo", "Material"],
+      Madera: ["Tipo de madera", "Calidad"],
+      Ladrillos: ["Tipo de ladrillo", "Uso"],
+      Plomería: ["Elemento", "Material"],
+    };
+
+    const prefer = ["tipo", "acabado", "uso", "elemento", "material", "otros"];
+    const keys = Object.keys(subcategoriasGrouped).sort((a, b) => {
+      const ai = prefer.indexOf(a),
+        bi = prefer.indexOf(b);
+      if (ai === -1 && bi === -1) return a.localeCompare(b);
+      if (ai === -1) return 1;
+      if (bi === -1) return -1;
+      return ai - bi;
+    });
+
+    const labelsPersonalizados = labelMap[categoriaNombre] || [
+      "Subcategoría 1",
+      "Subcategoría 2",
+    ];
+
+    let created = 0;
+    for (const tipo of keys) {
+      if (created >= 2) break;
+      const items = subcategoriasGrouped[tipo];
+      if (!items || items.length === 0) continue;
+
+      const label = document.createElement("label");
+      label.textContent =
+        labelsPersonalizados[created] || `Subcategoría ${created + 1}`;
+
+      const select = document.createElement("select");
+      select.name = created === 0 ? "subcategoria1_id" : "subcategoria2_id";
+      select.id = select.name;
+      select.dataset.tipo = tipo;
+      select.required = true;
+      select.innerHTML = `<option value="">Seleccionar ${label.textContent.toLowerCase()}</option>`;
+
+      items.forEach((it) => {
+        const opt = document.createElement("option");
+        opt.value = it.id;
+        opt.textContent = it.nombre;
+        select.appendChild(opt);
+      });
+
+      $subcategoriaContainer.appendChild(label);
+      $subcategoriaContainer.appendChild(select);
+      created++;
     }
   }
 
-  // Envío formularioa
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
+  // Envio formulario
+  $form?.addEventListener("submit", async (ev) => {
+    ev.preventDefault();
 
-    const data = new FormData(form);
-    const precio = parseFloat(data.get("precio"));
-    const cantidad = parseInt(data.get("cantidad"));
-    const categoriaId = parseInt(data.get("categoria")) || null;
-    const subcat1Id = parseInt(data.get("subcategoria1")) || null;
-    const subcat2Id = parseInt(data.get("subcategoria2")) || null;
-
-    if (precio <= 0 || cantidad <= 0) {
-      mostrarToast("Precio y cantidad deben ser positivos", true);
+    const usuario = JSON.parse(localStorage.getItem("user"));
+    if (!usuario || !usuario.id) {
+      alert("Debés iniciar sesión (usuario no encontrado).");
       return;
     }
 
-    const material = {
-      usuario_id: 1,
-      categoria_id: categoriaId,
-      subcategoria1_id: subcat1Id,
-      subcategoria2_id: subcat2Id,
-      titulo: data.get("nombre"),
-      descripcion: data.get("descripcion"),
-      precio,
-      cantidad,
-      imagen: null,
+    const categoria_id =
+      parseInt(document.getElementById("categoria").value) || null;
+    if (!categoria_id) {
+      alert("Seleccioná una categoría.");
+      return;
+    }
+
+    const sub1El = document.querySelector("select[name='subcategoria1_id']");
+    const sub2El = document.querySelector("select[name='subcategoria2_id']");
+
+    const subcategoria1_id =
+      sub1El && sub1El.value ? parseInt(sub1El.value) : null;
+    const subcategoria2_id =
+      sub2El && sub2El.value ? parseInt(sub2El.value) : null;
+
+    if (
+      subcategoria1_id &&
+      subcategoria2_id &&
+      subcategoria1_id === subcategoria2_id
+    ) {
+      alert("No podés seleccionar la misma subcategoría en ambos campos.");
+      return;
+    }
+
+    const payload = {
+      usuario_id: usuario.id,
+      categoria_id,
+      subcategoria1_id,
+      subcategoria2_id,
+      titulo: (document.getElementById("nombre").value || "").trim(),
+      descripcion: (document.getElementById("descripcion").value || "").trim(),
+      precio: parseFloat(document.getElementById("precio").value) || 0,
+      cantidad: parseInt(document.getElementById("cantidad").value) || 0,
+      imagen: document.getElementById("imagen").value || null,
     };
 
-    console.log("Enviando material:", material);
+    console.log("[carga] Payload a enviar:", payload);
+    if (
+      !payload.titulo ||
+      !payload.descripcion ||
+      payload.precio <= 0 ||
+      payload.cantidad <= 0
+    ) {
+      alert("Completá todos los campos obligatorios correctamente.");
+      return;
+    }
 
     try {
-      const res = await fetch("http://localhost:3000/api/publicaciones", {
+      const resp = await fetch(`${API_BASE}/publicaciones`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(material),
+        body: JSON.stringify(payload),
       });
-      const result = await res.json();
+      const body = await resp.json().catch(() => ({}));
+      console.log("[carga] respuesta POST /publicaciones:", resp.status, body);
 
-      if (result.success) {
-        mostrarToast("Material publicado con éxito");
-        form.reset();
-        subcatContainer.innerHTML = "";
-        cargarPublicaciones();
-      } else {
-        mostrarToast("Error al guardar la publicación", true);
+      if (!resp.ok) {
+        alert(body.error || "Error al crear la publicación.");
+        return;
       }
+
+      alert("Publicación creada correctamente.");
+      $form.reset();
+      $subcategoriaContainer.innerHTML = "";
     } catch (err) {
-      console.error("Error al enviar:", err);
-      mostrarToast("Error al conectar con el servidor", true);
+      console.error("[carga] Error en POST publicaciones:", err);
+      alert("Ocurrió un error al publicar. Mirá consola.");
     }
   });
-
-  // Mostrar publicaciones
-  async function cargarPublicaciones() {
-    try {
-      const res = await fetch("http://localhost:3000/api/publicaciones");
-      const data = await res.json();
-
-      listaMateriales.innerHTML = data
-        .map(
-          (m) => `
-        <li class="card">
-          <div class="thumb" data-initial="${m.titulo[0] || "?"}"></div>
-          <h3>${m.titulo}</h3>
-          <p>${m.descripcion}</p>
-          <p class="price">$${m.precio}</p>
-          <p>Cantidad: ${m.cantidad}</p>
-        </li>
-      `,
-        )
-        .join("");
-    } catch (err) {
-      console.error("Error al cargar publicaciones:", err);
-    }
-  }
-
-  // Mensaje toast error
-  function mostrarToast(texto, error = false) {
-    const toast = document.createElement("div");
-    toast.className = "toast" + (error ? " error" : "");
-    toast.textContent = texto;
-    toastContainer.appendChild(toast);
-    setTimeout(() => toast.remove(), 3000);
-  }
-
-  // Botón cancelar
-  document.getElementById("btn-cancelar").addEventListener("click", () => {
-    form.reset();
-    subcatContainer.innerHTML = "";
-    mostrarToast("Publicación cancelada", true);
-  });
-
-  // Inicialización
-  cargarCategorias();
-  cargarPublicaciones();
 });

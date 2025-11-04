@@ -1,11 +1,9 @@
 const $form = document.getElementById("form-login");
 const $btnCancelar = document.getElementById("btn-cancelar");
 const $error = document.getElementById("form-error");
-
-const ALLOW_LOCAL_LOGIN = true;
 const API_URL = "http://localhost:3000/api/auth";
 
-// --- Mostrar / limpiar error ---
+// Mostrar y limpiar error
 function showError(msg) {
   if (!$error) return;
   $error.textContent = msg || "Usuario o contraseña incorrectos.";
@@ -22,7 +20,7 @@ $btnCancelar.addEventListener("click", () => {
   clearError();
 });
 
-// --- Envío del formulario ---
+// Envío del formulario
 $form.addEventListener("submit", async (e) => {
   e.preventDefault();
   clearError();
@@ -52,24 +50,17 @@ $form.addEventListener("submit", async (e) => {
     const payload = await res.json();
 
     if (payload.usuario) {
-      localStorage.removeItem("user");
+      // Guardar usuario y su ID
       localStorage.setItem("user", JSON.stringify(payload.usuario));
+      localStorage.setItem("userId", payload.usuario.id);
+
       location.href = "./main.html";
       return;
     }
 
     showError("No se pudo iniciar sesión. Intentalo de nuevo.");
   } catch (err) {
-    if (ALLOW_LOCAL_LOGIN) {
-      const DEV_EMAIL = "test@local";
-      const DEV_PASS = "1234";
-      if (email === DEV_EMAIL && password === DEV_PASS) {
-        const user = { id: Date.now(), email, nombre: "dev" };
-        localStorage.setItem("user", JSON.stringify(user));
-        location.href = "./main.html";
-        return;
-      }
-    }
+    console.error("Error de conexión:", err);
     showError("No se pudo conectar con el servidor. Intentalo más tarde.");
   }
 });
