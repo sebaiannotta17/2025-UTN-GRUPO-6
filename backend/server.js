@@ -5,6 +5,7 @@ import { fileURLToPath } from "url";
 import publicacionesRoutes from "./routes/publicaciones.js";
 import authRoutes from "./routes/auth.js";
 import busquedaRoutes from "./routes/busqueda.js";
+import categoriasRouter from "./routes/categorias.js";
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
@@ -23,6 +24,7 @@ app.use("/imgs", express.static(path.join(__dirname, "../frontend/imgs")));
 app.use("/api/publicaciones", publicacionesRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/busqueda", busquedaRoutes);
+app.use("/api/categorias", categoriasRouter);
 
 // Iniciar servidor
 const PORT = 3000;
