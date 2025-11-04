@@ -61,3 +61,83 @@
 #btn-logout:hover {
     background-color: #ff6a1f;
 }
+
+.auth-wrap {
+    padding: 20px;
+    display: block; /* Asegura el flujo vertical normal */
+    /* Quitamos max-width y margin auto de aquí para no forzar todo */
+}
+
+/* 2. Forzamos la tarjeta de perfil a centrarse y ser pequeña */
+.auth-card {
+    max-width: 450px; /* Tamaño pequeño */
+    margin: 0 auto 30px auto; /* Centrar y margen inferior */
+    /* Aseguramos que la tarjeta no se vea 'flotando' y ocupe su espacio */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Si viene de login.css */
+    background: #fff; /* Si viene de login.css */
+    border-radius: 10px;
+}
+
+/* 3. Estilos para la sección de publicaciones (ancho, centrado, y cuadrícula) */
+.publicaciones-usuario {
+    width: 100%;
+    max-width: 900px; /* El ancho que queremos para la lista */
+    margin: 30px auto 0 auto; /* Centrar la sección de publicaciones debajo de la tarjeta */
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.publicaciones-usuario h2 {
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Estilos para el contenedor de publicaciones (Grid) */
+.publicaciones-grid {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    /* Crea columnas que se ajustan automáticamente (responsivo) */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+/* Estilos para cada tarjeta de publicación */
+.publicacion-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 15px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s;
+}
+
+.publicacion-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+}
+
+.publicacion-card h3 {
+    color: #f35c14;
+    font-size: 1.3em;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.publicacion-img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin-top: 10px;
+    display: block;
+}
+
+.publicacion-card .meta {
+    font-size: 0.9em;
+    color: #666;
+    margin-top: 10px;
+}

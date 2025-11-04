@@ -3,6 +3,59 @@ import db from "../db.js";
 
 const router = express.Router();
 
+router.get("/", (req, res) => {
+  // Extraer el parámetro de filtro (opcional)
+  const { usuario_id } = req.query;
+
+  let sql = `
+        SELECT
+            p.id,
+            p.titulo,
+            p.descripcion,
+            p.precio,
+            p.cantidad,
+            p.imagen,
+            p.fecha_publicacion,
+            c.nombre AS categoria_nombre,
+            s1.nombre AS subcategoria1_nombre,
+            s2.nombre AS subcategoria2_nombre
+        FROM publicaciones p
+        JOIN categorias c ON p.categoria_id = c.id
+        LEFT JOIN subcategorias s1 ON p.subcategoria1_id = s1.id
+        LEFT JOIN subcategorias s2 ON p.subcategoria2_id = s2.id
+    `;
+  const params = [];
+
+  // Aplicar filtro si se proporciona usuario_id
+  if (usuario_id) {
+    // Validación básica
+    if (isNaN(parseInt(usuario_id))) {
+      return res.status(400).json({ error: "ID de usuario inválido." });
+    }
+    sql += ` WHERE p.usuario_id = ?`;
+    params.push(usuario_id);
+  }
+
+  // Opcional: ordenar por fecha de creación descendente
+  sql += ` ORDER BY p.fecha_publicacion DESC`;
+
+  try {
+    const statement = db.prepare(sql);
+    const publicaciones = statement.all(params);
+
+    // Si no se encuentra nada, devuelve un array vacío (o un 404 si es estricto)
+    if (publicaciones.length === 0 && usuario_id) {
+      // No es un error, simplemente no hay publicaciones para ese usuario
+      return res.status(200).json([]);
+    }
+
+    res.status(200).json(publicaciones);
+  } catch (err) {
+    console.error("Error /api/publicaciones GET:", err);
+    res.status(500).json({ error: "Error al obtener publicaciones" });
+  }
+});
+
 // Insertar publicación con validaciones
 router.post("/", (req, res) => {
   const {
