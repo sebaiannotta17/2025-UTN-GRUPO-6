@@ -43,7 +43,15 @@
                 />
                 <button type="submit" id="btnSearch">Buscar</button>
             </form>
-
+            <!-- Controles del filtro -->
+            <select id="sortFilter">
+                <option value="default">Ordenar por...</option>
+                <option value="titulo-asc">Título: A-Z</option>
+                <option value="titulo-desc">Título: Z-A</option>
+                <option value="precio-asc">Precio: Menor a mayor</option>
+                <option value="precio-desc">Precio: Mayor a menor</option>
+            </select>
+            <!-- Controles del filtro -->
             <ul id="results" class="grid" aria-live="polite">
                 <li class="material-card">
                     <div class="card-thumb">
@@ -95,7 +103,15 @@
                         </button>
                     </div>
                 </li>
-            </ul>
+            </ul>        
+            <!-- Botones de paginacion -->
+            <div id="controlpagina">
+                <button id="prevPage" disabled>Anterior</button>
+                <span id="pageInfo">Página 1</span>
+                <button id="nextPage" disabled>Siguiente</button>
+            </div>
+            <!-- Botones de paginacion -->
+            
         </main>
 
         <div
