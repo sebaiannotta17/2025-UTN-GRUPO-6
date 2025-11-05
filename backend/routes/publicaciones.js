@@ -3,32 +3,32 @@ import db from "../db.js";
 
 const router = express.Router();
 
+// Traer publicaciones de usuario
 router.get("/", (req, res) => {
-  // Extraer el parámetro de filtro (opcional)
   const { usuario_id } = req.query;
-
   let sql = `
-        SELECT
-            p.id,
-            p.titulo,
-            p.descripcion,
-            p.precio,
-            p.cantidad,
-            p.imagen,
-            p.fecha_publicacion,
-            c.nombre AS categoria_nombre,
-            s1.nombre AS subcategoria1_nombre,
-            s2.nombre AS subcategoria2_nombre
-        FROM publicaciones p
-        JOIN categorias c ON p.categoria_id = c.id
-        LEFT JOIN subcategorias s1 ON p.subcategoria1_id = s1.id
-        LEFT JOIN subcategorias s2 ON p.subcategoria2_id = s2.id
-    `;
+          SELECT
+              p.id,
+              p.titulo,
+              p.descripcion,
+              p.precio,
+              p.cantidad,
+              p.imagen,
+              p.fecha_publicacion,
+              p.categoria_id,
+              p.subcategoria1_id,
+              p.subcategoria2_id,
+              c.nombre AS categoria_nombre,
+              s1.nombre AS subcategoria1_nombre,
+              s2.nombre AS subcategoria2_nombre
+          FROM publicaciones p
+          JOIN categorias c ON p.categoria_id = c.id
+          LEFT JOIN subcategorias s1 ON p.subcategoria1_id = s1.id
+          LEFT JOIN subcategorias s2 ON p.subcategoria2_id = s2.id
+      `;
   const params = [];
 
-  // Aplicar filtro si se proporciona usuario_id
   if (usuario_id) {
-    // Validación básica
     if (isNaN(parseInt(usuario_id))) {
       return res.status(400).json({ error: "ID de usuario inválido." });
     }
@@ -36,16 +36,14 @@ router.get("/", (req, res) => {
     params.push(usuario_id);
   }
 
-  // Opcional: ordenar por fecha de creación descendente
+  // Ordenar por fecha de publicacion
   sql += ` ORDER BY p.fecha_publicacion DESC`;
 
   try {
     const statement = db.prepare(sql);
     const publicaciones = statement.all(params);
 
-    // Si no se encuentra nada, devuelve un array vacío (o un 404 si es estricto)
     if (publicaciones.length === 0 && usuario_id) {
-      // No es un error, simplemente no hay publicaciones para ese usuario
       return res.status(200).json([]);
     }
 
@@ -150,6 +148,105 @@ router.post("/", (req, res) => {
   } catch (err) {
     console.error("Error /api/publicaciones POST:", err);
     res.status(500).json({ error: "Error al crear publicación" });
+  }
+});
+
+// Actualizar una publicación
+router.put("/:id", (req, res) => {
+  const { id } = req.params;
+  const {
+    categoria_id,
+    subcategoria1_id = null,
+    subcategoria2_id = null,
+    titulo,
+    descripcion,
+    precio,
+    cantidad,
+    imagen = null,
+  } = req.body;
+
+  try {
+    // Validaciones básicas de existencia de campos
+    if (!titulo || !descripcion || !precio || !cantidad) {
+      return res.status(400).json({ error: "Faltan campos obligatorios." });
+    }
+
+    // Verificar que la publicación exista
+    const pubExist = db
+      .prepare("SELECT id FROM publicaciones WHERE id = ?")
+      .get(id);
+    if (!pubExist) {
+      return res.status(404).json({ error: "Publicación no encontrada." });
+    }
+
+    // Ejecutar la actualización
+    const update = db.prepare(`
+            UPDATE publicaciones SET
+                categoria_id = @categoria_id,
+                subcategoria1_id = @subcategoria1_id,
+                subcategoria2_id = @subcategoria2_id,
+                titulo = @titulo,
+                descripcion = @descripcion,
+                precio = @precio,
+                cantidad = @cantidad,
+                imagen = @imagen
+            WHERE id = @id
+        `);
+
+    const info = update.run({
+      id,
+      categoria_id,
+      subcategoria1_id,
+      subcategoria2_id,
+      titulo,
+      descripcion,
+      precio,
+      cantidad,
+      imagen,
+    });
+
+    if (info.changes === 0) {
+      return res
+        .status(500)
+        .json({ error: "No se pudo actualizar la publicación." });
+    }
+
+    res
+      .status(200)
+      .json({ success: true, message: "Publicación actualizada." });
+  } catch (err) {
+    console.error(`Error /api/publicaciones/${id} PUT:`, err);
+    res.status(500).json({ error: "Error interno al actualizar." });
+  }
+});
+
+// Eliminar una publicación
+router.delete("/:id", (req, res) => {
+  const { id } = req.params;
+
+  try {
+    // Verificar que la publicación exista
+    const pubExist = db
+      .prepare("SELECT id FROM publicaciones WHERE id = ?")
+      .get(id);
+    if (!pubExist) {
+      return res.status(404).json({ error: "Publicación no encontrada." });
+    }
+
+    // Ejecutar la eliminación
+    const del = db.prepare("DELETE FROM publicaciones WHERE id = ?");
+    const info = del.run(id);
+
+    if (info.changes === 0) {
+      return res
+        .status(500)
+        .json({ error: "No se pudo eliminar la publicación." });
+    }
+
+    res.status(200).json({ success: true, message: "Publicación eliminada." });
+  } catch (err) {
+    console.error(`Error /api/publicaciones/${id} DELETE:`, err);
+    res.status(500).json({ error: "Error interno al eliminar." });
   }
 });
 
