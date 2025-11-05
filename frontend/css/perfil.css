@@ -64,25 +64,21 @@
 
 .auth-wrap {
     padding: 20px;
-    display: block; /* Asegura el flujo vertical normal */
-    /* Quitamos max-width y margin auto de aquí para no forzar todo */
+    display: block;
 }
 
-/* 2. Forzamos la tarjeta de perfil a centrarse y ser pequeña */
 .auth-card {
-    max-width: 450px; /* Tamaño pequeño */
-    margin: 0 auto 30px auto; /* Centrar y margen inferior */
-    /* Aseguramos que la tarjeta no se vea 'flotando' y ocupe su espacio */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Si viene de login.css */
-    background: #fff; /* Si viene de login.css */
+    max-width: 450px;
+    margin: 0 auto 30px auto;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    background: #fff;
     border-radius: 10px;
 }
 
-/* 3. Estilos para la sección de publicaciones (ancho, centrado, y cuadrícula) */
 .publicaciones-usuario {
     width: 100%;
-    max-width: 900px; /* El ancho que queremos para la lista */
-    margin: 30px auto 0 auto; /* Centrar la sección de publicaciones debajo de la tarjeta */
+    max-width: 900px;
+    margin: 30px auto 0 auto;
     padding: 20px;
     background-color: #f9f9f9;
     border-radius: 8px;
@@ -96,17 +92,14 @@
     color: #333;
 }
 
-/* Estilos para el contenedor de publicaciones (Grid) */
 .publicaciones-grid {
     list-style: none;
     padding: 0;
     display: grid;
-    /* Crea columnas que se ajustan automáticamente (responsivo) */
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 20px;
 }
 
-/* Estilos para cada tarjeta de publicación */
 .publicacion-card {
     border: 1px solid #e0e0e0;
     border-radius: 8px;
@@ -140,4 +133,40 @@
     font-size: 0.9em;
     color: #666;
     margin-top: 10px;
+}
+
+.publicacion-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+}
+
+.publicacion-actions button {
+    flex: 1;
+    padding: 8px 10px;
+    font-size: 0.9em;
+    cursor: pointer;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+.btn-outline {
+    background-color: transparent;
+    border: 1.5px solid #f35c14;
+    color: #f35c14;
+}
+.btn-outline:hover {
+    background-color: #f35c14;
+    color: #fff;
+}
+
+.btn-danger {
+    background-color: #e53935;
+    color: #fff;
+    border: none;
+}
+.btn-danger:hover {
+    background-color: #ff4444;
 }
