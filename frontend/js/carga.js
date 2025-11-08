@@ -127,7 +127,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   }
 
-  // Envio formulario
+  // Envio formulario (multipart/form-data, incluye archivo de imagen opcional)
   $form?.addEventListener("submit", async (ev) => {
     ev.preventDefault();
 
@@ -137,8 +137,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       return;
     }
 
-    const categoria_id =
-      parseInt(document.getElementById("categoria").value) || null;
+    const categoria_val = document.getElementById("categoria").value;
+    const categoria_id = categoria_val ? parseInt(categoria_val) : null;
     if (!categoria_id) {
       alert("Seleccioná una categoría.");
       return;
@@ -147,48 +147,43 @@ document.addEventListener("DOMContentLoaded", async () => {
     const sub1El = document.querySelector("select[name='subcategoria1_id']");
     const sub2El = document.querySelector("select[name='subcategoria2_id']");
 
-    const subcategoria1_id =
-      sub1El && sub1El.value ? parseInt(sub1El.value) : null;
-    const subcategoria2_id =
-      sub2El && sub2El.value ? parseInt(sub2El.value) : null;
+    const subcategoria1_id = sub1El && sub1El.value ? parseInt(sub1El.value) : null;
+    const subcategoria2_id = sub2El && sub2El.value ? parseInt(sub2El.value) : null;
 
-    if (
-      subcategoria1_id &&
-      subcategoria2_id &&
-      subcategoria1_id === subcategoria2_id
-    ) {
+    if (subcategoria1_id && subcategoria2_id && subcategoria1_id === subcategoria2_id) {
       alert("No podés seleccionar la misma subcategoría en ambos campos.");
       return;
     }
 
-    const payload = {
-      usuario_id: usuario.id,
-      categoria_id,
-      subcategoria1_id,
-      subcategoria2_id,
-      titulo: (document.getElementById("nombre").value || "").trim(),
-      descripcion: (document.getElementById("descripcion").value || "").trim(),
-      precio: parseFloat(document.getElementById("precio").value) || 0,
-      cantidad: parseInt(document.getElementById("cantidad").value) || 0,
-      imagen: document.getElementById("imagen").value || null,
-    };
+    const titulo = (document.getElementById("nombre").value || "").trim();
+    const descripcion = (document.getElementById("descripcion").value || "").trim();
+    const precioVal = parseFloat(document.getElementById("precio").value) || 0;
+    const cantidadVal = parseInt(document.getElementById("cantidad").value) || 0;
 
-    console.log("[carga] Payload a enviar:", payload);
-    if (
-      !payload.titulo ||
-      !payload.descripcion ||
-      payload.precio <= 0 ||
-      payload.cantidad <= 0
-    ) {
+    if (!titulo || !descripcion || precioVal <= 0 || cantidadVal <= 0) {
       alert("Completá todos los campos obligatorios correctamente.");
       return;
+    }
+
+    const formData = new FormData();
+    formData.append("usuario_id", usuario.id);
+    formData.append("categoria_id", categoria_id);
+    if (subcategoria1_id) formData.append("subcategoria1_id", subcategoria1_id);
+    if (subcategoria2_id) formData.append("subcategoria2_id", subcategoria2_id);
+    formData.append("titulo", titulo);
+    formData.append("descripcion", descripcion);
+    formData.append("precio", precioVal);
+    formData.append("cantidad", cantidadVal);
+
+    const fileEl = document.getElementById("imagen");
+    if (fileEl && fileEl.files && fileEl.files[0]) {
+      formData.append("imagen", fileEl.files[0]);
     }
 
     try {
       const resp = await fetch(`${API_BASE}/publicaciones`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        body: formData,
       });
       const body = await resp.json().catch(() => ({}));
       console.log("[carga] respuesta POST /publicaciones:", resp.status, body);

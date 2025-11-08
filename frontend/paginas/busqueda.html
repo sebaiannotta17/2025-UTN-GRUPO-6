@@ -1,177 +1,123 @@
 <!doctype html>
 <html lang="es">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width,initial-scale=1" />
-        <title>Marketplace — Búsqueda</title>
-        <link rel="stylesheet" href="../css/estiloMain.css" />
-        <link rel="stylesheet" href="../css/busqueda.css" />
-    </head>
-    <body>
-        <header class="topbar">
-            <div class="container">
-                <a href="./main.html" class="logo">MaterialesYA</a>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Marketplace — Búsqueda</title>
+    <link rel="stylesheet" href="../css/estiloMain.css" />
+    <link rel="stylesheet" href="../css/busqueda.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container">
+        <a href="./main.html" class="logo">MaterialesYA</a>
 
-                <nav class="header-actions">
-                    <a href="./main.html" class="btn btn-secondary">Inicio</a>
-                    <a
-                        href="./carga.html"
-                        class="btn btn-secondary"
-                        id="btn-publicar"
-                        >Publicar</a
-                    >
-                    <a
-                        href="./registro.html"
-                        class="btn btn-primary"
-                        id="btn-login"
-                        >Login</a
-                    >
-                </nav>
+        <nav class="header-actions">
+          <a href="./main.html" class="btn btn-secondary">Inicio</a>
+          <a href="./carga.html" class="btn btn-secondary" id="btn-publicar">Publicar</a>
+          <a href="./registro.html" class="btn btn-primary" id="btn-login">Login</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>Buscar materiales</h1>
+
+      <form id="searchForm" role="search" autocomplete="off" class="search-form">
+        <input
+          id="q"
+          name="q"
+          type="search"
+          placeholder="Cemento, arena, ladrillo…"
+          required
+        />
+        <button type="submit" id="btnSearch" class="btn btn-primary">Buscar</button>
+      </form>
+
+      <!-- Filtro de orden -->
+      <div class="toolbar">
+        <label for="sortFilter" class="sr-only">Ordenar</label>
+        <select id="sortFilter">
+          <option value="default">Ordenar por...</option>
+          <option value="titulo-asc">Título: A-Z</option>
+          <option value="titulo-desc">Título: Z-A</option>
+          <option value="precio-asc">Precio: Menor a mayor</option>
+          <option value="precio-desc">Precio: Mayor a menor</option>
+        </select>
+      </div>
+
+      <!-- Resultados -->
+      <ul id="results" class="grid" aria-live="polite"></ul>
+
+      <!-- Paginación -->
+      <div id="controlpagina" class="pager">
+        <button id="prevPage" class="btn" disabled>Anterior</button>
+        <span id="pageInfo">Página 1</span>
+        <button id="nextPage" class="btn" disabled>Siguiente</button>
+      </div>
+    </main>
+
+    <!-- Modal de detalle (único) -->
+    <div
+      id="materialModal"
+      class="modal"
+      aria-hidden="true"
+      role="dialog"
+      aria-modal="true"
+    >
+      <div class="modal-backdrop" data-close="1"></div>
+      <div class="modal-card">
+        <!-- ❌ Cerrar -->
+        <button
+          class="modal-close"
+          aria-label="Cerrar"
+          title="Cerrar"
+          data-close="1"
+        >✕</button>
+
+        <div class="modal-content">
+          <div id="mThumb" class="modal-thumb">
+            <img
+              src="/imgs/default.png"
+              alt="Vista detallada"
+            />
+          </div>
+
+          <h2 id="mName">Nombre del Material</h2>
+
+          <p id="mDesc" class="muted">
+            Breve descripción del material.
+          </p>
+
+          <p id="mLongDesc" class="longdesc">
+            Descripción larga y detallada del producto, incluyendo especificaciones técnicas y uso recomendado.
+          </p>
+
+          <div id="mPrice" class="price">$0</div>
+
+          <div class="m-extra">
+            <div>
+              <strong>Categoría:</strong>
+              <span id="mCategory">—</span>
             </div>
-        </header>
-
-        <main class="container">
-            <h1>Buscar materiales</h1>
-
-            <form id="searchForm" role="search" autocomplete="off">
-                <input
-                    id="q"
-                    name="q"
-                    type="search"
-                    placeholder="Cemento, arena, ladrillo…"
-                    required
-                />
-                <button type="submit" id="btnSearch">Buscar</button>
-            </form>
-            <!-- Controles del filtro -->
-            <select id="sortFilter">
-                <option value="default">Ordenar por...</option>
-                <option value="titulo-asc">Título: A-Z</option>
-                <option value="titulo-desc">Título: Z-A</option>
-                <option value="precio-asc">Precio: Menor a mayor</option>
-                <option value="precio-desc">Precio: Mayor a menor</option>
-            </select>
-            <!-- Controles del filtro -->
-            <ul id="results" class="grid" aria-live="polite">
-                <li class="material-card">
-                    <div class="card-thumb">
-                        <img
-                            src="https://placehold.co/300x200/6c5ce7/ffffff?text=Cemento"
-                            alt="Cemento"
-                        />
-                    </div>
-                    <div class="card-info">
-                        <h3>Cemento Portland x50kg</h3>
-                        <p class="muted">El mejor para estructuras.</p>
-                        <div class="card-price">$8.500</div>
-                        <button class="btn btn-small btn-primary">
-                            Ver detalle
-                        </button>
-                    </div>
-                </li>
-
-                <li class="material-card">
-                    <div class="card-thumb">
-                        <img
-                            src="https://placehold.co/300x200/2ecc71/ffffff?text=Arena"
-                            alt="Arena"
-                        />
-                    </div>
-                    <div class="card-info">
-                        <h3>Arena Fina embolsada</h3>
-                        <p class="muted">Ideal para revoques.</p>
-                        <div class="card-price">$1.200</div>
-                        <button class="btn btn-small btn-primary">
-                            Ver detalle
-                        </button>
-                    </div>
-                </li>
-
-                <li class="material-card">
-                    <div class="card-thumb">
-                        <img
-                            src="https://placehold.co/300x200/e67e22/ffffff?text=Ladrillo"
-                            alt="Ladrillo"
-                        />
-                    </div>
-                    <div class="card-info">
-                        <h3>Ladrillo Hueco 12x18x33</h3>
-                        <p class="muted">Cerámico de alta calidad.</p>
-                        <div class="card-price">$350</div>
-                        <button class="btn btn-small btn-primary">
-                            Ver detalle
-                        </button>
-                    </div>
-                </li>
-            </ul>        
-            <!-- Botones de paginacion -->
-            <div id="controlpagina">
-                <button id="prevPage" disabled>Anterior</button>
-                <span id="pageInfo">Página 1</span>
-                <button id="nextPage" disabled>Siguiente</button>
+            <div>
+              <strong>Cantidad en Stock:</strong>
+              <span id="mQty">—</span>
             </div>
-            <!-- Botones de paginacion -->
-            
-        </main>
+          </div>
 
-        <div
-            id="materialModal"
-            class="modal"
-            aria-hidden="true"
-            role="dialog"
-            aria-modal="true"
-        >
-            <div class="modal-backdrop" data-close="1"></div>
-            <div class="modal-card">
-                <button
-                    class="modal-close"
-                    aria-label="Cerrar"
-                    data-close="1"
-                ></button>
-                <div class="modal-content">
-                    <div id="mThumb" class="modal-thumb">
-                        <img
-                            src="https://placehold.co/300x300/6c5ce7/ffffff?text=Material"
-                            alt="Vista detallada"
-                        />
-                    </div>
-                    <h2 id="mName">Nombre del Material Detallado</h2>
-                    <p id="mDesc" class="muted">
-                        Breve descripción del material.
-                    </p>
-                    <p id="mLongDesc" class="longdesc">
-                        Descripción larga y detallada del producto, incluyendo
-                        especificaciones técnicas y uso recomendado.
-                    </p>
+          <ul id="mDetails">
+            <li>Sin datos adicionales</li>
+          </ul>
 
-                    <div id="mPrice" class="price">$15.000 ARS</div>
-
-                    <div class="m-extra">
-                        <div>
-                            <strong>Categoría:</strong>
-                            <span id="mCategory">Cementos</span>
-                        </div>
-                        <div>
-                            <strong>Cantidad en Stock:</strong>
-                            <span id="mQty">50 unidades</span>
-                        </div>
-                    </div>
-
-                    <ul id="mDetails">
-                        <li>Ficha técnica</li>
-                        <li>Origen</li>
-                    </ul>
-                    <button
-                        class="btn btn-primary"
-                        style="margin-top: 20px; width: 100%"
-                    >
-                        Añadir al Carrito
-                    </button>
-                </div>
-            </div>
+          <button class="btn btn-primary" style="margin-top: 20px; width: 100%">
+            Añadir al Carrito
+          </button>
         </div>
+      </div>
+    </div>
 
-        <div id="toast-container"></div>
-        <script src="../js/busqueda.js" type="module"></script>
-    </body>
+    <div id="toast-container"></div>
+    <script src="../js/busqueda.js" type="module"></script>
+  </body>
 </html>

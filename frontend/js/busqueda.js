@@ -1,21 +1,31 @@
 document.addEventListener("DOMContentLoaded", async () => {
+  const API_BASE = "http://localhost:3000/api";
   const form = document.getElementById("searchForm");
   const input = document.getElementById("q");
   const resultsContainer = document.getElementById("results");
   const sortFilter = document.getElementById("sortFilter");
-  const API_URL = "http://localhost:3000/api/busqueda";
 
-  // paginacion
+  // Paginación
   let resultados = [];
   let currentPage = 1;
-  const pageSize = 9;//determina cuantas publicaciones muestra por pagina
+  const pageSize = 9;
 
-  // Pagination control elements
   const prevBtn = document.getElementById("prevPage");
   const nextBtn = document.getElementById("nextPage");
   const pageInfo = document.getElementById("pageInfo");
 
-  // lee los parametros en la url
+  // Modal refs
+  const $modal = document.getElementById("materialModal");
+  const $mImg = document.querySelector("#mThumb img");
+  const $mName = document.getElementById("mName");
+  const $mDesc = document.getElementById("mDesc");
+  const $mLong = document.getElementById("mLongDesc");
+  const $mPrice = document.getElementById("mPrice");
+  const $mCat = document.getElementById("mCategory");
+  const $mQty = document.getElementById("mQty");
+  const $mDetails = document.getElementById("mDetails");
+
+  // Lee parámetros iniciales
   const params = new URLSearchParams(window.location.search);
   const initialQuery = params.get("q") || "";
 
@@ -27,7 +37,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     input.focus();
   }
 
-  // Evento al enviar el formulario
+  // Buscar al enviar formulario
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     const query = input.value.trim();
@@ -35,15 +45,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     await buscar(query);
   });
 
-  // Evento al cambiar el filtro de ordenamiento
+  // Cambio de filtro
   if (sortFilter) {
     sortFilter.addEventListener("change", () => {
-      currentPage = 1; // Reset to first page on sort change
+      currentPage = 1;
       renderResultados();
     });
   }
 
-  // botones de pagina
+  // Botones de página
   if (prevBtn && nextBtn) {
     prevBtn.addEventListener("click", () => {
       if (currentPage > 1) {
@@ -58,14 +68,15 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     });
   }
-//realiza la busqueda y lo guarda en el arreglo global resultados
+
+  // Realiza búsqueda y guarda resultados
   async function buscar(query) {
     resultsContainer.innerHTML = "";
     resultados = [];
     currentPage = 1;
 
     try {
-      const res = await fetch(`${API_URL}?q=${encodeURIComponent(query)}`);
+      const res = await fetch(`${API_BASE}/busqueda?q=${encodeURIComponent(query)}`, { cache: "no-store" });
       const data = await res.json();
 
       if (!res.ok) {
@@ -78,15 +89,15 @@ document.addEventListener("DOMContentLoaded", async () => {
         return;
       }
 
-      resultados = data.results.slice(); // guarda los resultados
-      renderResultados(); // renderiza (incluyendo paginación y orden)
+      resultados = data.results.slice();
+      renderResultados();
     } catch (err) {
       console.error(err);
       resultsContainer.innerHTML = `<p class="error">Error al conectar con el servidor.</p>`;
     }
   }
 
-  // ordena y muestra los resultados
+  // Renderiza los resultados paginados y ordenados
   function renderResultados() {
     resultsContainer.innerHTML = "";
 
@@ -107,11 +118,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         resultsToRender.sort((a, b) => (b.precio || 0) - (a.precio || 0));
         break;
       default:
-        // No sorting
         break;
     }
 
-    // controles para la paginacion
     const totalPages = Math.ceil(resultsToRender.length / pageSize);
     const startIdx = (currentPage - 1) * pageSize;
     const endIdx = Math.min(startIdx + pageSize, resultsToRender.length);
@@ -123,22 +132,88 @@ document.addEventListener("DOMContentLoaded", async () => {
       pagedResults.forEach((pub) => {
         const li = document.createElement("li");
         li.classList.add("material-card");
+        li.dataset.id = pub.id;
         li.innerHTML = `
-          <img src="${pub.imagen || "../img/default.png"}" alt="${pub.titulo}">
-          <div class="material-info">
+          <div class="card-thumb">
+            <img src="${pub.imagen || "../img/default.png"}" alt="${pub.titulo}">
+          </div>
+          <div class="card-info">
             <h3>${pub.titulo}</h3>
-            <p>${pub.descripcion || ""}</p>
-            <p><strong>Precio:</strong> $${pub.precio}</p>
-            <p><strong>Cantidad:</strong> ${pub.cantidad}</p>
+            <p class="muted">${pub.descripcion || ""}</p>
+            <div class="card-price">$${pub.precio ?? 0}</div>
+            <button class="btn btn-small btn-primary ver-detalle" data-id="${pub.id}">Ver detalle</button>
           </div>
         `;
         resultsContainer.appendChild(li);
       });
     }
 
-    // actualiza controles de paginacion
     if (pageInfo) pageInfo.textContent = `Página ${currentPage} de ${totalPages || 1}`;
     if (prevBtn) prevBtn.disabled = currentPage === 1;
     if (nextBtn) nextBtn.disabled = currentPage === totalPages || totalPages === 0;
   }
+
+  // Delegación de eventos para abrir modal
+  resultsContainer.addEventListener("click", async (e) => {
+    const btn = e.target.closest(".ver-detalle");
+    if (!btn) return;
+    const id = parseInt(btn.dataset.id);
+    await openModal(id);
+  });
+
+  // Abrir modal (detalle)
+  async function openModal(id) {
+    let pub = null;
+
+    try {
+      const r = await fetch(`${API_BASE}/publicaciones/${id}`, { cache: "no-store" });
+      if (r.ok) {
+        pub = await r.json();
+      }
+    } catch (_) {
+      /* fallback */
+    }
+
+    if (!pub) pub = resultados.find((x) => x.id === id);
+
+    if (!pub) {
+      alert("No se pudo cargar el detalle de la publicación.");
+      return;
+    }
+
+    $mImg.src = pub.imagen || "../img/default.png";
+    $mImg.alt = pub.titulo || "Material";
+    $mName.textContent = pub.titulo || "Sin título";
+    $mDesc.textContent = pub.descripcion || "";
+    $mLong.textContent = pub.descripcion_larga || "";
+    $mPrice.textContent = `$${pub.precio ?? 0}`;
+    $mCat.textContent = pub.categoria_nombre || pub.categoria_id || "—";
+    $mQty.textContent = `${pub.cantidad ?? 0} unidades`;
+
+    const extra = [];
+    if (pub.fecha_publicacion) {
+      let fechaText = pub.fecha_publicacion;
+      try {
+        const d = new Date(pub.fecha_publicacion);
+        fechaText = d.toLocaleDateString('es-AR', { day: '2-digit', month: 'short', year: 'numeric' });
+      } catch (e) {
+        // leave original
+      }
+      extra.push(`<li>Publicada: ${fechaText}</li>`);
+    }
+    if (pub.vendedor_nombre) extra.push(`<li>Vendedor: ${pub.vendedor_nombre}</li>`);
+    if (pub.vendedor_email) extra.push(`<li>Contacto: ${pub.vendedor_email}</li>`);
+    $mDetails.innerHTML = extra.join("") || "<li>Sin datos adicionales</li>";
+
+    $modal.setAttribute("aria-hidden", "false");
+  }
+
+  // Cerrar modal
+  document.querySelectorAll('[data-close="1"]').forEach((el) =>
+    el.addEventListener("click", () => $modal.setAttribute("aria-hidden", "true"))
+  );
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") $modal.setAttribute("aria-hidden", "true");
+  });
 });

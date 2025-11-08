@@ -214,9 +214,7 @@ h1 {
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
 }
 
-.modal-close {
-    color: var(--color-text-muted);
-}
+
 
 .modal-content {
     display: flex;
@@ -296,4 +294,76 @@ h1 {
         grid-template-columns: 1fr;
         gap: 10px;
     }
+}
+.modal {
+  position: fixed;           /* por las dudas unificamos */
+  inset: 0;                  /* equivale a top/left/width/height full */
+}
+
+.modal-backdrop {
+  position: absolute;
+  inset: 0;                  /* ocupa todo el modal */
+  background: rgba(0,0,0,.6);
+  z-index: 0;
+}
+
+.modal-card {
+  position: relative;
+  z-index: 1;                /* por encima del backdrop */
+}
+
+/* botón ❌ arriba a la derecha */
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  font-size: 22px;
+  line-height: 1;
+  color: var(--color-text-dark);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-weight: 800;
+  transition: transform .2s ease, color .2s ease;
+}
+
+.modal-close:hover {
+  color: #e53935;
+  transform: scale(1.15);
+}
+
+/* Estilos para la toolbar y el select de ordenar */
+.toolbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 22px;
+}
+
+.toolbar label {
+    font-weight: 600;
+    color: var(--color-text-dark);
+}
+
+#sortFilter {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding: 10px 38px 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background: #fff url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24'><path fill='%23f35c14' d='M7 10l5 5 5-5z'/></svg>") no-repeat right 10px center/14px 14px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+#sortFilter:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 4px rgba(243,92,20,0.06);
+}
+
+@media (max-width: 800px) {
+    .toolbar { flex-direction: column; align-items: stretch; }
+    #sortFilter { width: 100%; }
 }
