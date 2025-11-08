@@ -25,54 +25,76 @@
                 <h1>Crear publicación</h1>
 
                 <form id="form-material" autocomplete="off" novalidate>
-                    <input
-                        id="nombre"
-                        name="nombre"
-                        type="text"
-                        placeholder="Nombre del material (Ej: Cemento Portland, Ladrillo Hueco)"
-                        required
-                    />
-                    <textarea
-                        id="descripcion"
-                        name="descripcion"
-                        placeholder="Descripción detallada del material y su estado (Ej: Vendo 10 bolsas de cemento a medio uso, sin humedad)"
-                        rows="4"
-                        required
-                    ></textarea>
+                    <div class="form-field">
+                        <label for="nombre">Nombre del material <span class="required">*</span></label>
+                        <input
+                            id="nombre"
+                            name="nombre"
+                            type="text"
+                            placeholder="Ej: Cemento Portland, Ladrillo Hueco"
+                            required
+                        />
+                        <div class="error-message" id="error-nombre"></div>
+                    </div>
 
-                    <label for="categoria">Categoría</label>
-                    <select name="categoria" id="categoria" required>
-                        <option value="">Seleccionar categoría</option>
-                    </select>
+                    <div class="form-field">
+                        <label for="descripcion">Descripción detallada</label>
+                        <textarea
+                            id="descripcion"
+                            name="descripcion"
+                            placeholder="Ej: Vendo 10 bolsas de cemento a medio uso, sin humedad"
+                            rows="4"
+                        ></textarea>
+                        <div class="error-message" id="error-descripcion"></div>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="categoria">Categoría <span class="required">*</span></label>
+                        <select name="categoria" id="categoria" required>
+                            <option value="">Seleccionar categoría</option>
+                        </select>
+                        <div class="error-message" id="error-categoria"></div>
+                    </div>
 
                     <div id="subcategoria-container"></div>
 
                     <div class="input-group">
-                        <input
-                            id="precio"
-                            name="precio"
-                            type="number"
-                            placeholder="Precio por unidad (Ej: 8500)"
-                            min="1"
-                            required
-                        />
-                        <input
-                            id="cantidad"
-                            name="cantidad"
-                            type="number"
-                            placeholder="Cantidad disponible (Ej: 100)"
-                            min="1"
-                            required
-                        />
+                        <div class="form-field">
+                            <label for="precio">Precio por unidad <span class="required">*</span></label>
+                            <input
+                                id="precio"
+                                name="precio"
+                                type="number"
+                                placeholder="Ej: 8500"
+                                min="1"
+                                required
+                            />
+                            <div class="error-message" id="error-precio"></div>
+                        </div>
+                        <div class="form-field">
+                            <label for="cantidad">Cantidad disponible <span class="required">*</span></label>
+                            <input
+                                id="cantidad"
+                                name="cantidad"
+                                type="number"
+                                placeholder="Ej: 100"
+                                min="1"
+                                required
+                            />
+                            <div class="error-message" id="error-cantidad"></div>
+                        </div>
                     </div>
 
-                    <label for="imagen">Foto del Producto (Opcional)</label>
-                    <input
-                        id="imagen"
-                        name="imagen"
-                        type="file"
-                        accept="image/*"
-                    />
+                    <div class="form-field">
+                        <label for="imagen">Foto del Producto (Opcional)</label>
+                        <input
+                            id="imagen"
+                            name="imagen"
+                            type="file"
+                            accept="image/*"
+                        />
+                        <div class="error-message" id="error-imagen"></div>
+                    </div>
 
                     <div class="form-buttons">
                         <button

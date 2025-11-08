@@ -9,8 +9,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Verificar usuario logueado
   const usuarioLocal = JSON.parse(localStorage.getItem("user"));
   if (!usuarioLocal || !usuarioLocal.id) {
-    window.alert("Usuario no logueado. Redirigiendo a login.");
-    window.location.href = "login.html";
+    showToast("Usuario no logueado. Redirigiendo a login.", "error");
+    setTimeout(() => {
+      window.location.href = "login.html";
+    }, 2000);
     return;
   }
 
@@ -104,15 +106,14 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (!items || items.length === 0) continue;
 
       const label = document.createElement("label");
-      label.textContent =
-        labelsPersonalizados[created] || `Subcategoría ${created + 1}`;
+      label.innerHTML = `${labelsPersonalizados[created] || `Subcategoría ${created + 1}`} <span class="required">*</span>`;
 
       const select = document.createElement("select");
       select.name = created === 0 ? "subcategoria1_id" : "subcategoria2_id";
       select.id = select.name;
       select.dataset.tipo = tipo;
       select.required = true;
-      select.innerHTML = `<option value="">Seleccionar ${label.textContent.toLowerCase()}</option>`;
+      select.innerHTML = `<option value="">Seleccionar ${labelsPersonalizados[created] || `subcategoría ${created + 1}`}</option>`;
 
       items.forEach((it) => {
         const opt = document.createElement("option");
@@ -121,8 +122,18 @@ document.addEventListener("DOMContentLoaded", async () => {
         select.appendChild(opt);
       });
 
-      $subcategoriaContainer.appendChild(label);
-      $subcategoriaContainer.appendChild(select);
+      const fieldDiv = document.createElement("div");
+      fieldDiv.className = "form-field";
+      
+      const errorDiv = document.createElement("div");
+      errorDiv.className = "error-message";
+      errorDiv.id = `error-${select.name}`;
+
+      fieldDiv.appendChild(label);
+      fieldDiv.appendChild(select);
+      fieldDiv.appendChild(errorDiv);
+      
+      $subcategoriaContainer.appendChild(fieldDiv);
       created++;
     }
   }
@@ -131,17 +142,39 @@ document.addEventListener("DOMContentLoaded", async () => {
   $form?.addEventListener("submit", async (ev) => {
     ev.preventDefault();
 
+    // Limpiar errores previos
+    clearAllErrors();
+
     const usuario = JSON.parse(localStorage.getItem("user"));
     if (!usuario || !usuario.id) {
-      alert("Debés iniciar sesión (usuario no encontrado).");
+      showToast("Debés iniciar sesión para publicar.", "error");
       return;
+    }
+
+    // Validar todos los campos
+    let hasErrors = false;
+
+    const titulo = document.getElementById("nombre").value.trim();
+    if (!titulo) {
+      showFieldError("nombre", "El nombre del material es obligatorio");
+      hasErrors = true;
+    } else if (titulo.length < 3) {
+      showFieldError("nombre", "El nombre debe tener al menos 3 caracteres");
+      hasErrors = true;
+    }
+
+    const descripcion = document.getElementById("descripcion").value.trim();
+    // Descripción opcional, pero si se completa debe tener al menos 10 caracteres
+    if (descripcion && descripcion.length < 10) {
+      showFieldError("descripcion", "Si agregás una descripción, debe tener al menos 10 caracteres");
+      hasErrors = true;
     }
 
     const categoria_val = document.getElementById("categoria").value;
     const categoria_id = categoria_val ? parseInt(categoria_val) : null;
     if (!categoria_id) {
-      alert("Seleccioná una categoría.");
-      return;
+      showFieldError("categoria", "Seleccioná una categoría");
+      hasErrors = true;
     }
 
     const sub1El = document.querySelector("select[name='subcategoria1_id']");
@@ -150,18 +183,36 @@ document.addEventListener("DOMContentLoaded", async () => {
     const subcategoria1_id = sub1El && sub1El.value ? parseInt(sub1El.value) : null;
     const subcategoria2_id = sub2El && sub2El.value ? parseInt(sub2El.value) : null;
 
-    if (subcategoria1_id && subcategoria2_id && subcategoria1_id === subcategoria2_id) {
-      alert("No podés seleccionar la misma subcategoría en ambos campos.");
-      return;
+    if (sub1El && !subcategoria1_id) {
+      showFieldError("subcategoria1_id", "Seleccioná una opción");
+      hasErrors = true;
     }
 
-    const titulo = (document.getElementById("nombre").value || "").trim();
-    const descripcion = (document.getElementById("descripcion").value || "").trim();
-    const precioVal = parseFloat(document.getElementById("precio").value) || 0;
-    const cantidadVal = parseInt(document.getElementById("cantidad").value) || 0;
+    if (sub2El && !subcategoria2_id) {
+      showFieldError("subcategoria2_id", "Seleccioná una opción");
+      hasErrors = true;
+    }
 
-    if (!titulo || !descripcion || precioVal <= 0 || cantidadVal <= 0) {
-      alert("Completá todos los campos obligatorios correctamente.");
+    if (subcategoria1_id && subcategoria2_id && subcategoria1_id === subcategoria2_id) {
+      showFieldError("subcategoria2_id", "No podés seleccionar la misma subcategoría dos veces");
+      hasErrors = true;
+    }
+
+    const precioVal = parseFloat(document.getElementById("precio").value) || 0;
+    if (precioVal <= 0) {
+      showFieldError("precio", "El precio debe ser mayor a 0");
+      hasErrors = true;
+    }
+
+    const cantidadVal = parseInt(document.getElementById("cantidad").value) || 0;
+    if (cantidadVal <= 0) {
+      showFieldError("cantidad", "La cantidad debe ser mayor a 0");
+      hasErrors = true;
+    }
+
+    // Si hay errores, no continuar
+    if (hasErrors) {
+      showToast("Corregí los errores antes de continuar", "error");
       return;
     }
 
@@ -189,16 +240,169 @@ document.addEventListener("DOMContentLoaded", async () => {
       console.log("[carga] respuesta POST /publicaciones:", resp.status, body);
 
       if (!resp.ok) {
-        alert(body.error || "Error al crear la publicación.");
+        showToast(body.error || "Error al crear la publicación", "error");
         return;
       }
 
-      alert("Publicación creada correctamente.");
+      showToast("¡Publicación creada correctamente!", "success");
       $form.reset();
       $subcategoriaContainer.innerHTML = "";
+      clearAllErrors();
     } catch (err) {
       console.error("[carga] Error en POST publicaciones:", err);
-      alert("Ocurrió un error al publicar. Mirá consola.");
+      showToast("Ocurrió un error al publicar. Intentá de nuevo.", "error");
     }
   });
+
+  // ===== Funciones de validación y UI =====
+  
+  function showFieldError(fieldId, message) {
+    const field = document.getElementById(fieldId);
+    const errorDiv = document.getElementById(`error-${fieldId}`);
+    
+    if (field) {
+      field.classList.add('error');
+      field.classList.remove('success');
+    }
+    
+    if (errorDiv) {
+      errorDiv.textContent = message;
+    }
+  }
+
+  function clearFieldError(fieldId) {
+    const field = document.getElementById(fieldId);
+    const errorDiv = document.getElementById(`error-${fieldId}`);
+    
+    if (field) {
+      field.classList.remove('error');
+      field.classList.add('success');
+    }
+    
+    if (errorDiv) {
+      errorDiv.textContent = '';
+    }
+  }
+
+  function clearAllErrors() {
+    const errorDivs = document.querySelectorAll('.error-message');
+    const fields = document.querySelectorAll('input, textarea, select');
+    
+    errorDivs.forEach(div => div.textContent = '');
+    fields.forEach(field => {
+      field.classList.remove('error', 'success');
+    });
+  }
+
+  function showToast(message, type = 'info') {
+    // Crear o encontrar container
+    let container = document.getElementById('toast-container');
+    if (!container) {
+      container = document.createElement('div');
+      container.id = 'toast-container';
+      container.className = 'toast-container';
+      document.body.appendChild(container);
+    }
+
+    // Crear toast
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    toast.innerHTML = `
+      <span>${message}</span>
+      <button class="toast-close" onclick="this.parentElement.remove()">&times;</button>
+    `;
+
+    container.appendChild(toast);
+
+    // Mostrar con animación
+    setTimeout(() => toast.classList.add('show'), 100);
+
+    // Auto-remover después de 5 segundos
+    setTimeout(() => {
+      toast.classList.remove('show');
+      setTimeout(() => toast.remove(), 300);
+    }, 5000);
+  }
+
+  // Validación en tiempo real
+  function setupRealTimeValidation() {
+    const fields = [
+      { id: 'nombre', minLength: 3 },
+      { id: 'precio', type: 'number', min: 1 },
+      { id: 'cantidad', type: 'number', min: 1 }
+    ];
+
+    fields.forEach(({ id, minLength, type, min }) => {
+      const field = document.getElementById(id);
+      if (!field) return;
+
+      field.addEventListener('blur', () => {
+        const value = field.value.trim();
+        
+        if (!value) {
+          showFieldError(id, 'Este campo es obligatorio');
+        } else if (minLength && value.length < minLength) {
+          showFieldError(id, `Debe tener al menos ${minLength} caracteres`);
+        } else if (type === 'number' && (parseFloat(value) < min || isNaN(parseFloat(value)))) {
+          showFieldError(id, `Debe ser un número mayor a ${min - 1}`);
+        } else {
+          clearFieldError(id);
+        }
+      });
+
+      field.addEventListener('input', () => {
+        if (field.classList.contains('error')) {
+          field.classList.remove('error');
+          const errorDiv = document.getElementById(`error-${id}`);
+          if (errorDiv) errorDiv.textContent = '';
+        }
+      });
+    });
+
+    // Validación para categoria
+    const categoriaSelect = document.getElementById('categoria');
+    if (categoriaSelect) {
+      categoriaSelect.addEventListener('change', () => {
+        if (categoriaSelect.value) {
+          clearFieldError('categoria');
+        } else {
+          showFieldError('categoria', 'Seleccioná una categoría');
+        }
+      });
+    }
+
+    // Validación especial para descripción (opcional)
+    const descripcionField = document.getElementById('descripcion');
+    if (descripcionField) {
+      descripcionField.addEventListener('blur', () => {
+        const value = descripcionField.value.trim();
+        if (value && value.length < 10) {
+          showFieldError('descripcion', 'Si agregás una descripción, debe tener al menos 10 caracteres');
+        } else {
+          clearFieldError('descripcion');
+        }
+      });
+
+      descripcionField.addEventListener('input', () => {
+        if (descripcionField.classList.contains('error')) {
+          descripcionField.classList.remove('error');
+          const errorDiv = document.getElementById('error-descripcion');
+          if (errorDiv) errorDiv.textContent = '';
+        }
+      });
+    }
+  }
+
+  // Inicializar validación en tiempo real
+  setupRealTimeValidation();
+
+  // Botón cancelar
+  const btnCancelar = document.getElementById('btn-cancelar');
+  if (btnCancelar) {
+    btnCancelar.addEventListener('click', () => {
+      if (confirm('¿Estás seguro de que querés cancelar? Se perderán todos los datos ingresados.')) {
+        window.location.href = './main.html';
+      }
+    });
+  }
 });

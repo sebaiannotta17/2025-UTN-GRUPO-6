@@ -1,4 +1,33 @@
 document.addEventListener("DOMContentLoaded", async () => {
+  // =============================
+  // 1) Manejo del estado de login
+  // =============================
+  const $navLoginBtn  = document.getElementById("nav-login-btn");
+  const $navPerfilBtn = document.getElementById("nav-perfil-btn");
+  const $navLogoutBtn = document.getElementById("nav-logout-btn");
+  const usuario = safeParse(localStorage.getItem("user"));
+
+  if (usuario && usuario.id) {
+    if ($navLoginBtn)  $navLoginBtn.style.display  = "none";
+    if ($navPerfilBtn) $navPerfilBtn.style.display = "inline-block";
+    if ($navLogoutBtn) $navLogoutBtn.style.display = "inline-block";
+  } else {
+    if ($navLoginBtn)  $navLoginBtn.style.display  = "inline-block";
+    if ($navPerfilBtn) $navPerfilBtn.style.display = "none";
+    if ($navLogoutBtn) $navLogoutBtn.style.display = "none";
+  }
+
+  // Logout desde el header
+  if ($navLogoutBtn) {
+    $navLogoutBtn.addEventListener('click', () => {
+      localStorage.removeItem('user');
+      window.location.href = './main.html';
+    });
+  }
+
+  // =============================
+  // 2) Búsqueda y resultados
+  // =============================
   const API_BASE = "http://localhost:3000/api";
   const form = document.getElementById("searchForm");
   const input = document.getElementById("q");
@@ -216,4 +245,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") $modal.setAttribute("aria-hidden", "true");
   });
+
+  // =============================
+  // Helper functions
+  // =============================
+  function safeParse(str) {
+    try { return JSON.parse(str || "null"); } catch { return null; }
+  }
 });

@@ -336,26 +336,62 @@ document.addEventListener("DOMContentLoaded", () => {
         const li = document.createElement("li");
         li.classList.add("publicacion-card");
         li.dataset.publicacion = JSON.stringify(m);
+        // Formatear fecha
+        let fechaText = "";
+        if (m.fecha_publicacion) {
+          try {
+            const d = new Date(m.fecha_publicacion);
+            fechaText = d.toLocaleDateString('es-AR', { day: '2-digit', month: 'short', year: 'numeric' });
+          } catch (e) {
+            fechaText = m.fecha_publicacion;
+          }
+        }
+
+        // Formatear precio
+        const precioFormateado = new Intl.NumberFormat("es-AR", {
+          style: "currency",
+          currency: "ARS",
+          maximumFractionDigits: 0
+        }).format(Number(m.precio) || 0);
+
         li.innerHTML = `
+          ${m.imagen ? `<img src="${m.imagen}" alt="${m.titulo}" class="publicacion-img" />` : '<div class="no-image"></div>'}
           <div class="card-content">
             <h3>${m.titulo || "Sin título"}</h3>
-            <p>${m.descripcion || "Sin descripción."}</p>
-            <p><strong>Precio:</strong> $${m.precio ?? 0}</p>
-            <p><strong>Cantidad:</strong> ${m.cantidad ?? 0}</p>
-            <p class="meta">
-              Categoría: ${m.categoria_nombre || "N/A"}
-              <br>
-              Subcategoría 1: ${m.subcategoria1_nombre || "N/A"}
-            </p>
-            ${
-              m.imagen
-                ? `<img src="${m.imagen}" alt="${m.titulo}" class="publicacion-img" />`
-                : ""
-            }
+            <p class="descripcion">${m.descripcion || "Sin descripción."}</p>
+            <div class="price-section">
+              <span class="precio">${precioFormateado}</span>
+            </div>
+            <div class="meta-info">
+              <div class="cantidad-info">
+                <span class="label">Cantidad:</span>
+                <span class="value">${m.cantidad ?? 0}</span>
+              </div>
+              <div class="fecha-info">
+                <span class="fecha">${fechaText}</span>
+              </div>
+            </div>
+            <div class="categoria-info">
+              <span class="categoria">${m.categoria_nombre || "Sin categoría"}</span>
+              ${m.subcategoria1_nombre ? `<span class="subcategoria">${m.subcategoria1_nombre}</span>` : ''}
+            </div>
           </div>
           <div class="publicacion-actions">
-            <button class="btn-edit-pub btn-outline" data-id="${m.id}">Editar</button>
-            <button class="btn-delete-pub btn-danger" data-id="${m.id}">Eliminar</button>
+            <button class="btn-edit-pub btn-outline" data-id="${m.id}">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="m18.5 2.5 a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+              Editar
+            </button>
+            <button class="btn-delete-pub btn-danger" data-id="${m.id}">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6h14z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <line x1="10" y1="11" x2="10" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <line x1="14" y1="11" x2="14" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+              Eliminar
+            </button>
           </div>
         `;
         $listaPublicaciones.appendChild(li);
