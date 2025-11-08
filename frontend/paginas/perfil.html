@@ -1,63 +1,177 @@
 <!doctype html>
 <html lang="es">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width,initial-scale=1" />
-        <title>Mi perfil | MaterialesYA</title>
-        <link rel="stylesheet" href="../css/estiloMain.css" />
-        <link rel="stylesheet" href="../css/login.css" />
-        <link rel="stylesheet" href="../css/perfil.css" />
-    </head>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Mi perfil | MaterialesYA</title>
+    <link rel="stylesheet" href="../css/estiloMain.css" />
+    <link rel="stylesheet" href="../css/login.css" />
+    <link rel="stylesheet" href="../css/perfil.css" />
+  </head>
 
-    <body>
-        <header class="topbar">
-            <div class="container">
-                <a href="./main.html" class="logo">MaterialesYA</a>
+  <body>
+    <header class="topbar">
+      <div class="container">
+        <a href="./main.html" class="logo">MaterialesYA</a>
 
-                <div class="header-actions">
-                    <a href="./main.html" class="btn btn-secondary">Inicio</a>
-                    <a href="./carga.html" class="btn btn-secondary"
-                        >Publicar</a
-                    >
-                    <a href="./perfil.html" class="btn btn-primary"
-                        >Mi perfil</a
-                    >
-                </div>
+        <div class="header-actions">
+          <a href="./main.html" class="btn btn-secondary">Inicio</a>
+          <a href="./carga.html" class="btn btn-secondary">Publicar</a>
+          <a href="./perfil.html" class="btn btn-primary">Mi perfil</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="auth-wrap">
+      <section class="auth-card">
+        <h1>Mi perfil</h1>
+
+        <div class="user-info">
+          <p><strong>Nombre:</strong> <span id="nombre"></span></p>
+          <p><strong>Email:</strong> <span id="email"></span></p>
+          <p><strong>Fecha de registro:</strong> <span id="fecha"></span></p>
+        </div>
+
+        <div class="form-buttons">
+          <button id="btn-edit" type="button" class="btn-outline">Editar perfil</button>
+          <button id="btn-delete" type="button" class="btn-danger">Eliminar cuenta</button>
+          <button id="btn-logout" type="button">Cerrar sesión</button>
+        </div>
+
+        <p id="status"></p>
+      </section>
+
+      <section class="publicaciones-usuario">
+        <h2>Mis Publicaciones</h2>
+        <ul id="lista-publicaciones" class="publicaciones-grid"></ul>
+      </section>
+    </main>
+
+    <!-- Modal: Editar perfil -->
+    <div
+      id="editProfileModal"
+      class="modal"
+      aria-hidden="true"
+      role="dialog"
+      aria-modal="true"
+    >
+      <div class="modal-backdrop" data-close="1"></div>
+
+      <div class="modal-card" role="document">
+        <button class="modal-close" aria-label="Cerrar" title="Cerrar" data-close="1">✕</button>
+
+        <div class="modal-content">
+          <h2 style="margin-top:0">Editar perfil</h2>
+
+          <form id="form-edit-profile" autocomplete="off">
+            <label for="ep-nombre">Nombre</label>
+            <input id="ep-nombre" name="nombre" type="text" placeholder="Tu nombre" required />
+
+            <label for="ep-email">Email</label>
+            <input id="ep-email" name="email" type="email" placeholder="tu@email.com" required />
+
+            <div id="ep-error" class="muted" style="display:none;color:#ff6b6b;margin-top:8px"></div>
+
+            <div class="form-buttons" style="margin-top:16px">
+              <button type="submit" class="btn btn-primary">Guardar cambios</button>
+              <button type="button" class="btn btn-secondary" data-close="1">Cancelar</button>
             </div>
-        </header>
+          </form>
+        </div>
+      </div>
+    </div>
 
-        <main class="auth-wrap">
-            <section class="auth-card">
-                <h1>Mi perfil</h1>
+    <!-- Modal: Editar publicación -->
+    <div id="editPubModal" class="modal" aria-hidden="true" role="dialog" aria-modal="true">
+      <div class="modal-backdrop" data-close="1"></div>
+      <div class="modal-card" role="document">
+        <button class="modal-close" aria-label="Cerrar" title="Cerrar" data-close="1">✕</button>
+        <div class="modal-content">
+          <h2 style="margin-top:0">Editar publicación</h2>
+          <form id="form-edit-publicacion" autocomplete="off">
+            <input type="hidden" id="ep-id" />
+            <input type="hidden" id="ep-categoria" />
+            <input type="hidden" id="ep-sub1" />
+            <input type="hidden" id="ep-sub2" />
+            <label for="ep-titulo">Título</label>
+            <input id="ep-titulo" name="titulo" type="text" required />
 
-                <div class="user-info">
-                    <p><strong>Nombre:</strong> <span id="nombre"></span></p>
-                    <p><strong>Email:</strong> <span id="email"></span></p>
-                    <p>
-                        <strong>Fecha de registro:</strong>
-                        <span id="fecha"></span>
-                    </p>
-                </div>
+            <label for="ep-descripcion">Descripción</label>
+            <textarea id="ep-descripcion" name="descripcion" rows="4" required></textarea>
 
-                <div class="form-buttons">
-                    <button id="btn-edit" type="button" class="btn-outline">
-                        Editar perfil
-                    </button>
-                    <button id="btn-delete" type="button" class="btn-danger">
-                        Eliminar cuenta
-                    </button>
-                    <button id="btn-logout" type="button">Cerrar sesión</button>
-                </div>
+            <div class="input-group">
+              <label for="ep-precio">Precio</label>
+              <input id="ep-precio" name="precio" type="number" min="0" step="0.01" required />
+              <label for="ep-cantidad">Cantidad</label>
+              <input id="ep-cantidad" name="cantidad" type="number" min="0" required />
+            </div>
 
-                <p id="status"></p>
-            </section>
+            <label for="ep-imagen">Imagen (opcional)</label>
+            <input id="ep-imagen" name="imagen" type="file" accept="image/*" />
 
-            <section class="publicaciones-usuario">
-                <h2>Mis Publicaciones</h2>
-                <ul id="lista-publicaciones" class="publicaciones-grid"></ul>
-            </section>
-        </main>
+            <div id="ep-pub-error" class="muted" style="display:none;color:#ff6b6b;margin-top:8px"></div>
 
-        <script src="../js/perfil.js"></script>
-    </body>
+            <div class="form-buttons" style="margin-top:12px">
+              <button type="submit" class="btn btn-primary">Guardar publicación</button>
+              <button type="button" class="btn btn-secondary" data-close="1">Cancelar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal: Eliminar publicación -->
+    <div id="deletePubModal" class="modal" aria-hidden="true" role="dialog" aria-modal="true">
+      <div class="modal-backdrop" data-close="1"></div>
+      <div class="modal-card" role="document">
+        <button class="modal-close" aria-label="Cerrar" title="Cerrar" data-close="1">✕</button>
+        <div class="modal-content">
+          <h2 style="margin-top:0; color:#e53935;">Eliminar publicación</h2>
+          <p id="delete-pub-title">¿Estás seguro que querés eliminar esta publicación?</p>
+          <div id="ep-delete-error" class="muted" style="display:none;color:#ff6b6b;margin-top:8px"></div>
+          <div class="form-buttons" style="margin-top:12px">
+            <button id="confirm-delete-pub" type="button" class="btn btn-danger">Eliminar</button>
+            <button type="button" class="btn btn-secondary" data-close="1">Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="toast-container"></div>
+    <script src="../js/perfil.js"></script>
+  </body>
 </html>
+<!-- Modal: Eliminar cuenta -->
+<div id="deleteAccountModal" class="modal" aria-hidden="true" role="dialog" aria-modal="true">
+  <div class="modal-backdrop" data-close="1"></div>
+
+  <div class="modal-card" role="document">
+    <button class="modal-close" aria-label="Cerrar" title="Cerrar" data-close="1">✕</button>
+
+    <div class="modal-content">
+      <h2 style="margin-top:0; color:#e53935;">Eliminar cuenta</h2>
+      <p>Esta acción eliminará tu cuenta <strong>permanentemente</strong>. Si estás seguro, escribí tu contraseña para confirmar:</p>
+
+      <form id="form-delete-account" autocomplete="off" style="margin-top:10px;">
+        <label for="del-password">Contraseña</label>
+        <div class="field-password">
+          <input
+            id="del-password"
+            name="password"
+            type="password"
+            placeholder="Tu contraseña"
+            required
+          />
+          <button type="button" class="password-toggle" aria-label="Mostrar contraseña" title="Mostrar contraseña">👁️</button>
+        </div>
+
+        <div id="del-error" class="muted" style="display:none;color:#ff6b6b;margin-top:8px"></div>
+
+        <div class="form-buttons" style="margin-top:16px">
+          <button type="submit" class="btn btn-danger">Eliminar definitivamente</button>
+          <button type="button" class="btn btn-secondary" data-close="1">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
