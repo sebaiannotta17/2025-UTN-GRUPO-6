@@ -1,11 +1,15 @@
 document.addEventListener("DOMContentLoaded", async () => {
   // =============================
-  // 1) Manejo del estado de login
+  // 1) Manejo del estado de login y favoritos
   // =============================
   const $navLoginBtn  = document.getElementById("nav-login-btn");
   const $navPerfilBtn = document.getElementById("nav-perfil-btn");
   const $navLogoutBtn = document.getElementById("nav-logout-btn");
   const usuario = safeParse(localStorage.getItem("user"));
+
+  // Inicializar favoritos y carrito
+  FavoritosManager.init(usuario);
+  CarritoManager.init(usuario);
 
   if (usuario && usuario.id) {
     if ($navLoginBtn)  $navLoginBtn.style.display  = "none";
@@ -170,7 +174,10 @@ document.addEventListener("DOMContentLoaded", async () => {
             <h3>${pub.titulo}</h3>
             <p class="muted">${pub.descripcion || ""}</p>
             <div class="card-price">$${pub.precio ?? 0}</div>
-            <button class="btn btn-small btn-primary ver-detalle" data-id="${pub.id}">Ver detalle</button>
+            <div class="card-actions">
+              <button class="btn btn-small btn-primary ver-detalle" data-id="${pub.id}">Ver detalle</button>
+              ${FavoritosManager.agregarBotonFavorito(pub)}
+            </div>
           </div>
         `;
         resultsContainer.appendChild(li);
@@ -180,19 +187,32 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (pageInfo) pageInfo.textContent = `Página ${currentPage} de ${totalPages || 1}`;
     if (prevBtn) prevBtn.disabled = currentPage === 1;
     if (nextBtn) nextBtn.disabled = currentPage === totalPages || totalPages === 0;
+
+    // Cargar estados de favoritos
+    if (usuario && usuario.id) {
+      FavoritosManager.cargarEstadosFavoritos();
+    }
   }
 
-  // Delegación de eventos para abrir modal
+  // Delegación de eventos para abrir modal y favoritos
   resultsContainer.addEventListener("click", async (e) => {
     const btn = e.target.closest(".ver-detalle");
-    if (!btn) return;
-    const id = parseInt(btn.dataset.id);
-    await openModal(id);
+    if (btn) {
+      const id = parseInt(btn.dataset.id);
+      await openModal(id);
+      return;
+    }
+
+    // Manejar click en favorito
+    FavoritosManager.handleFavoritoClick(e);
   });
 
   // Abrir modal (detalle)
   async function openModal(id) {
     let pub = null;
+    
+    // Guardar ID actual para el carrito
+    window.currentPublicacionId = id;
 
     try {
       const r = await fetch(`${API_BASE}/publicaciones/${id}`, { cache: "no-store" });
@@ -236,6 +256,18 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     $modal.setAttribute("aria-hidden", "false");
   }
+
+  // Event listener para el botón "Añadir al Carrito"
+  document.addEventListener("click", (e) => {
+    const btnCarrito = e.target.closest(".btn-carrito");
+    if (btnCarrito) {
+      // Obtener el ID de la publicación del modal actual
+      const modalVisible = $modal.getAttribute("aria-hidden") === "false";
+      if (modalVisible && window.currentPublicacionId) {
+        CarritoManager.agregarAlCarrito(window.currentPublicacionId, 1);
+      }
+    }
+  });
 
   // Cerrar modal
   document.querySelectorAll('[data-close="1"]').forEach((el) =>

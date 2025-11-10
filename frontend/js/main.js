@@ -15,12 +15,16 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // =============================
-  // 2) Botón Login / Mi Perfil
+  // 2) Botón Login / Mi Perfil / Favoritos
   // =============================
   const $navLoginBtn  = document.getElementById("nav-login-btn");
   const $navPerfilBtn = document.getElementById("nav-perfil-btn");
   const $navLogoutBtn = document.getElementById("nav-logout-btn");
   const usuario = safeParse(localStorage.getItem("user"));
+
+  // Inicializar favoritos y carrito
+  FavoritosManager.init(usuario);
+  CarritoManager.init(usuario);
 
   if (usuario && usuario.id) {
     if ($navLoginBtn)  $navLoginBtn.style.display  = "none";
@@ -42,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // =============================
-  // 3) Publicaciones recientes (mis últimas si hay sesión; sino generales)
+  // 3) Publicaciones recientes
   // =============================
   const API_BASE = `${location.origin}/api`;
   const $homeGrid = document.getElementById("home-grid");
@@ -51,7 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if ($homeGrid) {
     const qs = new URLSearchParams();
     qs.set("limit", "8");
-    // Siempre pedimos las publicaciones más recientes del sistema (no filtrar por usuario)
+    // Siempre pedimos las publicaciones más recientes del sistema
     cargarRecientes(qs.toString());
   }
 
@@ -80,18 +84,28 @@ document.addEventListener("DOMContentLoaded", () => {
       if ($homeFeedback) $homeFeedback.remove();
       $homeGrid.innerHTML = pubs.map(cardHTMLPerfilStyle).join("");
 
-      // Botón "Ver": por ahora redirige a búsqueda por título
-      $homeGrid.addEventListener("click", (e) => {
-        const btn = e.target.closest(".btn-view-pub");
-        if (!btn) return;
-        const titulo = btn.dataset.titulo || "";
-        window.location.href = `./busqueda.html?q=${encodeURIComponent(titulo)}`;
-      }, { once: true });
+      // Event listeners para botones
+      $homeGrid.addEventListener("click", handleGridClick);
+
     } catch (err) {
       console.error("[recientes][error]", err);
       if ($homeFeedback) $homeFeedback.textContent = "No se pudieron cargar las publicaciones.";
       else if ($homeGrid) $homeGrid.innerHTML = `<li class="error">Error al cargar publicaciones.</li>`;
     }
+  }
+
+  // Manejar clicks en el grid (ver publicación y favoritos)
+  function handleGridClick(e) {
+    // Botón ver publicación
+    const btnView = e.target.closest(".btn-view-pub");
+    if (btnView) {
+      const titulo = btnView.dataset.titulo || "";
+      window.location.href = `./busqueda.html?q=${encodeURIComponent(titulo)}`;
+      return;
+    }
+
+    // Manejar click en favorito
+    FavoritosManager.handleFavoritoClick(e);
   }
 
   // --- tarjeta con el MISMO layout/clases que Perfil ---
@@ -129,9 +143,19 @@ document.addEventListener("DOMContentLoaded", () => {
                   data-titulo="${escapeHTML(m.titulo || "")}">
             Ver detalle
           </button>
+          ${FavoritosManager.agregarBotonFavorito(m)}
         </div>
       </li>
     `;
+  }
+
+  // Cargar estados de favoritos después de cargar publicaciones
+  if (usuario && usuario.id && $homeGrid) {
+    // Observar cuando se agreguen nuevos elementos al grid
+    const observer = new MutationObserver(() => {
+      FavoritosManager.cargarEstadosFavoritos();
+    });
+    observer.observe($homeGrid, { childList: true });
   }
 
   // =============================

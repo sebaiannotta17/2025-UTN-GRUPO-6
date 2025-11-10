@@ -18,6 +18,7 @@ router.post("/login", (req, res) => {
       id: user.id,
       nombre: user.nombre,
       email: user.email,
+      celular: user.celular,
       fecha_registro: user.fecha_registro,
     },
   });
@@ -25,7 +26,7 @@ router.post("/login", (req, res) => {
 
 // Registro usuario
 router.post("/register", (req, res) => {
-  const { nombre, email, password } = req.body;
+  const { nombre, email, password, celular } = req.body;
 
   if (!nombre || !email || !password)
     return res.status(400).json({ error: "Faltan datos" });
@@ -38,10 +39,10 @@ router.post("/register", (req, res) => {
 
   const fecha = new Date().toISOString().slice(0, 19).replace("T", " ");
   const insert = db.prepare(`
-    INSERT INTO usuarios (nombre, email, password, fecha_registro)
-    VALUES (?, ?, ?, ?)
+    INSERT INTO usuarios (nombre, email, password, fecha_registro, celular)
+    VALUES (?, ?, ?, ?, ?)
   `);
-  const result = insert.run(nombre, email, password, fecha);
+  const result = insert.run(nombre, email, password, fecha, celular || null);
 
   const user = db
     .prepare("SELECT * FROM usuarios WHERE id = ?")
@@ -56,15 +57,29 @@ router.post("/register", (req, res) => {
 // Actualizar perfil
 router.put("/update/:id", (req, res) => {
   const { id } = req.params;
-  const { nombre, email } = req.body;
+  const { nombre, email, celular, passwordActual, passwordNueva } = req.body;
 
   const user = db.prepare("SELECT * FROM usuarios WHERE id = ?").get(id);
   if (!user) return res.status(404).json({ error: "Usuario no encontrado" });
 
-  const update = db.prepare(
-    "UPDATE usuarios SET nombre = ?, email = ? WHERE id = ?",
-  );
-  update.run(nombre, email, id);
+  // Si se quiere cambiar la contraseña, validar la actual
+  if (passwordActual && passwordNueva) {
+    if (user.password !== passwordActual) {
+      return res.status(400).json({ error: "La contraseña actual es incorrecta" });
+    }
+    
+    // Actualizar con nueva contraseña
+    const update = db.prepare(
+      "UPDATE usuarios SET nombre = ?, email = ?, celular = ?, password = ? WHERE id = ?",
+    );
+    update.run(nombre, email, celular || null, passwordNueva, id);
+  } else {
+    // Actualizar sin cambiar contraseña
+    const update = db.prepare(
+      "UPDATE usuarios SET nombre = ?, email = ?, celular = ? WHERE id = ?",
+    );
+    update.run(nombre, email, celular || null, id);
+  }
 
   res.json({ message: "Usuario actualizado correctamente" });
 });

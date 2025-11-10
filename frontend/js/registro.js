@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Captura de valores
     const nombre = form.elements["nombre"]?.value?.trim() || "";
     const email = form.elements["email"]?.value?.trim() || "";
+    const celular = form.elements["celular"]?.value?.trim() || "";
     const pw1 = form.elements["pw1"]?.value || "";
     const pw2 = form.elements["pw2"]?.value || "";
 
@@ -46,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const res = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ nombre, email, password: pw1 }),
+        body: JSON.stringify({ nombre, email, celular, password: pw1 }),
       });
 
       const data = await res.json().catch(() => ({}));

@@ -15,9 +15,14 @@
         <div class="header-actions">
           <a href="./main.html" class="btn btn-secondary">Inicio</a>
           <a href="./carga.html" class="btn btn-secondary">Publicar</a>
+          <button id="btn-favoritos" class="btn btn-secondary" style="display:none">⭐ Favoritos</button>
+          <button id="btn-carrito" class="btn btn-secondary" style="display:none">
+            🛒 Carrito
+            <span id="carrito-badge" class="carrito-badge" style="display:none">0</span>
+          </button>
 
           <a href="./login.html" class="btn btn-primary" id="nav-login-btn">Login</a>
-          <a href="./perfil.html" class="btn btn-primary" id="nav-perfil-btn" style="display:none">Mi Cuenta</a>
+          <a href="./perfil.html" class="btn btn-primary" id="nav-perfil-btn" style="display:none">Mi perfil</a>
           <button id="nav-logout-btn" class="btn btn-secondary" style="display:none; margin-left:10px">Cerrar sesión</button>
         </div>
       </div>
@@ -113,14 +118,54 @@
             <li>Sin datos adicionales</li>
           </ul>
 
-          <button class="btn btn-primary" style="margin-top: 20px; width: 100%">
-            Añadir al Carrito
-          </button>
+          <div class="modal-actions">
+            <button class="btn btn-primary btn-carrito">
+              🛒 Añadir al Carrito
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal de Favoritos -->
+    <div id="modal-favoritos" class="modal" style="display: none;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>⭐ Mis Favoritos</h2>
+          <button id="close-modal-favoritos" class="close-btn">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p id="favoritos-feedback">Cargando favoritos...</p>
+          <ul id="favoritos-grid" class="grid"></ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal del Carrito -->
+    <div id="modal-carrito" class="modal" style="display: none;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>🛒 Mi Carrito</h2>
+          <button id="close-modal-carrito" class="close-btn">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p id="carrito-feedback">Cargando carrito...</p>
+          <ul id="carrito-grid" class="carrito-list"></ul>
+          <div class="carrito-footer">
+            <p id="carrito-total" class="carrito-total">Total: $0</p>
+            <div class="carrito-info-box">
+              <p><strong>💡 ¿Cómo comprar?</strong></p>
+              <p>Para cada producto puedes contactar directamente con su vendedor usando el botón "� Contactar Vendedor" que aparece en cada item del carrito.</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
     <div id="toast-container"></div>
+    <script src="../js/favoritos.js"></script>
+    <script src="../js/carrito.js"></script>
+    <script src="../js/vendedor.js"></script>
     <script src="../js/busqueda.js" type="module"></script>
   </body>
 </html>

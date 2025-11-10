@@ -29,6 +29,7 @@
         <div class="user-info">
           <p><strong>Nombre:</strong> <span id="nombre"></span></p>
           <p><strong>Email:</strong> <span id="email"></span></p>
+          <p><strong>Celular:</strong> <span id="celular"></span></p>
           <p><strong>Fecha de registro:</strong> <span id="fecha"></span></p>
         </div>
 
@@ -69,6 +70,27 @@
 
             <label for="ep-email">Email</label>
             <input id="ep-email" name="email" type="email" placeholder="tu@email.com" required />
+
+            <label for="ep-celular">Celular</label>
+            <input id="ep-celular" name="celular" type="tel" placeholder="Número de celular (opcional)" />
+
+            <div class="password-section">
+              <div class="section-header">
+                <h3>🔒 Cambiar contraseña (opcional)</h3>
+                <p class="section-subtitle">Deja estos campos vacíos si no deseas cambiar tu contraseña</p>
+              </div>
+              
+              <div class="password-fields">
+                <label for="ep-password-actual">Contraseña actual</label>
+                <input id="ep-password-actual" name="passwordActual" type="password" placeholder="Tu contraseña actual" />
+
+                <label for="ep-password-nueva">Nueva contraseña</label>
+                <input id="ep-password-nueva" name="passwordNueva" type="password" placeholder="Nueva contraseña (mín. 6 caracteres)" />
+
+                <label for="ep-password-confirmar">Repetir nueva contraseña</label>
+                <input id="ep-password-confirmar" name="passwordConfirmar" type="password" placeholder="Repetir nueva contraseña" />
+              </div>
+            </div>
 
             <div id="ep-error" class="muted" style="display:none;color:#ff6b6b;margin-top:8px"></div>
 

@@ -14,7 +14,7 @@ router.get("/", (req, res) => {
 
   try {
     const stmt = db.prepare(`
-      SELECT id, titulo, descripcion, precio, cantidad, imagen, fecha_publicacion
+      SELECT id, titulo, descripcion, precio, cantidad, imagen, fecha_publicacion, usuario_id
       FROM publicaciones
       WHERE titulo LIKE ?
       ORDER BY fecha_publicacion DESC

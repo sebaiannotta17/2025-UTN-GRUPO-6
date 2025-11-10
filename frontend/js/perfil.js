@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const user = JSON.parse(localStorage.getItem("user"));
   const nombreEl = document.getElementById("nombre");
   const emailEl = document.getElementById("email");
+  const celularEl = document.getElementById("celular");
   const fechaEl = document.getElementById("fecha");
   const statusEl = document.getElementById("status");
   const $listaPublicaciones = document.getElementById("lista-publicaciones");
@@ -24,6 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Mostrar datos del usuario
   nombreEl.textContent = user.nombre;
   emailEl.textContent = user.email;
+  celularEl.textContent = user.celular || "No especificado";
   fechaEl.textContent = user.fecha_registro;
 
   // ============================================================
@@ -35,6 +37,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const $err = document.getElementById("ep-error");
   const $nombre = document.getElementById("ep-nombre");
   const $email = document.getElementById("ep-email");
+  const $celular = document.getElementById("ep-celular");
+  const $passwordActual = document.getElementById("ep-password-actual");
+  const $passwordNueva = document.getElementById("ep-password-nueva");
+  const $passwordConfirmar = document.getElementById("ep-password-confirmar");
 
   function openModal() {
     $modal.setAttribute("aria-hidden", "false");
@@ -65,6 +71,11 @@ document.addEventListener("DOMContentLoaded", () => {
   btnEdit.addEventListener("click", () => {
     $nombre.value = user.nombre || "";
     $email.value = user.email || "";
+    $celular.value = user.celular || "";
+    // Limpiar campos de contraseña
+    $passwordActual.value = "";
+    $passwordNueva.value = "";
+    $passwordConfirmar.value = "";
     openModal();
   });
 
@@ -74,6 +85,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const nuevoNombre = $nombre.value.trim();
     const nuevoEmail = $email.value.trim();
+    const nuevoCelular = $celular.value.trim();
+    const passwordActual = $passwordActual.value;
+    const passwordNueva = $passwordNueva.value;
+    const passwordConfirmar = $passwordConfirmar.value;
 
     if (!nuevoNombre || !nuevoEmail) {
       $err.textContent = "Completá nombre y email.";
@@ -81,11 +96,43 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+    // Validar cambio de contraseña si se completó algún campo
+    const cambiarPassword = passwordActual || passwordNueva || passwordConfirmar;
+    if (cambiarPassword) {
+      if (!passwordActual || !passwordNueva || !passwordConfirmar) {
+        $err.textContent = "Para cambiar la contraseña, completá todos los campos de contraseña.";
+        $err.style.display = "block";
+        return;
+      }
+      if (passwordNueva !== passwordConfirmar) {
+        $err.textContent = "La nueva contraseña y su confirmación no coinciden.";
+        $err.style.display = "block";
+        return;
+      }
+      if (passwordNueva.length < 6) {
+        $err.textContent = "La nueva contraseña debe tener al menos 6 caracteres.";
+        $err.style.display = "block";
+        return;
+      }
+    }
+
     try {
+      const datosActualizacion = { 
+        nombre: nuevoNombre, 
+        email: nuevoEmail, 
+        celular: nuevoCelular 
+      };
+
+      // Agregar campos de contraseña si se va a cambiar
+      if (cambiarPassword) {
+        datosActualizacion.passwordActual = passwordActual;
+        datosActualizacion.passwordNueva = passwordNueva;
+      }
+
       const res = await fetch(`${API_AUTH_URL}/update/${user.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ nombre: nuevoNombre, email: nuevoEmail }),
+        body: JSON.stringify(datosActualizacion),
       });
 
       const data = await res.json();
@@ -94,13 +141,16 @@ document.addEventListener("DOMContentLoaded", () => {
       // Actualizar info local y UI
       user.nombre = nuevoNombre;
       user.email = nuevoEmail;
+      user.celular = nuevoCelular;
       localStorage.setItem("user", JSON.stringify(user));
 
       nombreEl.textContent = nuevoNombre;
       emailEl.textContent = nuevoEmail;
-      statusEl.textContent = "Perfil actualizado correctamente ✅";
-      statusEl.style.color = "green";
-
+      celularEl.textContent = nuevoCelular || "No especificado";
+      
+      // Mostrar notificación de éxito
+      mostrarNotificacion("✅ Perfil actualizado correctamente", "success");
+      
       closeModal();
     } catch (err) {
       console.error(err);
@@ -477,4 +527,58 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.removeItem("user");
     location.href = "./login.html";
   });
+
+  // ============================================================
+  // =================== NOTIFICACIONES ========================
+  // ============================================================
+  
+  function mostrarNotificacion(mensaje, tipo = 'info') {
+    // Crear o obtener contenedor de notificaciones
+    let container = document.getElementById('notification-container');
+    if (!container) {
+      container = document.createElement('div');
+      container.id = 'notification-container';
+      container.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 9999;
+        pointer-events: none;
+      `;
+      document.body.appendChild(container);
+    }
+
+    // Crear notificación
+    const notification = document.createElement('div');
+    notification.style.cssText = `
+      background: ${tipo === 'success' ? '#4CAF50' : tipo === 'error' ? '#f44336' : '#2196F3'};
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      font-weight: 500;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      pointer-events: auto;
+    `;
+    notification.textContent = mensaje;
+
+    container.appendChild(notification);
+
+    // Animar entrada
+    setTimeout(() => {
+      notification.style.transform = 'translateX(0)';
+    }, 10);
+
+    // Animar salida y remover
+    setTimeout(() => {
+      notification.style.transform = 'translateX(100%)';
+      setTimeout(() => {
+        if (notification.parentNode) {
+          notification.parentNode.removeChild(notification);
+        }
+      }, 300);
+    }, 3000);
+  }
 });

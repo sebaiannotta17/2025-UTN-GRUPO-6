@@ -6,6 +6,9 @@ import publicacionesRoutes from "./routes/publicaciones.js";
 import authRoutes from "./routes/auth.js";
 import busquedaRoutes from "./routes/busqueda.js";
 import categoriasRouter from "./routes/categorias.js";
+import favoritosRoutes from "./routes/favoritos.js";
+import carritoRoutes from "./routes/carrito.js";
+import vendedorRoutes from "./routes/vendedor.js";
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
@@ -25,6 +28,9 @@ app.use("/api/publicaciones", publicacionesRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/busqueda", busquedaRoutes);
 app.use("/api/categorias", categoriasRouter);
+app.use("/api/favoritos", favoritosRoutes);
+app.use("/api/carrito", carritoRoutes);
+app.use("/api/vendedor", vendedorRoutes);
 
 // Iniciar servidor
 const PORT = 3000;
